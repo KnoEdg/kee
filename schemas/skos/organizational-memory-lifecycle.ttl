@@ -1,0 +1,19 @@
+@prefix omlife: <https://w3id.org/kee/lifecycle/organizational-memory#> .
+@prefix legacy: <https://knoedg.org/vocab/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+omlife:OrganizationalMemoryLifecycleScheme a skos:ConceptScheme ; skos:prefLabel "KEE Organizational Memory Lifecycle Scheme" ; dcterms:identifier "kee-organizational-memory-lifecycle-v0.8-rc4" ; dcterms:description "Canonical RC4 organizational-memory lifecycle/disposition scheme. Review/currency assessment, qualification, and staleness remain separate dimensions." .
+omlife:Draft a skos:Concept ; skos:prefLabel "Draft" ; skos:definition "Artifact is being prepared." ; skos:exactMatch legacy:DraftMemoryArtifact ; skos:inScheme omlife:OrganizationalMemoryLifecycleScheme .
+omlife:Active a skos:Concept ; skos:prefLabel "Active" ; skos:definition "Artifact is usable within its declared scope; active status does not imply freshness or truth." ; skos:exactMatch legacy:ActiveMemoryArtifact ; skos:inScheme omlife:OrganizationalMemoryLifecycleScheme .
+omlife:Deprecated a skos:Concept ; skos:prefLabel "Deprecated" ; skos:definition "Artifact is retained but no longer recommended." ; skos:exactMatch legacy:DeprecatedMemoryArtifact ; skos:inScheme omlife:OrganizationalMemoryLifecycleScheme .
+omlife:Superseded a skos:Concept ; skos:prefLabel "Superseded" ; skos:definition "Artifact has been replaced by another artifact." ; skos:exactMatch legacy:SupersededMemoryArtifact ; skos:inScheme omlife:OrganizationalMemoryLifecycleScheme .
+omlife:Retired a skos:Concept ; skos:prefLabel "Retired" ; skos:definition "Artifact has been withdrawn from operational use." ; skos:exactMatch legacy:RetiredMemoryArtifact ; skos:inScheme omlife:OrganizationalMemoryLifecycleScheme .
+omlife:Archived a skos:Concept ; skos:prefLabel "Archived" ; skos:definition "Artifact is preserved for historical, legal, or compliance reasons; archival preservation does not establish current operational applicability." ; skos:exactMatch legacy:ArchivedMemoryArtifact ; skos:inScheme omlife:OrganizationalMemoryLifecycleScheme .
+
+legacy:DraftMemoryArtifact skos:exactMatch omlife:Draft .
+legacy:ActiveMemoryArtifact skos:exactMatch omlife:Active .
+legacy:DeprecatedMemoryArtifact skos:exactMatch omlife:Deprecated .
+legacy:SupersededMemoryArtifact skos:exactMatch omlife:Superseded .
+legacy:RetiredMemoryArtifact skos:exactMatch omlife:Retired .
+legacy:ArchivedMemoryArtifact skos:exactMatch omlife:Archived .
