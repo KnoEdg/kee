@@ -1,0 +1,26 @@
+@prefix unit: <https://w3id.org/kee/vocab/assertion-unit-kind#> .
+@prefix legacy: <https://knoedg.org/vocab/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+unit:AssertionUnitKindScheme
+  a skos:ConceptScheme ;
+  skos:prefLabel "KEE Assertion Managed-Unit Kind Scheme" ;
+  dcterms:identifier "kee-assertion-unit-kind-v0.8-rc4" ;
+  dcterms:description "Open local vocabulary for the representation unit governed by assertion metadata. The slot remains open to additional representation patterns." .
+
+unit:Triple a skos:Concept ; skos:prefLabel "Triple" ; skos:definition "The managed assertion unit is a single RDF triple or RDF-star triple term." ; skos:scopeNote "Representation prior art: RDF/RDF-star." ; skos:exactMatch legacy:TripleUnit ; skos:inScheme unit:AssertionUnitKindScheme .
+unit:Reifier a skos:Concept ; skos:prefLabel "Reifier" ; skos:definition "The managed assertion unit is an RDF 1.2 reifier or reified statement." ; skos:scopeNote "Representation prior art: RDF reification / RDF 1.2 reifiers." ; skos:exactMatch legacy:ReifierUnit ; skos:inScheme unit:AssertionUnitKindScheme .
+unit:StatementNode a skos:Concept ; skos:prefLabel "Statement Node" ; skos:definition "The managed assertion unit is a statement node distinct from a reifier, such as an rdf:Statement resource." ; skos:scopeNote "Representation prior art: RDF statement resources." ; skos:exactMatch legacy:StatementNodeUnit ; skos:inScheme unit:AssertionUnitKindScheme .
+unit:NamedGraph a skos:Concept ; skos:prefLabel "Named Graph" ; skos:definition "The managed assertion unit is a named graph." ; skos:scopeNote "Representation prior art: RDF Dataset named graphs." ; skos:exactMatch legacy:NamedGraphUnit ; skos:inScheme unit:AssertionUnitKindScheme .
+unit:NanopublicationAssertionGraph a skos:Concept ; skos:prefLabel "Nanopublication Assertion Graph" ; skos:definition "The managed assertion unit is the assertion graph of a nanopublication, packaged alongside provenance and publication-info graphs." ; skos:scopeNote "Representation prior art: Nanopublication model." ; skos:exactMatch legacy:NanopublicationAssertionGraphUnit ; skos:inScheme unit:AssertionUnitKindScheme .
+unit:DocumentAssertion a skos:Concept ; skos:prefLabel "Document Assertion" ; skos:definition "The managed assertion unit is a document-level assertion such as a passage or section of a non-RDF document." ; skos:exactMatch legacy:DocumentAssertionUnit ; skos:inScheme unit:AssertionUnitKindScheme .
+unit:ClaimObject a skos:Concept ; skos:prefLabel "Claim Object" ; skos:definition "The managed assertion unit is an application-specific claim object with no required RDF representation." ; skos:exactMatch legacy:ClaimObjectUnit ; skos:inScheme unit:AssertionUnitKindScheme .
+
+legacy:TripleUnit skos:exactMatch unit:Triple .
+legacy:ReifierUnit skos:exactMatch unit:Reifier .
+legacy:StatementNodeUnit skos:exactMatch unit:StatementNode .
+legacy:NamedGraphUnit skos:exactMatch unit:NamedGraph .
+legacy:NanopublicationAssertionGraphUnit skos:exactMatch unit:NanopublicationAssertionGraph .
+legacy:DocumentAssertionUnit skos:exactMatch unit:DocumentAssertion .
+legacy:ClaimObjectUnit skos:exactMatch unit:ClaimObject .
