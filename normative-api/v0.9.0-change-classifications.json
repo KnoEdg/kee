@@ -1,0 +1,28 @@
+{
+  "candidateAdditions": {
+    "classification": "MINOR-compatible",
+    "reason": "Optional machine-readable and experimental surfaces; existing v0.8.2 conformers remain conforming."
+  },
+  "conformanceDimensionMachineTokens": {
+    "classification": "MINOR-compatible",
+    "reason": "Adds candidate machine-safe aliases while preserving the published v0.8.2 human dimension label governance/policy; the reference validator accepts both spellings."
+  },
+  "nonCollapseRuleIdentifiers": {
+    "classification": "MINOR-compatible",
+    "reason": "Introduces stable NC-01..NC-17 candidate identifiers mapped to the already-published Section 7.1 rules; it does not claim those identifiers existed in v0.8.2."
+  },
+  "promotionProfileShapeAcyclicScopeOrdering": {
+    "classification": "MINOR-compatible",
+    "reason": "shacl/promotion-profile.ttl gained a sh:sparql constraint rejecting a cyclic skos:broader ordering between kee:sourceScope and kee:scope. Reproduced against both shape versions with tests/shacl/valid/promotion.ttl plus one triple making the two scopes mutually skos:broader, composed with the governance-transition parent shape: the v0.8.2 baseline shape reports conforms = True and the v0.9 candidate shape reports conforms = False, while the unmutated control fixture conforms under both. That is a real conformance-behaviour change. It is MINOR-compatible and not a SemVer violation because docs/profiles/promotion-profile.md is Status: Draft / Non-Normative Design Note and ADR-0074 Section 2 excludes draft profiles from the public normative API; it also arguably implements Section 13.2's existing requirement for a machine-checkable ordering proving the target scope is strictly broader.",
+    "surfaceKind": "non-manifest",
+    "toolingNote": "tools/normative_api_diff.py cannot see this change. diff() walks the keys of two JSON manifests, and shacl/, schemas/skos/, context/ and the RO-Crate examples are in neither, so the tool printed \"unclassified\": [] and exited 0 beside it. The same blindness would miss a tightening of an Accepted / Normative profile's shape, which would be MAJOR-class under ADR-0074 Section 6. Recorded here so the gap is visible at the point of use; the remedy is escalated as ESC-04 in docs/release/KEE-v0.9.0-sixth-pass-escalations.md."
+  },
+  "promotionRequirements": {
+    "classification": "MINOR-compatible",
+    "reason": "Adds independent interoperability evidence as a requirement for new profile promotion/graduation claims, not as a new obligation on existing v0.8.2 conformance claims."
+  },
+  "version": {
+    "classification": "MINOR-compatible",
+    "reason": "Candidate release identifier."
+  }
+}
