@@ -1,0 +1,27 @@
+@prefix selife: <https://w3id.org/kee/lifecycle/software-engineering#> .
+@prefix legacy: <https://knoedg.org/vocab/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+selife:SoftwareEngineeringLifecycleScheme a skos:ConceptScheme ; skos:prefLabel "KEE Software Engineering Lifecycle Scheme" ; dcterms:identifier "kee-software-engineering-lifecycle-v0.8-rc4" ; dcterms:description "Canonical RC4 profile-specific lifecycle scheme for Software Engineering Profile state. RC4 changes namespace ownership only; later profile-specific lifecycle review may further separate dimensions." .
+selife:Draft a skos:Concept ; skos:prefLabel "Draft" ; skos:definition "Artifact is being prepared." ; skos:exactMatch legacy:DraftEngineeringArtifact ; skos:inScheme selife:SoftwareEngineeringLifecycleScheme .
+selife:Proposed a skos:Concept ; skos:prefLabel "Proposed" ; skos:definition "Artifact is under consideration." ; skos:exactMatch legacy:ProposedEngineeringArtifact ; skos:inScheme selife:SoftwareEngineeringLifecycleScheme .
+selife:Active a skos:Concept ; skos:prefLabel "Active" ; skos:definition "Artifact is currently applicable." ; skos:exactMatch legacy:ActiveEngineeringArtifact ; skos:inScheme selife:SoftwareEngineeringLifecycleScheme .
+selife:Implemented a skos:Concept ; skos:prefLabel "Implemented" ; skos:definition "Artifact has been implemented." ; skos:exactMatch legacy:ImplementedEngineeringArtifact ; skos:inScheme selife:SoftwareEngineeringLifecycleScheme .
+selife:Verified a skos:Concept ; skos:prefLabel "Verified" ; skos:definition "Artifact has supporting verification evidence." ; skos:exactMatch legacy:VerifiedEngineeringArtifact ; skos:inScheme selife:SoftwareEngineeringLifecycleScheme .
+selife:UnderReview a skos:Concept ; skos:prefLabel "Under Review" ; skos:definition "Artifact requires review." ; skos:exactMatch legacy:UnderReviewEngineeringArtifact ; skos:inScheme selife:SoftwareEngineeringLifecycleScheme .
+selife:Deprecated a skos:Concept ; skos:prefLabel "Deprecated" ; skos:definition "Artifact is retained but no longer recommended." ; skos:exactMatch legacy:DeprecatedEngineeringArtifact ; skos:inScheme selife:SoftwareEngineeringLifecycleScheme .
+selife:Superseded a skos:Concept ; skos:prefLabel "Superseded" ; skos:definition "Artifact has been replaced." ; skos:exactMatch legacy:SupersededEngineeringArtifact ; skos:inScheme selife:SoftwareEngineeringLifecycleScheme .
+selife:Retired a skos:Concept ; skos:prefLabel "Retired" ; skos:definition "Artifact is no longer operationally used." ; skos:exactMatch legacy:RetiredEngineeringArtifact ; skos:inScheme selife:SoftwareEngineeringLifecycleScheme .
+selife:Archived a skos:Concept ; skos:prefLabel "Archived" ; skos:definition "Artifact is retained for history or compliance." ; skos:exactMatch legacy:ArchivedEngineeringArtifact ; skos:inScheme selife:SoftwareEngineeringLifecycleScheme .
+
+legacy:DraftEngineeringArtifact skos:exactMatch selife:Draft .
+legacy:ProposedEngineeringArtifact skos:exactMatch selife:Proposed .
+legacy:ActiveEngineeringArtifact skos:exactMatch selife:Active .
+legacy:ImplementedEngineeringArtifact skos:exactMatch selife:Implemented .
+legacy:VerifiedEngineeringArtifact skos:exactMatch selife:Verified .
+legacy:UnderReviewEngineeringArtifact skos:exactMatch selife:UnderReview .
+legacy:DeprecatedEngineeringArtifact skos:exactMatch selife:Deprecated .
+legacy:SupersededEngineeringArtifact skos:exactMatch selife:Superseded .
+legacy:RetiredEngineeringArtifact skos:exactMatch selife:Retired .
+legacy:ArchivedEngineeringArtifact skos:exactMatch selife:Archived .
