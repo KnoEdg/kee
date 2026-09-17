@@ -1,0 +1,121 @@
+{
+  "version": "0.9.0",
+  "specification": "docs/specs/KEE-Specification-v0.9.0.md",
+  "historicalSourceTag": "v0.8.2",
+  "historicalSourceCommit": "7b3c490005a43c7312e055369d7cb0c85a83f295",
+  "acceptedProfiles": [
+    "assertion-metadata",
+    "scientific-claim",
+    "software-engineering"
+  ],
+  "termRegistry": "docs/release/KEE-v0.8.1-amendment-01-term-registry.tsv (historical path, incorporated by v0.8.2)",
+  "nonCollapseRules": [
+    "Section 7.1 rule 1",
+    "Section 7.1 rule 2",
+    "Section 7.1 rule 3",
+    "Section 7.1 rule 4",
+    "Section 7.1 rule 5",
+    "Section 7.1 rule 6",
+    "Section 7.1 rule 7",
+    "Section 7.1 rule 8",
+    "Section 7.1 rule 9",
+    "Section 7.1 rule 10",
+    "Section 7.1 rule 11",
+    "Section 7.1 rule 12",
+    "Section 7.1 rule 13",
+    "Section 7.1 rule 14",
+    "Section 7.1 rule 15",
+    "Section 7.1 rule 16",
+    "Section 7.1 rule 17"
+  ],
+  "nonCollapseRuleIdentifiers": {
+    "NC-01": "Section 7.1 rule 1",
+    "NC-02": "Section 7.1 rule 2",
+    "NC-03": "Section 7.1 rule 3",
+    "NC-04": "Section 7.1 rule 4",
+    "NC-05": "Section 7.1 rule 5",
+    "NC-06": "Section 7.1 rule 6",
+    "NC-07": "Section 7.1 rule 7",
+    "NC-08": "Section 7.1 rule 8",
+    "NC-09": "Section 7.1 rule 9",
+    "NC-10": "Section 7.1 rule 10",
+    "NC-11": "Section 7.1 rule 11",
+    "NC-12": "Section 7.1 rule 12",
+    "NC-13": "Section 7.1 rule 13",
+    "NC-14": "Section 7.1 rule 14",
+    "NC-15": "Section 7.1 rule 15",
+    "NC-16": "Section 7.1 rule 16",
+    "NC-17": "Section 7.1 rule 17"
+  },
+  "conformanceDimensions": [
+    "structural",
+    "profile-semantic",
+    "procedural",
+    "governance/policy",
+    "interoperability"
+  ],
+  "conformanceDimensionMachineTokens": {
+    "structural": "structural",
+    "profile-semantic": "profile-semantic",
+    "procedural": "procedural",
+    "governance-policy": "governance/policy",
+    "interoperability": "interoperability"
+  },
+  "capabilityLevels": {
+    "Level 0": "Informational alignment",
+    "Level 1": "Artifact registry",
+    "Level 2": "Governed lifecycle",
+    "Level 3": "Temporal and provenance-aware governance",
+    "Level 4": "Epistemic governance"
+  },
+  "declarationStatusValues": [
+    "experimental",
+    "partial",
+    "conformant",
+    "extended"
+  ],
+  "profileLifecycleNamespaces": [
+    "https://w3id.org/kee/lifecycle/assertion#",
+    "https://w3id.org/kee/lifecycle/scientific-claim#",
+    "https://w3id.org/kee/lifecycle/organizational-memory#",
+    "https://w3id.org/kee/lifecycle/decision#",
+    "https://w3id.org/kee/lifecycle/software-engineering#"
+  ],
+  "statusAwareToolingObligations": [
+    "report-profile-identity",
+    "report-profile-governance-status",
+    "report-shape-or-shape-contract-version",
+    "report-structural-result",
+    "report-normative-effect-for-evaluated-claim",
+    "report-untested-conformance-dimensions",
+    "make-claim-scoped-binding-explicit"
+  ],
+  "registeredLegacyCompatibilityWindow": {
+    "mode": "single-write canonical / dual-read registered legacy+canonical",
+    "newWrites": "canonical form only",
+    "legacyReads": "only where the migration registry explicitly records a compatibility policy",
+    "retirement": "requires a separately versioned decision and migration notice naming the legacy surface, last dual-read version, first rejecting version, and migration path or explicit absence of a safe automatic migration"
+  },
+  "compatibilityPolicy": "ADR-0074 strict SemVer",
+  "interoperabilityObligations": [
+    "source-neutrality",
+    "consumer-neutrality",
+    "claim-scoped-binding",
+    "non-collapse"
+  ],
+  "promotionRequirements": [
+    "independent-interoperability-evidence"
+  ],
+  "candidateAdditions": [
+    "obligation-lineage-registry",
+    "JSON-profile-declaration-and-schema",
+    "EARL-PROV-SHACL-evidence-graph",
+    "RO-Crate-KEEpack-experiment",
+    "public-API-diff"
+  ],
+  "status": "Published public normative API snapshot",
+  "supersedesCurrentVersionIdentifier": "0.8.2",
+  "candidateProvenance": "normative-api/v0.9.0-candidate.json",
+  "changeClassifications": "normative-api/v0.9.0-change-classifications.json",
+  "sharedContractCount": "NOT PUBLISHED. ADR-0077 restates the question-(a) figure as a band after the classification predicate failed blind replication; ADR-0078 forbids narrowing it by drafting alone. No count is part of this API."
+}
