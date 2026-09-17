@@ -1,0 +1,23 @@
+@prefix sclife: <https://w3id.org/kee/lifecycle/scientific-claim#> .
+@prefix legacy: <https://knoedg.org/vocab/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+sclife:ScientificClaimLifecycleScheme a skos:ConceptScheme ; skos:prefLabel "KEE Scientific Claim Lifecycle Scheme" ; dcterms:identifier "kee-scientific-claim-lifecycle-v0.8-rc4" ; dcterms:description "Canonical RC4 scientific-claim publication/governance/disposition scheme. Evidential support, challenge, qualification, confidence, and replication remain separate dimensions." .
+sclife:Hypothesis a skos:Concept ; skos:prefLabel "Hypothesis" ; skos:definition "Claim is proposed for investigation." ; skos:exactMatch legacy:HypothesisClaim ; skos:inScheme sclife:ScientificClaimLifecycleScheme .
+sclife:Submitted a skos:Concept ; skos:prefLabel "Submitted" ; skos:definition "Claim has been submitted for review or publication." ; skos:exactMatch legacy:SubmittedClaim ; skos:inScheme sclife:ScientificClaimLifecycleScheme .
+sclife:Preprint a skos:Concept ; skos:prefLabel "Preprint" ; skos:definition "Claim is publicly available before formal publication." ; skos:exactMatch legacy:PreprintClaim ; skos:inScheme sclife:ScientificClaimLifecycleScheme .
+sclife:Published a skos:Concept ; skos:prefLabel "Published" ; skos:definition "Claim is part of a publication or formal record." ; skos:exactMatch legacy:PublishedClaim ; skos:inScheme sclife:ScientificClaimLifecycleScheme .
+sclife:Corrected a skos:Concept ; skos:prefLabel "Corrected" ; skos:definition "Claim has been amended or corrected." ; skos:exactMatch legacy:CorrectedClaim ; skos:inScheme sclife:ScientificClaimLifecycleScheme .
+sclife:Retracted a skos:Concept ; skos:prefLabel "Retracted" ; skos:definition "Claim has been formally withdrawn from the scientific record." ; skos:exactMatch legacy:RetractedClaim ; skos:inScheme sclife:ScientificClaimLifecycleScheme .
+sclife:Superseded a skos:Concept ; skos:prefLabel "Superseded" ; skos:definition "Claim has been replaced by a later claim or model." ; skos:exactMatch legacy:SupersededClaim ; skos:inScheme sclife:ScientificClaimLifecycleScheme .
+sclife:Archived a skos:Concept ; skos:prefLabel "Archived" ; skos:definition "Claim is preserved for historical or reference purposes; archival preservation does not establish current applicability or evidential standing." ; skos:exactMatch legacy:ArchivedClaim ; skos:inScheme sclife:ScientificClaimLifecycleScheme .
+
+legacy:HypothesisClaim skos:exactMatch sclife:Hypothesis .
+legacy:SubmittedClaim skos:exactMatch sclife:Submitted .
+legacy:PreprintClaim skos:exactMatch sclife:Preprint .
+legacy:PublishedClaim skos:exactMatch sclife:Published .
+legacy:CorrectedClaim skos:exactMatch sclife:Corrected .
+legacy:RetractedClaim skos:exactMatch sclife:Retracted .
+legacy:SupersededClaim skos:exactMatch sclife:Superseded .
+legacy:ArchivedClaim skos:exactMatch sclife:Archived .
