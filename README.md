@@ -1,4 +1,3 @@
-```markdown
 # KEE
 
 **Knowledge, Epistemics & Eidos**
@@ -176,4 +175,3 @@ https://github.com/KnoEdg/kee
 ---
 
 **Current baseline: KEE v0.9.0**
-```
