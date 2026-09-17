@@ -1,0 +1,106 @@
+@prefix artifact: <https://w3id.org/kee/artifact#> .
+@prefix legacy: <https://knoedg.org/vocab/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix xwkont-core: <https://w3id.org/xwkont/core#> .
+
+artifact:ArtifactTypeScheme
+  a skos:ConceptScheme ;
+  skos:prefLabel "KEE Artifact Type Scheme" ;
+  dcterms:identifier "kee-artifact-type-v0.8-rc4" ;
+  dcterms:description "Canonical RC4 SKOS concept scheme for KEE controlled artifact classifications used with dcterms:type. The artifact# namespace is the new-write surface; historical knoedg.org/vocab/*Artifact terms are legacy identifiers with explicit mappings where reviewed." .
+
+artifact:Assertion
+  a skos:Concept ;
+  skos:prefLabel "Assertion" ;
+  skos:definition "A governed expressed claim by an agent or source in a specific context and time." ;
+  skos:relatedMatch xwkont-core:Proposition ;
+  skos:exactMatch legacy:AssertionArtifact ;
+  skos:inScheme artifact:ArtifactTypeScheme .
+
+artifact:Decision
+  a skos:Concept ;
+  skos:prefLabel "Decision" ;
+  skos:definition "A governed record of a choice, rationale, status, and consequences." ;
+  skos:exactMatch legacy:DecisionArtifact ;
+  skos:inScheme artifact:ArtifactTypeScheme .
+
+artifact:OrganizationalMemory
+  a skos:Concept ;
+  skos:prefLabel "Organizational Memory Artifact" ;
+  skos:definition "A governed artifact preserved to support organizational continuity, reuse, review, or learning over time." ;
+  skos:exactMatch legacy:MemoryArtifact ;
+  skos:inScheme artifact:ArtifactTypeScheme .
+
+artifact:ScientificClaim
+  a skos:Concept ;
+  skos:prefLabel "Scientific Claim" ;
+  skos:definition "A governed scientific claim whose interpretation is supplied by the Scientific Claim Profile." ;
+  skos:inScheme artifact:ArtifactTypeScheme .
+
+artifact:ArchitectureDecisionRecord
+  a skos:Concept ;
+  skos:prefLabel "Architecture Decision Record" ;
+  skos:definition "A governed decision record describing an architecture choice and its rationale." ;
+  skos:broader artifact:Decision ;
+  skos:inScheme artifact:ArtifactTypeScheme .
+
+artifact:CompatibilityObservation
+  a skos:Concept ;
+  skos:prefLabel "Compatibility Observation" ;
+  skos:definition "A governed observation recording compatibility behavior or evidence." ;
+  skos:inScheme artifact:ArtifactTypeScheme .
+
+artifact:DocumentArtifact
+  a skos:Concept ;
+  skos:prefLabel "Document Artifact" ;
+  skos:definition "A governed document-level artifact used as a managed unit." ;
+  skos:inScheme artifact:ArtifactTypeScheme .
+
+artifact:Evidence
+  a skos:Concept ;
+  skos:prefLabel "Evidence" ;
+  skos:definition "A governed artifact used to support, challenge, qualify, or explain another artifact." ;
+  skos:relatedMatch xwkont-core:Role ;
+  skos:exactMatch legacy:EvidenceArtifact ;
+  skos:inScheme artifact:ArtifactTypeScheme .
+
+artifact:ContradictionRecord
+  a skos:Concept ;
+  skos:prefLabel "Contradiction Record" ;
+  skos:definition "A governed artifact recording a conflict or tension between artifacts." ;
+  skos:exactMatch legacy:ContradictionArtifact ;
+  skos:inScheme artifact:ArtifactTypeScheme .
+
+artifact:SupersessionRecord
+  a skos:Concept ;
+  skos:prefLabel "Supersession Record" ;
+  skos:definition "A governed artifact recording that one artifact has replaced another." ;
+  skos:exactMatch legacy:SupersessionArtifact ;
+  skos:inScheme artifact:ArtifactTypeScheme .
+
+artifact:DeprecationRecord
+  a skos:Concept ;
+  skos:prefLabel "Deprecation Record" ;
+  skos:definition "A governed artifact recording that another artifact is retained but no longer recommended or active for ordinary use." ;
+  skos:exactMatch legacy:DeprecationArtifact ;
+  skos:inScheme artifact:ArtifactTypeScheme .
+
+artifact:Profile
+  a skos:Concept ;
+  skos:prefLabel "Profile" ;
+  skos:definition "A governed artifact that adapts KEE to a specific artifact type, domain, or implementation context." ;
+  skos:exactMatch legacy:ProfileArtifact ;
+  skos:inScheme artifact:ArtifactTypeScheme .
+
+# Legacy concepts are preserved as migration identifiers. Their historical
+# descriptions remain recoverable from git history; RC4 does not claim that
+# same-label RDF classes are owl:sameAs these classification concepts.
+legacy:AssertionArtifact skos:exactMatch artifact:Assertion .
+legacy:DecisionArtifact skos:exactMatch artifact:Decision .
+legacy:MemoryArtifact skos:exactMatch artifact:OrganizationalMemory .
+legacy:EvidenceArtifact skos:exactMatch artifact:Evidence .
+legacy:ContradictionArtifact skos:exactMatch artifact:ContradictionRecord .
+legacy:SupersessionArtifact skos:exactMatch artifact:SupersessionRecord .
+legacy:DeprecationArtifact skos:exactMatch artifact:DeprecationRecord .
+legacy:ProfileArtifact skos:exactMatch artifact:Profile .
