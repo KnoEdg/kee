@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://knoedg.org/schemas/governance-metadata.schema.json",
+  "title": "KEE Governance Metadata",
+  "description": "Draft schema for governance metadata attached to governed KEE artifacts.",
+  "type": "object",
+  "required": [
+    "artifactId",
+    "action",
+    "agent",
+    "timestamp"
+  ],
+  "properties": {
+    "artifactId": {
+      "type": "string"
+    },
+    "action": {
+      "type": "string",
+      "description": "Governance action performed on the artifact."
+    },
+    "agent": {
+      "type": "string",
+      "description": "Agent, role, system, or authority responsible for the action."
+    },
+    "authorityScope": {
+      "type": "string",
+      "description": "Boundary within which the agent had authority."
+    },
+    "reason": {
+      "type": "string"
+    },
+    "decisionId": {
+      "type": "string",
+      "description": "Related decision artifact, when applicable."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "effectiveFrom": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "effectiveUntil": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}

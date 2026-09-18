@@ -10,9 +10,7 @@
 
 # KEE term declarations
 #
-# Generated from docs/release/KEE-v0.8.1-amendment-01-term-registry.tsv by
-# reference/vocabulary.py. Do not edit by hand: tests/test_vocabulary.py
-# regenerates this file and compares it byte for byte.
+# Generated from the KEE term registry. Do not edit by hand.
 #
 # 18 classes, 62 properties, and 10 registered-legacy
 # controlled values that no scheme in schemas/skos/ declares.
@@ -23,15 +21,16 @@
 # than as object or datatype properties: any of those would be a semantic
 # claim the specification does not make. External relationships are recorded
 # as prose at the strength the registry records, not as mapping triples.
+#
+# Section references are to docs/specs/KEE-Specification-v0.9.2.md.
 
 <https://w3id.org/kee>
     a owl:Ontology ;
     rdfs:label "KEE term declarations"@en ;
     dcterms:title "KEE term declarations"@en ;
-    dcterms:description "Declarations for the KEE-owned classes, properties, and registered-legacy controlled values retained by the KEE v0.8.1 baseline. This document declares and defines terms; it is not a foundational ontology, and it introduces no semantics beyond the specification and the term registry it is generated from."@en ;
+    dcterms:description "Declarations for the KEE-owned classes, properties, and registered-legacy controlled values retained by the KEE v0.9.2 baseline. This document declares and defines terms; it is not a foundational ontology, and it introduces no semantics beyond the specification and the term registry it is generated from."@en ;
     dcterms:conformsTo <https://www.w3.org/TR/rdf-schema/> ;
-    dcterms:source "docs/release/KEE-v0.8.1-amendment-01-term-registry.tsv" ;
-    dcterms:isReferencedBy "docs/specs/KEE-Specification-v0.8.1.md" ;
+    dcterms:isReferencedBy "docs/specs/KEE-Specification-v0.9.2.md" ;
     rdfs:comment "The canonical namespaces are persistent identifiers that are not yet registered and do not dereference; see Section 18.7. Read this file from the repository rather than by dereferencing a KEE IRI."@en .
 
 kee:Assertion
@@ -40,26 +39,26 @@ kee:Assertion
     skos:definition "Identify a governed assertion artifact carrying label, definition, provenance, lifecycle, scope, and context."@en ;
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "Assertion Profile (Draft); core is owner of record (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
-    skos:note "External relationship: Composes prov:Entity and SKOS labelling; ADR-0014 requires rdfs:label and skos:definition."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0014 shape adoption). Migration: Retained; no migration."@en .
+    skos:note "External relationship: Composes prov:Entity and SKOS labelling; requires rdfs:label and skos:definition."@en ;
+    skos:historyNote "Migration: Retained; no migration."@en .
 
 kee:AssertionMetadataRecord
     a rdfs:Class ;
     rdfs:label "Assertion Metadata Record"@en ;
     skos:definition "Identify the managed assertion unit a metadata record governs, and keep managed-unit, content, record, occurrence, and container identities distinct."@en ;
     rdfs:isDefinedBy <https://w3id.org/kee> ;
-    skos:scopeNote "Assertion Metadata Profile (Accepted / Normative, ADR-0040). Accepted / Normative profile surface"@en ;
+    skos:scopeNote "Assertion Metadata Profile (Accepted / Normative). Accepted / Normative profile surface"@en ;
     skos:note "External relationship: Managed-unit kinds map to RDF/nanopublication/record representation prior art through the assertion-unit-kind scheme (§10)."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0036 shape adoption). Migration: Retained; no migration. Legacy kee:assertionTime is registry-registered (§14.1)."@en .
+    skos:historyNote "Migration: Retained; no migration. Legacy kee:assertionTime is registry-registered (§14.1)."@en .
 
 kee:AssertionOccurrence
     a rdfs:Class ;
     rdfs:label "Assertion Occurrence"@en ;
     skos:definition "Identify the managed assertion unit a metadata record governs, and keep managed-unit, content, record, occurrence, and container identities distinct."@en ;
     rdfs:isDefinedBy <https://w3id.org/kee> ;
-    skos:scopeNote "Assertion Metadata Profile (Accepted / Normative, ADR-0040). Accepted / Normative profile surface"@en ;
+    skos:scopeNote "Assertion Metadata Profile (Accepted / Normative). Accepted / Normative profile surface"@en ;
     skos:note "External relationship: Managed-unit kinds map to RDF/nanopublication/record representation prior art through the assertion-unit-kind scheme (§10)."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (shape-adopting ADR not separately recorded). Migration: Retained; no migration. Legacy kee:assertionTime is registry-registered (§14.1)."@en .
+    skos:historyNote "Migration: Retained; no migration. Legacy kee:assertionTime is registry-registered (§14.1)."@en .
 
 kee:AuthorityRecord
     a rdfs:Class ;
@@ -68,7 +67,7 @@ kee:AuthorityRecord
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "Authority and Delegation Profile (Draft / Non-Normative); core is owner of record (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: Composes prov:actedOnBehalfOf (Agent-to-Agent), prov:qualifiedAssociation, prov:invalidatedAtTime; XACML/ODRL remain the policy-side prior art."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0046 shape adoption). Migration: Retained; no migration."@en .
+    skos:historyNote "Migration: Retained; no migration."@en .
 
 kee:ContestedAuthorityClaim
     a rdfs:Class ;
@@ -77,7 +76,7 @@ kee:ContestedAuthorityClaim
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "Authority and Delegation Profile (Draft / Non-Normative); core is owner of record (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: Composes prov:actedOnBehalfOf (Agent-to-Agent), prov:qualifiedAssociation, prov:invalidatedAtTime; XACML/ODRL remain the policy-side prior art."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0046 shape adoption). Migration: Retained; no migration."@en .
+    skos:historyNote "Migration: Retained; no migration."@en .
 
 kee:ContradictionRecord
     a rdfs:Class ;
@@ -86,7 +85,7 @@ kee:ContradictionRecord
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "Contradiction Records Profile (Draft / Non-Normative); core is owner of record (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: Composes oa:Annotation/oa:hasTarget/oa:hasBody via dcterms:hasPart; kee:causeType remains an open IRI slot."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (shape-adopting ADR not separately recorded). Migration: Retained; no migration. Flat kee:evidenceForSide is registry-registered legacy (§13.1)."@en .
+    skos:historyNote "Migration: Retained; no migration. Flat kee:evidenceForSide is registry-registered legacy (§13.1)."@en .
 
 kee:Decision
     a rdfs:Class ;
@@ -95,7 +94,7 @@ kee:Decision
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "Decision Profile (Draft); core is owner of record (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: Composes dcterms:replaces/dcterms:isReplacedBy and prov:wasRevisionOf for supersession."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (shape-adopting ADR not separately recorded). Migration: Retained; no migration."@en .
+    skos:historyNote "Migration: Retained; no migration."@en .
 
 kee:GovernanceTransitionRecord
     a rdfs:Class ;
@@ -104,7 +103,7 @@ kee:GovernanceTransitionRecord
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "Governance Transition Profile (Draft / Non-Normative); core is owner of record (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: Composes prov:Activity, prov:qualifiedAssociation, prov:hadRole; no equivalence asserted."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (shape-adopting ADR not separately recorded). Migration: Retained; no migration. Wrapper optionality is governed by §8.4."@en .
+    skos:historyNote "Migration: Retained; no migration. Wrapper optionality is governed by §8.4."@en .
 
 kee:LifecycleCrosswalkMapping
     a rdfs:Class ;
@@ -113,7 +112,7 @@ kee:LifecycleCrosswalkMapping
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "Lifecycle Crosswalk Profile (Draft / Non-Normative); core is owner of record (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: kee:mappingRelationship values are the five SKOS mapping properties; no separate KEE relation code list exists (§16.5)."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0041 shape adoption). Migration: Retained; no migration."@en .
+    skos:historyNote "Migration: Retained; no migration."@en .
 
 kee:ManagedArtifactUnit
     a rdfs:Class ;
@@ -122,7 +121,7 @@ kee:ManagedArtifactUnit
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "Artifact Identity and Granularity Profile (Draft / Non-Normative); core is owner of record (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: Composes dcterms:identifier and PROV entity relations; no equivalence asserted."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0044 shape adoption). Migration: Retained; no migration."@en .
+    skos:historyNote "Migration: Retained; no migration."@en .
 
 kee:OrganizationalMemoryArtifact
     a rdfs:Class ;
@@ -131,7 +130,7 @@ kee:OrganizationalMemoryArtifact
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "Organizational Memory Profile (Draft); core is owner of record (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: Composes PROV qualified attribution for stewardship; review scheduling has no adopted external term."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (shape-adopting ADR not separately recorded). Migration: Retained; no migration."@en .
+    skos:historyNote "Migration: Retained; no migration."@en .
 
 kee:PointInTimeQuery
     a rdfs:Class ;
@@ -140,7 +139,7 @@ kee:PointInTimeQuery
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "Historical and Bitemporal Querying Profile (Draft / Non-Normative); core is owner of record (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: dcterms:temporal carries the requested instant/interval; time:Instant/time:Interval carry coverage; the dimension and pattern classifiers are open IRI slots with no external code list adopted."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0048 shape adoption). Migration: Retained; no migration. Legacy kee:queryInstant and kee:historyCompleteness are registry-registered (§14.2, §14.3)."@en .
+    skos:historyNote "Migration: Retained; no migration. Legacy kee:queryInstant and kee:historyCompleteness are registry-registered (§14.2, §14.3)."@en .
 
 kee:PromotionRecord
     a rdfs:Class ;
@@ -149,7 +148,7 @@ kee:PromotionRecord
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "Promotion Profile (Draft / Non-Normative); core is owner of record (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: Scope ordering uses skos:broader/skos:narrower or another profile-declared partial order; no external equivalent for the discriminator was located."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0045 shape adoption). Migration: Retained; no migration. Prior-art ownership of the discriminator remains an open question (Phase 5 ledger)."@en .
+    skos:historyNote "Migration: Retained; no migration. Prior-art ownership of the discriminator remains an open question (Phase 5 ledger)."@en .
 
 kee:RetrievalChunk
     a rdfs:Class ;
@@ -158,7 +157,7 @@ kee:RetrievalChunk
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "AI-Grounded Retrieval Profile (Draft / Non-Normative); core is owner of record (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: Composes prov:wasGeneratedBy/prov:generatedAtTime for decision provenance; categories are open IRI slots."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0044 shape adoption). Migration: Retained; no migration."@en .
+    skos:historyNote "Migration: Retained; no migration."@en .
 
 kee:RetrievalQuery
     a rdfs:Class ;
@@ -167,7 +166,7 @@ kee:RetrievalQuery
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "AI-Grounded Retrieval Profile (Draft / Non-Normative); core is owner of record (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: Composes prov:wasGeneratedBy/prov:generatedAtTime for decision provenance; categories are open IRI slots."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0047 shape adoption). Migration: Retained; no migration."@en .
+    skos:historyNote "Migration: Retained; no migration."@en .
 
 kee:RetrievalResult
     a rdfs:Class ;
@@ -176,25 +175,25 @@ kee:RetrievalResult
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "AI-Grounded Retrieval Profile (Draft / Non-Normative); core is owner of record (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: Composes prov:wasGeneratedBy/prov:generatedAtTime for decision provenance; categories are open IRI slots."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0047 shape adoption). Migration: Retained; no migration."@en .
+    skos:historyNote "Migration: Retained; no migration."@en .
 
 kee:ScientificClaim
     a rdfs:Class ;
     rdfs:label "Scientific Claim"@en ;
     skos:definition "Attach profile-defined confidence, evidence strength, and replication assessment to a scientific claim as dimensions independent of publication lifecycle."@en ;
     rdfs:isDefinedBy <https://w3id.org/kee> ;
-    skos:scopeNote "Scientific Claim Profile (Accepted / Normative, ADR-0035). Accepted / Normative profile surface"@en ;
+    skos:scopeNote "Scientific Claim Profile (Accepted / Normative). Accepted / Normative profile surface"@en ;
     skos:note "External relationship: Values are expected to come from ECO/SEPIO/GRADE or a declared domain vocabulary; the slots are open IRI/literal carriers."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0015 shape adoption). Migration: Retained; no migration. kee:evidenceStrength is additionally registered as legacy-readable (addendum 01)."@en .
+    skos:historyNote "Migration: Retained; no migration. kee:evidenceStrength is additionally registered as legacy-readable."@en .
 
 kee:SoftwareEngineeringArtifact
     a rdfs:Class ;
     rdfs:label "Software Engineering Artifact"@en ;
     skos:definition "Identify a governed software-engineering knowledge artifact and its lifecycle state."@en ;
     rdfs:isDefinedBy <https://w3id.org/kee> ;
-    skos:scopeNote "Software Engineering Profile (Accepted / Normative, ADR-0032). Accepted / Normative profile surface"@en ;
+    skos:scopeNote "Software Engineering Profile (Accepted / Normative). Accepted / Normative profile surface"@en ;
     skos:note "External relationship: Relationship semantics are delegated to OSLC/Trace Context/purl/SPDX/CycloneDX/OSV/SWHID (§16.1)."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0016 shape adoption). Migration: Retained; no migration."@en .
+    skos:historyNote "Migration: Retained; no migration."@en .
 
 kee:artifactType
     a rdf:Property ;
@@ -203,7 +202,7 @@ kee:artifactType
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "core interoperability contract. legacy-readable"@en ;
     skos:note "External relationship: canonical surface: dcterms:type"@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (shape-adopting ADR not separately recorded). Deprecated: v0.8.0 (registry-registered). Migration: Registry: exact-replacement, rewrite_safe=true; see docs/migration/KEE-v0.8.1-rc1-semantic-migration-registry.tsv and docs/specs/KEE-Specification-v0.8.1-rc1.md §8.2."@en ;
+    skos:historyNote "Deprecated: registered legacy. Migration: Registry: exact-replacement, rewrite_safe=true (§8.2)."@en ;
     owl:deprecated true .
 
 kee:assertionContent
@@ -211,18 +210,18 @@ kee:assertionContent
     rdfs:label "Assertion Content"@en ;
     skos:definition "Reference to or embedded representation of assertion content. Content identity is not automatically the same as metadata-record, managed-unit, occurrence, or container identity."@en ;
     rdfs:isDefinedBy <https://w3id.org/kee> ;
-    skos:scopeNote "Assertion Metadata Profile (Accepted / Normative, ADR-0040). Accepted / Normative profile surface"@en ;
+    skos:scopeNote "Assertion Metadata Profile (Accepted / Normative). Accepted / Normative profile surface"@en ;
     skos:note "External relationship: Managed-unit kinds map to RDF/nanopublication/record representation prior art through the assertion-unit-kind scheme (§10)."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0036 shape adoption). Migration: Retained; no migration. Legacy kee:assertionTime is registry-registered (§14.1)."@en .
+    skos:historyNote "Migration: Retained; no migration. Legacy kee:assertionTime is registry-registered (§14.1)."@en .
 
 kee:assertionTime
     a rdf:Property ;
     rdfs:label "Assertion Time"@en ;
     skos:definition "Identify the managed assertion unit a metadata record governs, and keep managed-unit, content, record, occurrence, and container identities distinct."@en ;
     rdfs:isDefinedBy <https://w3id.org/kee> ;
-    skos:scopeNote "Assertion Metadata Profile (Accepted / Normative, ADR-0040). legacy-readable"@en ;
+    skos:scopeNote "Assertion Metadata Profile (Accepted / Normative). legacy-readable"@en ;
     skos:note "External relationship: canonical surface: PROV activity timing / prov:generatedAtTime / dcterms:valid / OWL-Time"@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0036 shape adoption). Deprecated: v0.8.0 (registry-registered). Migration: Registry: intentionally-unmapped-semantic-split, rewrite_safe=false; see docs/migration/KEE-v0.8.1-rc1-semantic-migration-registry.tsv and docs/specs/KEE-Specification-v0.8.1-rc1.md §14.1."@en ;
+    skos:historyNote "Deprecated: registered legacy. Migration: Registry: intentionally-unmapped-semantic-split, rewrite_safe=false (§14.1)."@en ;
     owl:deprecated true .
 
 kee:authority
@@ -232,7 +231,7 @@ kee:authority
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "artifact-specific profile; core is owner of record while that profile is Draft (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: Values map to profile SKOS schemes; the carrier itself has no external equivalent asserted."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (shape-adopting ADR not separately recorded). Migration: Retained; no migration. Generic lifecycle# values are compatibility-only (§9.2)."@en .
+    skos:historyNote "Migration: Retained; no migration. Generic lifecycle# values are compatibility-only (§9.2)."@en .
 
 kee:authorityEvidence
     a rdf:Property ;
@@ -241,7 +240,7 @@ kee:authorityEvidence
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "Governance Transition Profile (Draft / Non-Normative); core is owner of record (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: Composes prov:Activity, prov:qualifiedAssociation, prov:hadRole; no equivalence asserted."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (shape-adopting ADR not separately recorded). Migration: Retained; no migration. Wrapper optionality is governed by §8.4."@en .
+    skos:historyNote "Migration: Retained; no migration. Wrapper optionality is governed by §8.4."@en .
 
 kee:authorityScope
     a rdf:Property ;
@@ -250,7 +249,7 @@ kee:authorityScope
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "Authority and Delegation Profile (Draft / Non-Normative); core is owner of record (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: Composes prov:actedOnBehalfOf (Agent-to-Agent), prov:qualifiedAssociation, prov:invalidatedAtTime; XACML/ODRL remain the policy-side prior art."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0046 shape adoption). Migration: Retained; no migration."@en .
+    skos:historyNote "Migration: Retained; no migration."@en .
 
 kee:candidateResult
     a rdf:Property ;
@@ -259,7 +258,7 @@ kee:candidateResult
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "AI-Grounded Retrieval Profile (Draft / Non-Normative); core is owner of record (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: Composes prov:wasGeneratedBy/prov:generatedAtTime for decision provenance; categories are open IRI slots."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0047 shape adoption). Migration: Retained; no migration."@en .
+    skos:historyNote "Migration: Retained; no migration."@en .
 
 kee:causeType
     a rdf:Property ;
@@ -268,7 +267,7 @@ kee:causeType
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "Contradiction Records Profile (Draft / Non-Normative); core is owner of record (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: Composes oa:Annotation/oa:hasTarget/oa:hasBody via dcterms:hasPart; kee:causeType remains an open IRI slot."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0043 shape adoption). Migration: Retained; no migration. Flat kee:evidenceForSide is registry-registered legacy (§13.1)."@en .
+    skos:historyNote "Migration: Retained; no migration. Flat kee:evidenceForSide is registry-registered legacy (§13.1)."@en .
 
 kee:citationGranularity
     a rdf:Property ;
@@ -277,7 +276,7 @@ kee:citationGranularity
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "AI-Grounded Retrieval Profile (Draft / Non-Normative); core is owner of record (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: Composes prov:wasGeneratedBy/prov:generatedAtTime for decision provenance; categories are open IRI slots."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0047 shape adoption). Migration: Retained; no migration."@en .
+    skos:historyNote "Migration: Retained; no migration."@en .
 
 kee:claimant
     a rdf:Property ;
@@ -286,25 +285,25 @@ kee:claimant
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "Authority and Delegation Profile (Draft / Non-Normative); core is owner of record (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: Composes prov:actedOnBehalfOf (Agent-to-Agent), prov:qualifiedAssociation, prov:invalidatedAtTime; XACML/ODRL remain the policy-side prior art."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0046 shape adoption). Migration: Retained; no migration."@en .
+    skos:historyNote "Migration: Retained; no migration."@en .
 
 kee:confidenceStatus
     a rdf:Property ;
     rdfs:label "Confidence Status"@en ;
     skos:definition "Confidence status is optional and profile-defined."@en ;
     rdfs:isDefinedBy <https://w3id.org/kee> ;
-    skos:scopeNote "Scientific Claim Profile (Accepted / Normative, ADR-0035). Accepted / Normative profile surface"@en ;
+    skos:scopeNote "Scientific Claim Profile (Accepted / Normative). Accepted / Normative profile surface"@en ;
     skos:note "External relationship: Values are expected to come from ECO/SEPIO/GRADE or a declared domain vocabulary; the slots are open IRI/literal carriers."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (shape-adopting ADR not separately recorded). Migration: Retained; no migration. kee:evidenceStrength is additionally registered as legacy-readable (addendum 01)."@en .
+    skos:historyNote "Migration: Retained; no migration. kee:evidenceStrength is additionally registered as legacy-readable."@en .
 
 kee:confidenceValue
     a rdf:Property ;
     rdfs:label "Confidence Value"@en ;
     skos:definition "Numeric confidence is optional and profile-defined. Profiles must define scale and interpretation before using it normatively."@en ;
     rdfs:isDefinedBy <https://w3id.org/kee> ;
-    skos:scopeNote "Scientific Claim Profile (Accepted / Normative, ADR-0035). Accepted / Normative profile surface"@en ;
+    skos:scopeNote "Scientific Claim Profile (Accepted / Normative). Accepted / Normative profile surface"@en ;
     skos:note "External relationship: Values are expected to come from ECO/SEPIO/GRADE or a declared domain vocabulary; the slots are open IRI/literal carriers."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (shape-adopting ADR not separately recorded). Migration: Retained; no migration. kee:evidenceStrength is additionally registered as legacy-readable (addendum 01)."@en .
+    skos:historyNote "Migration: Retained; no migration. kee:evidenceStrength is additionally registered as legacy-readable."@en .
 
 kee:conflictingArtifact
     a rdf:Property ;
@@ -313,7 +312,7 @@ kee:conflictingArtifact
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "Contradiction Records Profile (Draft / Non-Normative); core is owner of record (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: Composes oa:Annotation/oa:hasTarget/oa:hasBody via dcterms:hasPart; kee:causeType remains an open IRI slot."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0043 shape adoption). Migration: Retained; no migration. Flat kee:evidenceForSide is registry-registered legacy (§13.1)."@en .
+    skos:historyNote "Migration: Retained; no migration. Flat kee:evidenceForSide is registry-registered legacy (§13.1)."@en .
 
 kee:containerIdentifier
     a rdf:Property ;
@@ -322,7 +321,7 @@ kee:containerIdentifier
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "Artifact Identity and Granularity Profile (Draft / Non-Normative); core is owner of record (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: Composes dcterms:identifier and PROV entity relations; no equivalence asserted."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0044 shape adoption). Migration: Retained; no migration."@en .
+    skos:historyNote "Migration: Retained; no migration."@en .
 
 kee:contentIdentifier
     a rdf:Property ;
@@ -331,7 +330,7 @@ kee:contentIdentifier
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "Artifact Identity and Granularity Profile (Draft / Non-Normative); core is owner of record (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: Composes dcterms:identifier and PROV entity relations; no equivalence asserted."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0044 shape adoption). Migration: Retained; no migration."@en .
+    skos:historyNote "Migration: Retained; no migration."@en .
 
 kee:contestedScope
     a rdf:Property ;
@@ -340,7 +339,7 @@ kee:contestedScope
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "Authority and Delegation Profile (Draft / Non-Normative); core is owner of record (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: Composes prov:actedOnBehalfOf (Agent-to-Agent), prov:qualifiedAssociation, prov:invalidatedAtTime; XACML/ODRL remain the policy-side prior art."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0046 shape adoption). Migration: Retained; no migration."@en .
+    skos:historyNote "Migration: Retained; no migration."@en .
 
 kee:context
     a rdf:Property ;
@@ -349,7 +348,7 @@ kee:context
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "artifact-specific profile; core is owner of record while that profile is Draft (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: Values map to profile SKOS schemes; the carrier itself has no external equivalent asserted."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (shape-adopting ADR not separately recorded). Migration: Retained; no migration. Generic lifecycle# values are compatibility-only (§9.2)."@en .
+    skos:historyNote "Migration: Retained; no migration. Generic lifecycle# values are compatibility-only (§9.2)."@en .
 
 kee:contradicts
     a rdf:Property ;
@@ -358,7 +357,7 @@ kee:contradicts
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "Contradiction Records Profile (Draft / Non-Normative); core is owner of record (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: Composes oa:Annotation/oa:hasTarget/oa:hasBody via dcterms:hasPart; kee:causeType remains an open IRI slot."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0036 shape adoption). Migration: Retained; no migration. Flat kee:evidenceForSide is registry-registered legacy (§13.1)."@en .
+    skos:historyNote "Migration: Retained; no migration. Flat kee:evidenceForSide is registry-registered legacy (§13.1)."@en .
 
 kee:crossReference
     a rdf:Property ;
@@ -367,16 +366,16 @@ kee:crossReference
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "Historical and Bitemporal Querying Profile (Draft / Non-Normative); core is owner of record (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: dcterms:temporal carries the requested instant/interval; time:Instant/time:Interval carry coverage; the dimension and pattern classifiers are open IRI slots with no external code list adopted."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0048 shape adoption). Migration: Retained; no migration. Legacy kee:queryInstant and kee:historyCompleteness are registry-registered (§14.2, §14.3)."@en .
+    skos:historyNote "Migration: Retained; no migration. Legacy kee:queryInstant and kee:historyCompleteness are registry-registered (§14.2, §14.3)."@en .
 
 kee:eligibilityBasis
     a rdf:Property ;
     rdfs:label "Eligibility Basis"@en ;
-    skos:definition "Names the upstream metadata or policy facts claimed to have been consulted. RC8 procedural tests verify that the basis actually affects decision behavior."@en ;
+    skos:definition "Names the upstream metadata or policy facts claimed to have been consulted. procedural tests verify that the basis actually affects decision behavior."@en ;
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "AI-Grounded Retrieval Profile (Draft / Non-Normative); core is owner of record (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: Composes prov:wasGeneratedBy/prov:generatedAtTime for decision provenance; categories are open IRI slots."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0047 shape adoption). Migration: Retained; no migration."@en .
+    skos:historyNote "Migration: Retained; no migration."@en .
 
 kee:eligibilityCategory
     a rdf:Property ;
@@ -385,7 +384,7 @@ kee:eligibilityCategory
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "AI-Grounded Retrieval Profile (Draft / Non-Normative); core is owner of record (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: Composes prov:wasGeneratedBy/prov:generatedAtTime for decision provenance; categories are open IRI slots."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0047 shape adoption). Migration: Retained; no migration."@en .
+    skos:historyNote "Migration: Retained; no migration."@en .
 
 kee:evidenceForSide
     a rdf:Property ;
@@ -394,7 +393,7 @@ kee:evidenceForSide
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "Contradiction Records Profile (Draft / Non-Normative); core is owner of record (§6.4). legacy-readable"@en ;
     skos:note "External relationship: canonical surface: dcterms:hasPart Web Annotation side/evidence nodes"@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0043 shape adoption). Deprecated: v0.8.0 (registry-registered). Migration: Registry: intentionally-unmapped-structural-change, rewrite_safe=false; see docs/migration/KEE-v0.8.1-rc1-semantic-migration-registry.tsv and docs/specs/KEE-Specification-v0.8.1-rc1.md §13.1."@en ;
+    skos:historyNote "Deprecated: registered legacy. Migration: Registry: intentionally-unmapped-structural-change, rewrite_safe=false (§13.1)."@en ;
     owl:deprecated true .
 
 kee:evidenceStrength
@@ -402,9 +401,9 @@ kee:evidenceStrength
     rdfs:label "Evidence Strength"@en ;
     skos:definition "Evidence strength is optional and distinct from confidence. This open compatibility/convenience slot may carry an IRI from SEPIO, ECO, GRADE, another domain evidence vocabulary, or a declared profile vocabulary; KEE defi"@en ;
     rdfs:isDefinedBy <https://w3id.org/kee> ;
-    skos:scopeNote "Scientific Claim Profile (Accepted / Normative, ADR-0035). legacy-readable"@en ;
+    skos:scopeNote "Scientific Claim Profile (Accepted / Normative). legacy-readable"@en ;
     skos:note "External relationship: canonical surface: profile-declared evidence model (ECO/SEPIO/GRADE) or open IRI slot"@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0015 shape adoption). Deprecated: v0.8.0 (registry-registered). Migration: Registry: deprecated-without-direct-replacement, rewrite_safe=false (addendum 01); see docs/migration/KEE-v0.8.1-rc1-semantic-migration-registry.tsv and docs/specs/KEE-Specification-v0.8.1-rc1.md §11."@en ;
+    skos:historyNote "Deprecated: registered legacy. Migration: Registry: deprecated-without-direct-replacement, rewrite_safe=false (§11)."@en ;
     owl:deprecated true .
 
 kee:excludedFromCurrentAnswerGrounding
@@ -414,7 +413,7 @@ kee:excludedFromCurrentAnswerGrounding
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "AI-Grounded Retrieval Profile (Draft / Non-Normative); core is owner of record (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: Composes prov:wasGeneratedBy/prov:generatedAtTime for decision provenance; categories are open IRI slots."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0047 shape adoption). Migration: Retained; no migration."@en .
+    skos:historyNote "Migration: Retained; no migration."@en .
 
 kee:governedArtifact
     a rdf:Property ;
@@ -423,7 +422,7 @@ kee:governedArtifact
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "Governance Transition Profile (Draft / Non-Normative); core is owner of record (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: Composes prov:Activity, prov:qualifiedAssociation, prov:hadRole; no equivalence asserted."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (shape-adopting ADR not separately recorded). Migration: Retained; no migration. Wrapper optionality is governed by §8.4."@en .
+    skos:historyNote "Migration: Retained; no migration. Wrapper optionality is governed by §8.4."@en .
 
 kee:grantedTo
     a rdf:Property ;
@@ -432,7 +431,7 @@ kee:grantedTo
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "Authority and Delegation Profile (Draft / Non-Normative); core is owner of record (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: Composes prov:actedOnBehalfOf (Agent-to-Agent), prov:qualifiedAssociation, prov:invalidatedAtTime; XACML/ODRL remain the policy-side prior art."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0046 shape adoption). Migration: Retained; no migration."@en .
+    skos:historyNote "Migration: Retained; no migration."@en .
 
 kee:historyCompleteness
     a rdf:Property ;
@@ -441,7 +440,7 @@ kee:historyCompleteness
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "Historical and Bitemporal Querying Profile (Draft / Non-Normative); core is owner of record (§6.4). legacy-readable"@en ;
     skos:note "External relationship: canonical surface: coverage/source metadata (dcterms:temporal + OWL-Time)"@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0048 shape adoption). Deprecated: v0.8.0 (registry-registered). Migration: Registry: deprecated-without-direct-replacement, rewrite_safe=false; see docs/migration/KEE-v0.8.1-rc1-semantic-migration-registry.tsv and docs/specs/KEE-Specification-v0.8.1-rc1.md §14.3."@en ;
+    skos:historyNote "Deprecated: registered legacy. Migration: Registry: deprecated-without-direct-replacement, rewrite_safe=false (§14.3)."@en ;
     owl:deprecated true .
 
 kee:humanReviewRequired
@@ -451,16 +450,16 @@ kee:humanReviewRequired
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "AI-Grounded Retrieval Profile (Draft / Non-Normative); core is owner of record (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: Composes prov:wasGeneratedBy/prov:generatedAtTime for decision provenance; categories are open IRI slots."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0047 shape adoption). Migration: Retained; no migration."@en .
+    skos:historyNote "Migration: Retained; no migration."@en .
 
 kee:knownContradiction
     a rdf:Property ;
     rdfs:label "Known Contradiction"@en ;
-    skos:definition "Supplied contradiction links remain structurally valid here, but completeness of carry-forward is a procedural RC7 conformance obligation and is tested separately."@en ;
+    skos:definition "Supplied contradiction links remain structurally valid here, but completeness of carry-forward is a procedural conformance obligation and is tested separately."@en ;
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "Contradiction Records Profile (Draft / Non-Normative); core is owner of record (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: Composes oa:Annotation/oa:hasTarget/oa:hasBody via dcterms:hasPart; kee:causeType remains an open IRI slot."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0046 shape adoption). Migration: Retained; no migration. Flat kee:evidenceForSide is registry-registered legacy (§13.1)."@en .
+    skos:historyNote "Migration: Retained; no migration. Flat kee:evidenceForSide is registry-registered legacy (§13.1)."@en .
 
 kee:lifecycleState
     a rdf:Property ;
@@ -469,7 +468,7 @@ kee:lifecycleState
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "artifact-specific profile; core is owner of record while that profile is Draft (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: Values map to profile SKOS schemes; the carrier itself has no external equivalent asserted."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (shape-adopting ADR not separately recorded). Migration: Retained; no migration. Generic lifecycle# values are compatibility-only (§9.2)."@en .
+    skos:historyNote "Migration: Retained; no migration. Generic lifecycle# values are compatibility-only (§9.2)."@en .
 
 kee:lifecycleStatusVocabulary
     a rdf:Property ;
@@ -478,44 +477,44 @@ kee:lifecycleStatusVocabulary
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "Governance Transition Profile (Draft / Non-Normative); core is owner of record (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: Composes prov:Activity, prov:qualifiedAssociation, prov:hadRole; no equivalence asserted."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (shape-adopting ADR not separately recorded). Migration: Retained; no migration. Wrapper optionality is governed by §8.4."@en .
+    skos:historyNote "Migration: Retained; no migration. Wrapper optionality is governed by §8.4."@en .
 
 kee:managedAssertionUnit
     a rdf:Property ;
     rdfs:label "Managed Assertion Unit"@en ;
     skos:definition "The metadata record must identify the managed assertion unit it governs. This does not assert that the managed unit is identical to assertion content/proposition, assertion occurrence, metadata record, or containing repr"@en ;
     rdfs:isDefinedBy <https://w3id.org/kee> ;
-    skos:scopeNote "Assertion Metadata Profile (Accepted / Normative, ADR-0040). Accepted / Normative profile surface"@en ;
+    skos:scopeNote "Assertion Metadata Profile (Accepted / Normative). Accepted / Normative profile surface"@en ;
     skos:note "External relationship: Managed-unit kinds map to RDF/nanopublication/record representation prior art through the assertion-unit-kind scheme (§10)."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0036 shape adoption). Migration: Retained; no migration. Legacy kee:assertionTime is registry-registered (§14.1)."@en .
+    skos:historyNote "Migration: Retained; no migration. Legacy kee:assertionTime is registry-registered (§14.1)."@en .
 
 kee:managedAssertionUnitKind
     a rdf:Property ;
     rdfs:label "Managed Assertion Unit Kind"@en ;
     skos:definition "Managed-unit kind is optional and open. Implementations are recommended to use a term from the shared assertion-unit-kind scheme where applicable or another declared profile/domain IRI for a representation pattern the sc"@en ;
     rdfs:isDefinedBy <https://w3id.org/kee> ;
-    skos:scopeNote "Assertion Metadata Profile (Accepted / Normative, ADR-0040). Accepted / Normative profile surface"@en ;
+    skos:scopeNote "Assertion Metadata Profile (Accepted / Normative). Accepted / Normative profile surface"@en ;
     skos:note "External relationship: Managed-unit kinds map to RDF/nanopublication/record representation prior art through the assertion-unit-kind scheme (§10)."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0036 shape adoption). Migration: Retained; no migration. Legacy kee:assertionTime is registry-registered (§14.1)."@en .
+    skos:historyNote "Migration: Retained; no migration. Legacy kee:assertionTime is registry-registered (§14.1)."@en .
 
 kee:managedUnit
     a rdf:Property ;
     rdfs:label "Managed Unit"@en ;
     skos:definition "Identify the managed assertion unit a metadata record governs, and keep managed-unit, content, record, occurrence, and container identities distinct."@en ;
     rdfs:isDefinedBy <https://w3id.org/kee> ;
-    skos:scopeNote "Assertion Metadata Profile (Accepted / Normative, ADR-0040). orphan; used in one RO-Crate example and by no shape, profile, or specification section"@en ;
+    skos:scopeNote "Assertion Metadata Profile (Accepted / Normative). orphan; used in one RO-Crate example and by no shape, profile, or specification section"@en ;
     skos:note "External relationship: Managed-unit kinds map to RDF/nanopublication/record representation prior art through the assertion-unit-kind scheme (§10)."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (shape-adopting ADR not separately recorded). Deprecated: v0.8.1-amendment-01 (ADR-0061). Migration: No registry row exists; retirement requires a separately versioned decision (§17.3). Retired by ADR-0061: exact-replacement to https://w3id.org/kee#managedAssertionUnit; read policy dual-read-registered, rewrite_safe=true. Disposition: retired (exact-replacement) by ADR-0061."@en ;
+    skos:historyNote "Deprecated: registered legacy. Migration: No registry row exists; retirement requires a separately versioned decision (§17.3). Retired by a governed decision: exact-replacement to https://w3id.org/kee#managedAssertionUnit; read policy dual-read-registered, rewrite_safe=true. Disposition: retired (exact-replacement) by a governed decision."@en ;
     owl:deprecated true .
 
 kee:mappingRelationship
     a rdf:Property ;
     rdfs:label "Mapping Relationship"@en ;
-    skos:definition "RC10 new writes must preserve whether the mapping is exact, close, broad, narrow, or related by using the corresponding standard SKOS mapping-property IRI."@en ;
+    skos:definition "New writes must preserve whether the mapping is exact, close, broad, narrow, or related by using the corresponding standard SKOS mapping-property IRI."@en ;
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "Lifecycle Crosswalk Profile (Draft / Non-Normative); core is owner of record (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: kee:mappingRelationship values are the five SKOS mapping properties; no separate KEE relation code list exists (§16.5)."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0041 shape adoption). Migration: Retained; no migration."@en .
+    skos:historyNote "Migration: Retained; no migration."@en .
 
 kee:mapsToArtifact
     a rdf:Property ;
@@ -524,7 +523,7 @@ kee:mapsToArtifact
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "AI-Grounded Retrieval Profile (Draft / Non-Normative); core is owner of record (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: Composes prov:wasGeneratedBy/prov:generatedAtTime for decision provenance; categories are open IRI slots."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0044 shape adoption). Migration: Retained; no migration."@en .
+    skos:historyNote "Migration: Retained; no migration."@en .
 
 kee:mapsToContentHash
     a rdf:Property ;
@@ -533,7 +532,7 @@ kee:mapsToContentHash
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "AI-Grounded Retrieval Profile (Draft / Non-Normative); core is owner of record (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: Composes prov:wasGeneratedBy/prov:generatedAtTime for decision provenance; categories are open IRI slots."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0044 shape adoption). Migration: Retained; no migration."@en .
+    skos:historyNote "Migration: Retained; no migration."@en .
 
 kee:newLifecycleState
     a rdf:Property ;
@@ -542,7 +541,7 @@ kee:newLifecycleState
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "Governance Transition Profile (Draft / Non-Normative); core is owner of record (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: Composes prov:Activity, prov:qualifiedAssociation, prov:hadRole; no equivalence asserted."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (shape-adopting ADR not separately recorded). Migration: Retained; no migration. Wrapper optionality is governed by §8.4."@en .
+    skos:historyNote "Migration: Retained; no migration. Wrapper optionality is governed by §8.4."@en .
 
 kee:previousLifecycleState
     a rdf:Property ;
@@ -551,7 +550,7 @@ kee:previousLifecycleState
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "Governance Transition Profile (Draft / Non-Normative); core is owner of record (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: Composes prov:Activity, prov:qualifiedAssociation, prov:hadRole; no equivalence asserted."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (shape-adopting ADR not separately recorded). Migration: Retained; no migration. Wrapper optionality is governed by §8.4."@en .
+    skos:historyNote "Migration: Retained; no migration. Wrapper optionality is governed by §8.4."@en .
 
 kee:profileConformance
     a rdf:Property ;
@@ -560,7 +559,7 @@ kee:profileConformance
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "core interoperability contract. legacy-readable"@en ;
     skos:note "External relationship: canonical surface: dcterms:conformsTo"@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (shape-adopting ADR not separately recorded). Deprecated: v0.8.0 (registry-registered). Migration: Registry: exact-replacement, rewrite_safe=true; see docs/migration/KEE-v0.8.1-rc1-semantic-migration-registry.tsv and docs/specs/KEE-Specification-v0.8.1-rc1.md §8.1."@en ;
+    skos:historyNote "Deprecated: registered legacy. Migration: Registry: exact-replacement, rewrite_safe=true (§8.1)."@en ;
     owl:deprecated true .
 
 kee:queryInstant
@@ -570,7 +569,7 @@ kee:queryInstant
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "Historical and Bitemporal Querying Profile (Draft / Non-Normative); core is owner of record (§6.4). legacy-readable"@en ;
     skos:note "External relationship: canonical surface: dcterms:temporal + kee:queryTimeDimension + kee:queryPattern"@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0048 shape adoption). Deprecated: v0.8.0 (registry-registered). Migration: Registry: intentionally-unmapped-semantic-split, rewrite_safe=false; see docs/migration/KEE-v0.8.1-rc1-semantic-migration-registry.tsv and docs/specs/KEE-Specification-v0.8.1-rc1.md §14.2."@en ;
+    skos:historyNote "Deprecated: registered legacy. Migration: Registry: intentionally-unmapped-semantic-split, rewrite_safe=false (§14.2)."@en ;
     owl:deprecated true .
 
 kee:queryPattern
@@ -580,7 +579,7 @@ kee:queryPattern
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "Historical and Bitemporal Querying Profile (Draft / Non-Normative); core is owner of record (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: dcterms:temporal carries the requested instant/interval; time:Instant/time:Interval carry coverage; the dimension and pattern classifiers are open IRI slots with no external code list adopted."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0048 shape adoption). Migration: Retained; no migration. Legacy kee:queryInstant and kee:historyCompleteness are registry-registered (§14.2, §14.3)."@en .
+    skos:historyNote "Migration: Retained; no migration. Legacy kee:queryInstant and kee:historyCompleteness are registry-registered (§14.2, §14.3)."@en .
 
 kee:queryTimeDimension
     a rdf:Property ;
@@ -589,7 +588,7 @@ kee:queryTimeDimension
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "Historical and Bitemporal Querying Profile (Draft / Non-Normative); core is owner of record (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: dcterms:temporal carries the requested instant/interval; time:Instant/time:Interval carry coverage; the dimension and pattern classifiers are open IRI slots with no external code list adopted."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0048 shape adoption). Migration: Retained; no migration. Legacy kee:queryInstant and kee:historyCompleteness are registry-registered (§14.2, §14.3)."@en .
+    skos:historyNote "Migration: Retained; no migration. Legacy kee:queryInstant and kee:historyCompleteness are registry-registered (§14.2, §14.3)."@en .
 
 kee:reasonCode
     a rdf:Property ;
@@ -598,7 +597,7 @@ kee:reasonCode
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "Promotion Profile (Draft / Non-Normative); core is owner of record (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: Scope ordering uses skos:broader/skos:narrower or another profile-declared partial order; no external equivalent for the discriminator was located."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0045 shape adoption). Migration: Retained; no migration. Prior-art ownership of the discriminator remains an open question (Phase 5 ledger)."@en .
+    skos:historyNote "Migration: Retained; no migration. Prior-art ownership of the discriminator remains an open question (Phase 5 ledger)."@en .
 
 kee:reconstructedArtifact
     a rdf:Property ;
@@ -607,16 +606,16 @@ kee:reconstructedArtifact
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "Historical and Bitemporal Querying Profile (Draft / Non-Normative); core is owner of record (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: dcterms:temporal carries the requested instant/interval; time:Instant/time:Interval carry coverage; the dimension and pattern classifiers are open IRI slots with no external code list adopted."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0048 shape adoption). Migration: Retained; no migration. Legacy kee:queryInstant and kee:historyCompleteness are registry-registered (§14.2, §14.3)."@en .
+    skos:historyNote "Migration: Retained; no migration. Legacy kee:queryInstant and kee:historyCompleteness are registry-registered (§14.2, §14.3)."@en .
 
 kee:replicationStatus
     a rdf:Property ;
     rdfs:label "Replication Status"@en ;
     skos:definition "Replication status is optional and profile-defined, and is deliberately independent of kee:lifecycleState. A profile needing interoperable replication semantics should also identify the underlying replication attempt/res"@en ;
     rdfs:isDefinedBy <https://w3id.org/kee> ;
-    skos:scopeNote "Scientific Claim Profile (Accepted / Normative, ADR-0035). Accepted / Normative profile surface"@en ;
+    skos:scopeNote "Scientific Claim Profile (Accepted / Normative). Accepted / Normative profile surface"@en ;
     skos:note "External relationship: Values are expected to come from ECO/SEPIO/GRADE or a declared domain vocabulary; the slots are open IRI/literal carriers."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0015 shape adoption). Migration: Retained; no migration. kee:evidenceStrength is additionally registered as legacy-readable (addendum 01)."@en .
+    skos:historyNote "Migration: Retained; no migration. kee:evidenceStrength is additionally registered as legacy-readable."@en .
 
 kee:resolutionOutcome
     a rdf:Property ;
@@ -625,7 +624,7 @@ kee:resolutionOutcome
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "Contradiction Records Profile (Draft / Non-Normative); core is owner of record (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: Composes oa:Annotation/oa:hasTarget/oa:hasBody via dcterms:hasPart; kee:causeType remains an open IRI slot."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0043 shape adoption). Migration: Retained; no migration. Flat kee:evidenceForSide is registry-registered legacy (§13.1)."@en .
+    skos:historyNote "Migration: Retained; no migration. Flat kee:evidenceForSide is registry-registered legacy (§13.1)."@en .
 
 kee:retrievedArtifact
     a rdf:Property ;
@@ -634,7 +633,7 @@ kee:retrievedArtifact
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "AI-Grounded Retrieval Profile (Draft / Non-Normative); core is owner of record (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: Composes prov:wasGeneratedBy/prov:generatedAtTime for decision provenance; categories are open IRI slots."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0047 shape adoption). Migration: Retained; no migration."@en .
+    skos:historyNote "Migration: Retained; no migration."@en .
 
 kee:reviewDue
     a rdf:Property ;
@@ -643,7 +642,7 @@ kee:reviewDue
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "Organizational Memory Profile (Draft); core is owner of record (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: Composes PROV qualified attribution for stewardship; review scheduling has no adopted external term."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (shape-adopting ADR not separately recorded). Migration: Retained; no migration."@en .
+    skos:historyNote "Migration: Retained; no migration."@en .
 
 kee:roleOrCapacity
     a rdf:Property ;
@@ -652,7 +651,7 @@ kee:roleOrCapacity
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "Governance Transition Profile (Draft / Non-Normative); core is owner of record (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: Composes prov:Activity, prov:qualifiedAssociation, prov:hadRole; no equivalence asserted."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0042 shape adoption). Migration: Retained; no migration. Wrapper optionality is governed by §8.4."@en .
+    skos:historyNote "Migration: Retained; no migration. Wrapper optionality is governed by §8.4."@en .
 
 kee:scope
     a rdf:Property ;
@@ -661,7 +660,7 @@ kee:scope
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "artifact-specific profile; core is owner of record while that profile is Draft (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: Values map to profile SKOS schemes; the carrier itself has no external equivalent asserted."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (shape-adopting ADR not separately recorded). Migration: Retained; no migration. Generic lifecycle# values are compatibility-only (§9.2)."@en .
+    skos:historyNote "Migration: Retained; no migration. Generic lifecycle# values are compatibility-only (§9.2)."@en .
 
 kee:sourceChunk
     a rdf:Property ;
@@ -670,7 +669,7 @@ kee:sourceChunk
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "AI-Grounded Retrieval Profile (Draft / Non-Normative); core is owner of record (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: Composes prov:wasGeneratedBy/prov:generatedAtTime for decision provenance; categories are open IRI slots."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0047 shape adoption). Migration: Retained; no migration."@en .
+    skos:historyNote "Migration: Retained; no migration."@en .
 
 kee:sourceScope
     a rdf:Property ;
@@ -679,7 +678,7 @@ kee:sourceScope
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "Promotion Profile (Draft / Non-Normative); core is owner of record (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: Scope ordering uses skos:broader/skos:narrower or another profile-declared partial order; no external equivalent for the discriminator was located."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0045 shape adoption). Migration: Retained; no migration. Prior-art ownership of the discriminator remains an open question (Phase 5 ledger)."@en .
+    skos:historyNote "Migration: Retained; no migration. Prior-art ownership of the discriminator remains an open question (Phase 5 ledger)."@en .
 
 kee:sourceTerm
     a rdf:Property ;
@@ -688,7 +687,7 @@ kee:sourceTerm
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "Lifecycle Crosswalk Profile (Draft / Non-Normative); core is owner of record (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: kee:mappingRelationship values are the five SKOS mapping properties; no separate KEE relation code list exists (§16.5)."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0041 shape adoption). Migration: Retained; no migration."@en .
+    skos:historyNote "Migration: Retained; no migration."@en .
 
 kee:sourceVocabulary
     a rdf:Property ;
@@ -697,7 +696,7 @@ kee:sourceVocabulary
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "Lifecycle Crosswalk Profile (Draft / Non-Normative); core is owner of record (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: kee:mappingRelationship values are the five SKOS mapping properties; no separate KEE relation code list exists (§16.5)."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0041 shape adoption). Migration: Retained; no migration."@en .
+    skos:historyNote "Migration: Retained; no migration."@en .
 
 kee:supersessionChainTarget
     a rdf:Property ;
@@ -706,7 +705,7 @@ kee:supersessionChainTarget
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "core interoperability contract. legacy-readable"@en ;
     skos:note "External relationship: canonical surface: derived replacement-chain terminal"@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0047 shape adoption). Deprecated: v0.8.0 (registry-registered). Migration: Registry: tooling-only-removed, rewrite_safe=false; see docs/migration/KEE-v0.8.1-rc1-semantic-migration-registry.tsv and docs/specs/KEE-Specification-v0.8.1-rc1.md §8.3."@en ;
+    skos:historyNote "Deprecated: registered legacy. Migration: Registry: tooling-only-removed, rewrite_safe=false (§8.3)."@en ;
     owl:deprecated true .
 
 kee:targetTerm
@@ -716,7 +715,7 @@ kee:targetTerm
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "Lifecycle Crosswalk Profile (Draft / Non-Normative); core is owner of record (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: kee:mappingRelationship values are the five SKOS mapping properties; no separate KEE relation code list exists (§16.5)."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0041 shape adoption). Migration: Retained; no migration."@en .
+    skos:historyNote "Migration: Retained; no migration."@en .
 
 kee:targetVocabulary
     a rdf:Property ;
@@ -725,7 +724,7 @@ kee:targetVocabulary
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "Lifecycle Crosswalk Profile (Draft / Non-Normative); core is owner of record (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: kee:mappingRelationship values are the five SKOS mapping properties; no separate KEE relation code list exists (§16.5)."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0041 shape adoption). Migration: Retained; no migration."@en .
+    skos:historyNote "Migration: Retained; no migration."@en .
 
 kee:unresolvedSince
     a rdf:Property ;
@@ -734,7 +733,7 @@ kee:unresolvedSince
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "Contradiction Records Profile (Draft / Non-Normative); core is owner of record (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: Composes oa:Annotation/oa:hasTarget/oa:hasBody via dcterms:hasPart; kee:causeType remains an open IRI slot."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0043 shape adoption). Migration: Retained; no migration. Flat kee:evidenceForSide is registry-registered legacy (§13.1)."@en .
+    skos:historyNote "Migration: Retained; no migration. Flat kee:evidenceForSide is registry-registered legacy (§13.1)."@en .
 
 kee:validFrom
     a rdf:Property ;
@@ -743,7 +742,7 @@ kee:validFrom
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "Authority and Delegation Profile (Draft / Non-Normative); core is owner of record (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: Composes prov:actedOnBehalfOf (Agent-to-Agent), prov:qualifiedAssociation, prov:invalidatedAtTime; XACML/ODRL remain the policy-side prior art."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0046 shape adoption). Migration: Retained; no migration."@en .
+    skos:historyNote "Migration: Retained; no migration."@en .
 
 kee:validUntil
     a rdf:Property ;
@@ -752,7 +751,7 @@ kee:validUntil
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "Authority and Delegation Profile (Draft / Non-Normative); core is owner of record (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: Composes prov:actedOnBehalfOf (Agent-to-Agent), prov:qualifiedAssociation, prov:invalidatedAtTime; XACML/ODRL remain the policy-side prior art."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0046 shape adoption). Migration: Retained; no migration."@en .
+    skos:historyNote "Migration: Retained; no migration."@en .
 
 kee:warningContent
     a rdf:Property ;
@@ -761,7 +760,7 @@ kee:warningContent
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "AI-Grounded Retrieval Profile (Draft / Non-Normative); core is owner of record (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: Composes prov:wasGeneratedBy/prov:generatedAtTime for decision provenance; categories are open IRI slots."@en ;
-    skos:historyNote "Introduced: v0.7.2 profile work (ADR-0047 shape adoption). Migration: Retained; no migration."@en .
+    skos:historyNote "Migration: Retained; no migration."@en .
 
 lifecycle:Accepted
     a skos:Concept ;
@@ -770,7 +769,7 @@ lifecycle:Accepted
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "legacy generic lifecycle namespace (compatibility-only, §9.2). legacy-readable"@en ;
     skos:note "External relationship: Profile-qualified mappings only; label similarity does not establish equivalence (§9.2)."@en ;
-    skos:historyNote "Introduced: v0.7.1-alpha/v0.7.2 vocabulary surface. Deprecated: v0.8.0-rc4 (KCHG-023). Migration: Registry: intentionally-unmapped-profile-aware, rewrite_safe=false."@en ;
+    skos:historyNote "Deprecated: registered legacy. Migration: Registry: intentionally-unmapped-profile-aware, rewrite_safe=false."@en ;
     owl:deprecated true .
 
 lifecycle:Active
@@ -780,7 +779,7 @@ lifecycle:Active
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "legacy generic lifecycle namespace (compatibility-only, §9.2). legacy-readable"@en ;
     skos:note "External relationship: Profile-qualified mappings only; label similarity does not establish equivalence (§9.2)."@en ;
-    skos:historyNote "Introduced: v0.7.1-alpha/v0.7.2 vocabulary surface. Deprecated: v0.8.0-rc4 (KCHG-023). Migration: Registry: intentionally-unmapped-profile-aware, rewrite_safe=false."@en ;
+    skos:historyNote "Deprecated: registered legacy. Migration: Registry: intentionally-unmapped-profile-aware, rewrite_safe=false."@en ;
     owl:deprecated true .
 
 lifecycle:Challenged
@@ -790,7 +789,7 @@ lifecycle:Challenged
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "legacy generic lifecycle namespace (compatibility-only, §9.2). legacy-readable"@en ;
     skos:note "External relationship: Profile-qualified mappings only; label similarity does not establish equivalence (§9.2)."@en ;
-    skos:historyNote "Introduced: v0.7.1-alpha/v0.7.2 vocabulary surface. Deprecated: v0.8.0-rc4 (KCHG-023). Migration: Registry: intentionally-unmapped-profile-aware, rewrite_safe=false."@en ;
+    skos:historyNote "Deprecated: registered legacy. Migration: Registry: intentionally-unmapped-profile-aware, rewrite_safe=false."@en ;
     owl:deprecated true .
 
 lifecycle:Deprecated
@@ -800,7 +799,7 @@ lifecycle:Deprecated
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "legacy generic lifecycle namespace (compatibility-only, §9.2). legacy-readable"@en ;
     skos:note "External relationship: Profile-qualified mappings only; label similarity does not establish equivalence (§9.2)."@en ;
-    skos:historyNote "Introduced: v0.7.1-alpha/v0.7.2 vocabulary surface. Deprecated: v0.8.0-rc4 (KCHG-023). Migration: Registry: intentionally-unmapped-profile-aware, rewrite_safe=false."@en ;
+    skos:historyNote "Deprecated: registered legacy. Migration: Registry: intentionally-unmapped-profile-aware, rewrite_safe=false."@en ;
     owl:deprecated true .
 
 lifecycle:Preferred
@@ -810,7 +809,7 @@ lifecycle:Preferred
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "legacy generic lifecycle namespace (compatibility-only, §9.2). legacy-readable"@en ;
     skos:note "External relationship: Profile-qualified mappings only; label similarity does not establish equivalence (§9.2)."@en ;
-    skos:historyNote "Introduced: v0.7.1-alpha/v0.7.2 vocabulary surface. Deprecated: v0.8.0-rc4 (KCHG-023). Migration: Registry: intentionally-unmapped-profile-aware, rewrite_safe=false."@en ;
+    skos:historyNote "Deprecated: registered legacy. Migration: Registry: intentionally-unmapped-profile-aware, rewrite_safe=false."@en ;
     owl:deprecated true .
 
 lifecycle:Published
@@ -820,7 +819,7 @@ lifecycle:Published
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "legacy generic lifecycle namespace (compatibility-only, §9.2). legacy-readable"@en ;
     skos:note "External relationship: Profile-qualified mappings only; label similarity does not establish equivalence (§9.2)."@en ;
-    skos:historyNote "Introduced: v0.7.1-alpha/v0.7.2 vocabulary surface. Deprecated: v0.8.0-rc4 (KCHG-023). Migration: Registry: intentionally-unmapped-profile-aware, rewrite_safe=false."@en ;
+    skos:historyNote "Deprecated: registered legacy. Migration: Registry: intentionally-unmapped-profile-aware, rewrite_safe=false."@en ;
     owl:deprecated true .
 
 lifecycle:Qualified
@@ -830,7 +829,7 @@ lifecycle:Qualified
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "legacy generic lifecycle namespace (compatibility-only, §9.2). legacy-readable"@en ;
     skos:note "External relationship: Profile-qualified mappings only; label similarity does not establish equivalence (§9.2)."@en ;
-    skos:historyNote "Introduced: v0.7.1-alpha/v0.7.2 vocabulary surface. Deprecated: v0.8.0-rc4 (KCHG-023). Migration: Registry: intentionally-unmapped-profile-aware, rewrite_safe=false."@en ;
+    skos:historyNote "Deprecated: registered legacy. Migration: Registry: intentionally-unmapped-profile-aware, rewrite_safe=false."@en ;
     owl:deprecated true .
 
 lifecycle:Stale
@@ -840,7 +839,7 @@ lifecycle:Stale
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "legacy generic lifecycle namespace (compatibility-only, §9.2). legacy-readable"@en ;
     skos:note "External relationship: Profile-qualified mappings only; label similarity does not establish equivalence (§9.2)."@en ;
-    skos:historyNote "Introduced: v0.7.1-alpha/v0.7.2 vocabulary surface. Deprecated: v0.8.0-rc4 (KCHG-023). Migration: Registry: intentionally-unmapped-profile-aware, rewrite_safe=false."@en ;
+    skos:historyNote "Deprecated: registered legacy. Migration: Registry: intentionally-unmapped-profile-aware, rewrite_safe=false."@en ;
     owl:deprecated true .
 
 lifecycle:Supported
@@ -850,7 +849,7 @@ lifecycle:Supported
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "legacy generic lifecycle namespace (compatibility-only, §9.2). legacy-readable"@en ;
     skos:note "External relationship: Profile-qualified mappings only; label similarity does not establish equivalence (§9.2)."@en ;
-    skos:historyNote "Introduced: v0.7.1-alpha/v0.7.2 vocabulary surface. Deprecated: v0.8.0-rc4 (KCHG-023). Migration: Registry: intentionally-unmapped-profile-aware, rewrite_safe=false."@en ;
+    skos:historyNote "Deprecated: registered legacy. Migration: Registry: intentionally-unmapped-profile-aware, rewrite_safe=false."@en ;
     owl:deprecated true .
 
 lifecycle:UnderReview
@@ -860,5 +859,5 @@ lifecycle:UnderReview
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "legacy generic lifecycle namespace (compatibility-only, §9.2). legacy-readable"@en ;
     skos:note "External relationship: Profile-qualified mappings only; label similarity does not establish equivalence (§9.2)."@en ;
-    skos:historyNote "Introduced: v0.7.1-alpha/v0.7.2 vocabulary surface. Deprecated: v0.8.0-rc4 (KCHG-023). Migration: Registry: intentionally-unmapped-profile-aware, rewrite_safe=false."@en ;
+    skos:historyNote "Deprecated: registered legacy. Migration: Registry: intentionally-unmapped-profile-aware, rewrite_safe=false."@en ;
     owl:deprecated true .

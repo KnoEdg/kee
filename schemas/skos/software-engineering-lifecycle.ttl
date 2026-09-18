@@ -3,7 +3,7 @@
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 
-selife:SoftwareEngineeringLifecycleScheme a skos:ConceptScheme ; skos:prefLabel "KEE Software Engineering Lifecycle Scheme" ; dcterms:identifier "kee-software-engineering-lifecycle-v0.8-rc4" ; dcterms:description "Canonical RC4 profile-specific lifecycle scheme for Software Engineering Profile state. RC4 changes namespace ownership only; later profile-specific lifecycle review may further separate dimensions." .
+selife:SoftwareEngineeringLifecycleScheme a skos:ConceptScheme ; skos:prefLabel "KEE Software Engineering Lifecycle Scheme" ; dcterms:identifier "kee-software-engineering-lifecycle-v0.9.2" ; dcterms:description "Canonical profile-specific lifecycle scheme for Software Engineering Profile state. This scheme fixes namespace ownership only; later profile-specific lifecycle review may further separate dimensions." .
 selife:Draft a skos:Concept ; skos:prefLabel "Draft" ; skos:definition "Artifact is being prepared." ; skos:exactMatch legacy:DraftEngineeringArtifact ; skos:inScheme selife:SoftwareEngineeringLifecycleScheme .
 selife:Proposed a skos:Concept ; skos:prefLabel "Proposed" ; skos:definition "Artifact is under consideration." ; skos:exactMatch legacy:ProposedEngineeringArtifact ; skos:inScheme selife:SoftwareEngineeringLifecycleScheme .
 selife:Active a skos:Concept ; skos:prefLabel "Active" ; skos:definition "Artifact is currently applicable." ; skos:exactMatch legacy:ActiveEngineeringArtifact ; skos:inScheme selife:SoftwareEngineeringLifecycleScheme .

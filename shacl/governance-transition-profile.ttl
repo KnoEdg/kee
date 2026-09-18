@@ -1,0 +1,246 @@
+@prefix kee: <https://w3id.org/kee#>.
+@prefix profile: <https://w3id.org/kee/profile#>.
+@prefix artifact: <https://w3id.org/kee/artifact#>.
+@prefix lifecycle: <https://w3id.org/kee/lifecycle#>.
+@prefix confidence: <https://w3id.org/kee/confidence#>.
+@prefix prov: <http://www.w3.org/ns/prov#>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix dcterms: <http://purl.org/dc/terms/>.
+@prefix sh: <http://www.w3.org/ns/shacl#>.
+@prefix skos: <http://www.w3.org/2004/02/skos/core#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+
+# KEE Governance Transition Profile SHACL Shapes
+# Status: Draft / Non-Normative
+# Shape-contract version: 0.9.2
+# Repository path: shacl/governance-transition-profile.ttl
+#
+# Semantic-surface rule: new writes use dcterms:conformsTo for
+# profile declarations; legacy kee:profileConformance remains accepted for
+# reads during the registered legacy compatibility window.
+#
+# This shape resolves the Governance Transition Profile Open
+# Question 2 ("which metadata categories become hard SHACL constraints").
+# It targets kee:GovernanceTransitionRecord, the record
+# resource that documents a lifecycle/status transition -- kept distinct
+# from the prov:Activity that performed the transition (referenced via
+# prov:wasGeneratedBy) and from the governed artifact itself, per the
+# profile's own Key Distinctions table and worked example.
+#
+# Severity tiers follow the profile document's own "Candidate Validation
+# Constraints" section, and mirror shacl/assertion-metadata-profile.ttl
+# and shacl/lifecycle-crosswalk-profile.ttl's tiering
+# pattern for shared categories (provenance, temporal anchor, scope,
+# context, confidence, rationale via skos:changeNote).
+#
+# kee:governedArtifact, kee:newLifecycleState, kee:previousLifecycleState,
+# kee:lifecycleStatusVocabulary, kee:authorityEvidence, and
+# kee:roleOrCapacity are new predicates introduced by this ADR -- they
+# compose the profile's own "Baseline Transition Metadata Categories"
+# table rather than introducing new primitives. "Review status" (the
+# transition record's own governance status, distinct from the previous/
+# new lifecycle terms it documents) reuses kee:lifecycleState, the same
+# predicate every sibling shape uses for artifact governance status, and
+# the same reuse already applied for the Lifecycle Crosswalk
+# Profile's own "review status" category. Delegation chains are out of
+# scope for this shape: the Authority and Delegation Profile
+# already composes prov:actedOnBehalfOf/prov:qualifiedDelegation
+# for that purpose, per this profile's Open Question 3 resolution.
+#
+# The shape composes prior-art vocabularies:
+# - PROV-O for provenance and the transition activity reference
+# - Dublin Core Terms for evidence, reference links, and profile conformance
+# - SKOS for rationale (skos:changeNote, reused from shacl/decision-profile.ttl)
+# - SHACL for validation
+
+kee:GovernanceTransitionProfileShape
+    a sh:NodeShape;
+    rdfs:label "KEE Governance Transition Profile Shape"@en;
+    rdfs:comment "Minimal SHACL shape for governance transition records binding lifecycle/status transitions to authority and review activity."@en;
+    sh:targetClass kee:GovernanceTransitionRecord;
+
+    sh:property [
+        sh:path kee:governedArtifact;
+        sh:name "governed artifact"@en;
+        sh:description "A transition record must identify the governed artifact or managed assertion unit whose lifecycle/status changed."@en;
+        sh:minCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "A governance transition record must have at least one kee:governedArtifact IRI."@en;
+    ];
+
+    sh:property [
+        sh:path kee:newLifecycleState;
+        sh:name "new lifecycle state"@en;
+        sh:description "A transition record must identify the resulting lifecycle/status term."@en;
+        sh:minCount 1;
+        sh:maxCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "A governance transition record must have exactly one kee:newLifecycleState IRI."@en;
+    ];
+
+    sh:property [
+        sh:path kee:lifecycleStatusVocabulary;
+        sh:name "lifecycle status vocabulary"@en;
+        sh:description "A transition record must identify the profile, source system, controlled vocabulary, or crosswalk context used to interpret the previous and new lifecycle/status terms."@en;
+        sh:minCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "A governance transition record must have at least one kee:lifecycleStatusVocabulary IRI."@en;
+    ];
+
+    sh:property [
+        sh:path kee:lifecycleState;
+        sh:name "review status"@en;
+        sh:description "A transition record must declare the review state of the transition record itself (the profile's 'Review status' category), distinct from the previous/new lifecycle terms it documents."@en;
+        sh:minCount 1;
+        sh:maxCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "A governance transition record must have exactly one kee:lifecycleState IRI."@en;
+    ];
+
+    sh:property [
+        sh:path [ sh:alternativePath ( dcterms:conformsTo kee:profileConformance ) ];
+        sh:name "profile conformance"@en;
+        sh:description "Governance transition records must identify the profile used to interpret the metadata using dcterms:conformsTo. Legacy kee:profileConformance remains accepted for registered legacy reads only."@en;
+        sh:minCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "A governance transition record must declare at least one dcterms:conformsTo IRI; legacy kee:profileConformance is accepted during the registered legacy compatibility window."@en;
+    ];
+
+    sh:property [
+        sh:path prov:wasGeneratedBy;
+        sh:name "transition activity"@en;
+        sh:description "A transition record must reference the transition event or activity that performed, recorded, reviewed, or approved the transition."@en;
+        sh:minCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "A governance transition record must have at least one prov:wasGeneratedBy IRI referencing the transition activity."@en;
+    ];
+
+    sh:property [
+        sh:path prov:wasAttributedTo;
+        sh:name "responsible agent"@en;
+        sh:description "A transition record must identify the agent associated with performing, approving, reviewing, or recording the transition."@en;
+        sh:minCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "A governance transition record must have at least one prov:wasAttributedTo IRI."@en;
+    ];
+
+    sh:property [
+        sh:path prov:generatedAtTime;
+        sh:name "temporal qualification"@en;
+        sh:description "A transition record must declare at least one temporal anchor for when the transition was recorded."@en;
+        sh:minCount 1;
+        sh:maxCount 1;
+        sh:datatype xsd:dateTime;
+        sh:message "A governance transition record must have exactly one prov:generatedAtTime value typed as xsd:dateTime."@en;
+    ];
+
+    sh:property [
+        sh:path kee:previousLifecycleState;
+        sh:name "previous lifecycle state"@en;
+        sh:description "A transition record should identify the prior lifecycle/status term when one exists; an initial-assignment transition (e.g. first creation) has none."@en;
+        sh:nodeKind sh:IRI;
+        sh:severity sh:Warning;
+        sh:message "If present, kee:previousLifecycleState should be an IRI."@en;
+    ];
+
+    sh:property [
+        sh:path kee:authorityEvidence;
+        sh:name "authority evidence"@en;
+        sh:description "A transition record should link to the delegation evidence, policy, charter, rule, workflow record, or governance basis cited for the transition."@en;
+        sh:nodeKind sh:IRI;
+        sh:severity sh:Warning;
+        sh:message "If present, kee:authorityEvidence should be an IRI."@en;
+    ];
+
+    sh:property [
+        sh:path skos:changeNote;
+        sh:name "review rationale"@en;
+        sh:description "A transition record should include review rationale, required in practice when the transition changes operational status, deprecates, supersedes, rejects, withdraws, archives, or promotes an artifact."@en;
+        sh:datatype rdf:langString;
+        sh:severity sh:Warning;
+        sh:message "A governance transition record should have at least one skos:changeNote language-tagged rationale string."@en;
+    ];
+
+    sh:property [
+        sh:path dcterms:source;
+        sh:name "source or affected evidence"@en;
+        sh:description "A transition record should link to evidence considered by the transition or evidence affected by it."@en;
+        sh:nodeKind sh:IRIOrLiteral;
+        sh:severity sh:Warning;
+        sh:message "If present, dcterms:source should identify source or affected evidence."@en;
+    ];
+
+    sh:property [
+        sh:path kee:scope;
+        sh:name "scope"@en;
+        sh:description "Governance transition records should declare the scope where the transition applies."@en;
+        sh:nodeKind sh:IRI;
+        sh:severity sh:Warning;
+        sh:message "A governance transition record should declare at least one kee:scope IRI."@en;
+    ];
+
+    sh:property [
+        sh:path kee:context;
+        sh:name "context"@en;
+        sh:description "Governance transition records should declare the interpretive context for the transition."@en;
+        sh:nodeKind sh:IRI;
+        sh:severity sh:Warning;
+        sh:message "A governance transition record should declare at least one kee:context IRI."@en;
+    ];
+
+    sh:property [
+        sh:path kee:roleOrCapacity;
+        sh:name "role or capacity"@en;
+        sh:description "Role or capacity is optional and does not define a universal role vocabulary (this profile's own Non-Goals); implementations may use a profile-defined term."@en;
+        sh:nodeKind sh:IRI;
+        sh:severity sh:Info;
+        sh:message "If present, kee:roleOrCapacity should be an IRI from a profile-defined role vocabulary."@en;
+    ];
+
+    sh:property [
+        sh:path dcterms:references;
+        sh:name "policy or additional references"@en;
+        sh:description "Policy references and other supplementary links are optional."@en;
+        sh:nodeKind sh:IRIOrLiteral;
+        sh:severity sh:Info;
+        sh:message "If present, dcterms:references should identify a policy, rule, or other supplementary reference."@en;
+    ];
+
+    sh:property [
+        sh:path kee:confidenceStatus;
+        sh:name "confidence status"@en;
+        sh:description "Confidence status is optional and profile-defined, and must not be collapsed into transition approval, authority, provenance, or lifecycle status."@en;
+        sh:nodeKind sh:IRI;
+        sh:severity sh:Info;
+        sh:message "If present, kee:confidenceStatus should be an IRI from a profile-defined controlled vocabulary."@en;
+    ];
+
+    sh:property [
+        sh:path kee:confidenceValue;
+        sh:name "confidence value"@en;
+        sh:description "Numeric confidence is optional and profile-defined. Profiles must define scale and interpretation before using it normatively."@en;
+        sh:datatype xsd:decimal;
+        sh:minInclusive 0;
+        sh:maxInclusive 1;
+        sh:severity sh:Info;
+        sh:message "If present, kee:confidenceValue must be a decimal between 0 and 1. The value has no normative meaning unless a profile defines it."@en;
+    ];
+
+    sh:property [
+        sh:path dcterms:isReplacedBy;
+        sh:name "replacement artifact"@en;
+        sh:description "A transition record superseded by a later transition record may point to its replacement."@en;
+        sh:nodeKind sh:IRI;
+        sh:severity sh:Info;
+        sh:message "If present, dcterms:isReplacedBy should be an IRI identifying the replacement artifact."@en;
+    ];
+
+    sh:property [
+        sh:path prov:wasRevisionOf;
+        sh:name "revision lineage"@en;
+        sh:description "A transition record that revises a prior transition record may identify the prior entity."@en;
+        sh:nodeKind sh:IRI;
+        sh:severity sh:Info;
+        sh:message "If present, prov:wasRevisionOf should be an IRI identifying the revised artifact."@en;
+    ].

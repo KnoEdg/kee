@@ -1,0 +1,129 @@
+@prefix kee: <https://w3id.org/kee#>.
+@prefix profile: <https://w3id.org/kee/profile#>.
+@prefix prov: <http://www.w3.org/ns/prov#>.
+@prefix dcterms: <http://purl.org/dc/terms/>.
+@prefix sh: <http://www.w3.org/ns/shacl#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+
+# KEE AI-Grounded Retrieval Profile SHACL Shapes
+# Status: Draft / Non-Normative
+#
+# This shape corrects the temporal and decision boundary:
+# prov:generatedAtTime is the generation time of the retrieval resource, not
+# the historical instant being queried. Historical retrieval composes an
+# explicit kee:PointInTimeQuery (or equivalent) through dcterms:references.
+# Retrieval-result eligibility remains a consumer/use-scoped derived decision
+# and therefore carries explicit context plus decision provenance/time.
+# Replacement-chain compatibility remains explicit: a materialized
+# supersession terminal is derived from retained dcterms:replaces/dcterms:isReplacedBy
+# and applicable PROV revision lineage, and must not replace or suppress that chain.
+
+kee:RetrievalQueryProfileShape
+    a sh:NodeShape;
+    rdfs:label "KEE Retrieval Query Shape"@en;
+    rdfs:comment "Minimal SHACL shape for a retrieval query and its candidate results."@en;
+    sh:targetClass kee:RetrievalQuery;
+
+    sh:property [
+        sh:path [ sh:alternativePath ( dcterms:conformsTo kee:profileConformance ) ];
+        sh:name "profile conformance"@en;
+        sh:minCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "A retrieval query must declare at least one dcterms:conformsTo IRI; legacy kee:profileConformance is accepted during the registered legacy compatibility window."@en;
+    ];
+
+    sh:property [
+        sh:path prov:generatedAtTime;
+        sh:name "retrieval resource generation time"@en;
+        sh:description "Time at which the retrieval query/result resource was generated. This does not encode the historical instant or temporal dimension requested."@en;
+        sh:minCount 1;
+        sh:maxCount 1;
+        sh:datatype xsd:dateTime;
+        sh:message "A retrieval query must have exactly one prov:generatedAtTime value typed as xsd:dateTime."@en;
+    ];
+
+    sh:property [
+        sh:path dcterms:references;
+        sh:name "historical query intent reference"@en;
+        sh:description "When retrieval is historical, this may identify the explicit point-in-time query record carrying requested time, time dimension, query pattern, and history-source assumptions."@en;
+        sh:nodeKind sh:IRI;
+        sh:severity sh:Info;
+        sh:message "If present, dcterms:references should identify the associated historical query-intent resource."@en;
+    ];
+
+    sh:property [ sh:path kee:candidateResult; sh:name "candidate result"@en; sh:nodeKind sh:IRI; sh:severity sh:Warning; sh:message "If present, kee:candidateResult should identify a kee:RetrievalResult."@en ];
+    sh:property [ sh:path dcterms:description; sh:name "query text"@en; sh:severity sh:Warning; sh:message "A retrieval query should include the query text."@en ].
+
+kee:RetrievalResultProfileShape
+    a sh:NodeShape;
+    rdfs:label "KEE Retrieval Result Shape"@en;
+    rdfs:comment "Minimal SHACL shape for one consumer-scoped derived retrieval eligibility decision."@en;
+    sh:targetClass kee:RetrievalResult;
+
+    sh:property [
+        sh:path kee:retrievedArtifact;
+        sh:name "retrieved artifact"@en;
+        sh:minCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "A retrieval result must have at least one kee:retrievedArtifact IRI."@en;
+    ];
+
+    sh:property [
+        sh:path kee:eligibilityCategory;
+        sh:name "eligibility category"@en;
+        sh:minCount 1;
+        sh:maxCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "A retrieval result must have exactly one kee:eligibilityCategory IRI."@en;
+    ];
+
+    sh:property [
+        sh:path kee:eligibilityBasis;
+        sh:name "eligibility basis"@en;
+        sh:description "Names the upstream metadata or policy facts claimed to have been consulted. Procedural conformance tests verify that the basis actually affects decision behavior."@en;
+        sh:minCount 1;
+        sh:nodeKind sh:IRIOrLiteral;
+        sh:message "A retrieval result must have at least one kee:eligibilityBasis value."@en;
+    ];
+
+    sh:property [
+        sh:path kee:context;
+        sh:name "consumer/use context"@en;
+        sh:description "The consumer/use context for which this eligibility decision applies; the decision does not mutate source semantics."@en;
+        sh:minCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "A retrieval result must identify at least one consumer/use context with kee:context."@en;
+    ];
+
+    sh:property [
+        sh:path prov:wasGeneratedBy;
+        sh:name "eligibility decision activity"@en;
+        sh:minCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "A retrieval result must identify the decision activity that generated it."@en;
+    ];
+
+    sh:property [
+        sh:path prov:generatedAtTime;
+        sh:name "eligibility decision time"@en;
+        sh:minCount 1;
+        sh:maxCount 1;
+        sh:datatype xsd:dateTime;
+        sh:message "A retrieval result must have exactly one decision generation time typed as xsd:dateTime."@en;
+    ];
+
+    sh:property [
+        sh:path [ sh:alternativePath ( dcterms:conformsTo kee:profileConformance ) ];
+        sh:name "profile conformance"@en;
+        sh:minCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "A retrieval result must declare at least one dcterms:conformsTo IRI; legacy kee:profileConformance is accepted during the registered legacy compatibility window."@en;
+    ];
+
+    sh:property [ sh:path kee:citationGranularity; sh:name "citation granularity"@en; sh:nodeKind sh:IRI; sh:severity sh:Warning; sh:message "If present, kee:citationGranularity should identify the actual governed/indexed unit available for citation."@en ];
+    sh:property [ sh:path kee:warningContent; sh:name "warning content"@en; sh:severity sh:Warning; sh:message "Warning content is structurally advisory; Procedural conformance tests enforce category/policy-triggered warning behavior."@en ];
+    sh:property [ sh:path kee:humanReviewRequired; sh:name "human review required"@en; sh:datatype xsd:boolean; sh:severity sh:Warning; sh:message "If present, kee:humanReviewRequired should be an xsd:boolean; Procedural conformance tests enforce policy-triggered review behavior."@en ];
+    sh:property [ sh:path kee:supersessionChainTarget; sh:name "derived supersession-chain target"@en; sh:description "Optional derived/cache terminal target from retained dcterms:replaces/dcterms:isReplacedBy and applicable PROV revision lineage; this cache must not replace or suppress that chain."@en; sh:nodeKind sh:IRI; sh:severity sh:Warning; sh:message "If present, kee:supersessionChainTarget remains a derived/cache terminal target and must not replace or suppress that chain."@en ];
+    sh:property [ sh:path kee:excludedFromCurrentAnswerGrounding; sh:name "excluded from current-answer grounding"@en; sh:datatype xsd:boolean; sh:severity sh:Info; sh:message "If present, this flag is scoped to the current consumer/use decision and does not imply deletion or universal exclusion."@en ];
+    sh:property [ sh:path kee:sourceChunk; sh:name "source chunk"@en; sh:nodeKind sh:IRI; sh:severity sh:Info; sh:message "If present, kee:sourceChunk should identify the actual indexed retrieval unit mapped to the governed artifact."@en ].

@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://knoedg.org/schemas/profile-metadata.schema.json",
+  "title": "KEE Profile Metadata",
+  "description": "Draft schema for KEE profile metadata declarations.",
+  "type": "object",
+  "required": [
+    "id",
+    "title",
+    "status",
+    "version",
+    "scope",
+    "managedArtifactUnits"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Stable profile identifier."
+    },
+    "title": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "proposed",
+        "accepted",
+        "deprecated",
+        "superseded",
+        "archived"
+      ]
+    },
+    "version": {
+      "type": "string"
+    },
+    "scope": {
+      "type": "string",
+      "description": "Applicability boundary for the profile."
+    },
+    "context": {
+      "type": "string",
+      "description": "Interpretive frame for the profile."
+    },
+    "managedArtifactUnits": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "relatedSpecification": {
+      "type": "string"
+    },
+    "relatedADRs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "relatedResearchBriefs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "owner": {
+      "type": "string"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "additionalProperties": false
+}

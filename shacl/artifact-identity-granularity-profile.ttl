@@ -1,0 +1,158 @@
+@prefix kee: <https://w3id.org/kee#>.
+@prefix profile: <https://w3id.org/kee/profile#>.
+@prefix artifact: <https://w3id.org/kee/artifact#>.
+@prefix prov: <http://www.w3.org/ns/prov#>.
+@prefix dcterms: <http://purl.org/dc/terms/>.
+@prefix sh: <http://www.w3.org/ns/shacl#>.
+@prefix skos: <http://www.w3.org/2004/02/skos/core#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+
+# KEE Artifact Identity and Granularity Profile SHACL Shapes
+# Status: Draft / Non-Normative
+# Shape-contract version: 0.9.2
+# Repository path: shacl/artifact-identity-granularity-profile.ttl
+#
+# Semantic-surface rule:
+# - new writes use dcterms:type for controlled artifact classification;
+# - new writes use dcterms:conformsTo for profile declarations;
+# - legacy kee:artifactType and kee:profileConformance remain dual-read inputs
+# during the registered legacy compatibility window.
+#
+# This shape resolves the Artifact Identity and Granularity Profile
+# Open Question 2 ("which categories become hard SHACL constraints") per
+# Unlike the four Track B shapes adopted so far (Assertion
+# Metadata, Lifecycle Crosswalk, Governance Transition, Contradiction
+# Records), this profile's own Non-Goals explicitly state it "does not
+# define lifecycle, confidence, authority, contradiction, or
+# temporal-query semantics" -- each already has its own profile. This
+# shape therefore does NOT require kee:lifecycleState, prov:wasAttributedTo,
+# or prov:generatedAtTime: this profile is about identity and granularity
+# structure, not governance events, and grounding every constraint in this
+# profile's own Baseline Artifact Identity and Granularity Categories table
+# means not inventing requirements the profile document itself declines to
+# make.
+#
+# Two target classes are defined, matching the profile's own worked example
+# kee:ManagedArtifactUnit (the governed artifact whose identity/granularity
+# this profile describes) and kee:RetrievalChunk (an AI/RAG indexing
+# artifact that is NOT a governed artifact by default, per this profile's
+# own Non-Goals, unless explicitly mapped to one via kee:mapsToArtifact).
+#
+# kee:contentIdentifier, kee:containerIdentifier, kee:mapsToArtifact, and
+# kee:mapsToContentHash are new predicates introduced by this ADR -- they
+# compose this profile's own Baseline categories table. Version/revision
+# identity reuses Dublin Core Terms (dcterms:hasVersion, dcterms:isVersionOf,
+# dcterms:replaces, dcterms:isReplacedBy), per this profile's own
+# "DCAT and Dublin Core Terms" Prior-Art Composition section, which states
+# this profile's version-identifier category "reuses rather than redefines"
+# those terms.
+#
+# kee:ManagedArtifactUnit's shape constrains sh:nodeKind to sh:IRI at the
+# node-shape level, directly encoding this profile's own Candidate
+# Validation Constraint: "blank nodes, when used, are not relied upon for
+# cross-system or cross-snapshot governance identity."
+
+kee:ArtifactIdentityGranularityProfileShape
+    a sh:NodeShape;
+    rdfs:label "KEE Artifact Identity and Granularity Profile Shape"@en;
+    rdfs:comment "Minimal SHACL shape for governed artifact identity and granularity, independent of lifecycle/confidence/authority/temporal semantics defined by other profiles."@en;
+    sh:targetClass kee:ManagedArtifactUnit;
+    sh:nodeKind sh:IRI;
+
+    sh:property [
+        sh:path [ sh:alternativePath ( dcterms:type kee:artifactType ) ];
+        sh:name "artifact unit type"@en;
+        sh:description "An implementation must declare which artifact unit type it governs using dcterms:type. Legacy kee:artifactType remains accepted for registered legacy reads only."@en;
+        sh:minCount 1;
+        sh:maxCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "A managed artifact unit must have exactly one dcterms:type IRI; legacy kee:artifactType is accepted during the registered legacy compatibility window."@en;
+    ];
+
+    sh:property [
+        sh:path [ sh:alternativePath ( dcterms:conformsTo kee:profileConformance ) ];
+        sh:name "profile conformance"@en;
+        sh:description "Managed artifact units must identify the profile used to interpret the metadata using dcterms:conformsTo. Legacy kee:profileConformance remains accepted for registered legacy reads only."@en;
+        sh:minCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "A managed artifact unit must declare at least one dcterms:conformsTo IRI; legacy kee:profileConformance is accepted during the registered legacy compatibility window."@en;
+    ];
+
+    sh:property [
+        sh:path kee:contentIdentifier;
+        sh:name "content identifier"@en;
+        sh:description "A managed artifact unit should distinguish a content identifier or content hash (a specific content snapshot) from its own stable artifact identifier (this resource's own IRI, which persists across content revisions)."@en;
+        sh:nodeKind sh:IRIOrLiteral;
+        sh:severity sh:Warning;
+        sh:message "If present, kee:contentIdentifier should identify a specific content snapshot, distinct from this resource's own stable identifier."@en;
+    ];
+
+    sh:property [
+        sh:path kee:containerIdentifier;
+        sh:name "container identifier"@en;
+        sh:description "A managed artifact unit held within a graph, nanopublication, dataset, or record aggregation should identify that container, distinct from its own identity."@en;
+        sh:nodeKind sh:IRI;
+        sh:severity sh:Warning;
+        sh:message "If present, kee:containerIdentifier should be an IRI distinct from this resource's own identifier."@en;
+    ];
+
+    sh:property [
+        sh:path dcterms:isVersionOf;
+        sh:name "version of"@en;
+        sh:description "A managed artifact unit that is one revision among several should identify the stable series or artifact it is a version of, reusing Dublin Core Terms rather than a new version-identifier predicate."@en;
+        sh:nodeKind sh:IRI;
+        sh:severity sh:Warning;
+        sh:message "If present, dcterms:isVersionOf should identify the stable series or artifact this revision belongs to."@en;
+    ];
+
+    sh:property [
+        sh:path dcterms:hasVersion;
+        sh:name "has version"@en;
+        sh:description "A stable series or artifact identity may enumerate its known versions."@en;
+        sh:nodeKind sh:IRI;
+        sh:severity sh:Info;
+        sh:message "If present, dcterms:hasVersion should identify a version of this artifact."@en;
+    ];
+
+    sh:property [
+        sh:path dcterms:replaces;
+        sh:name "replaces"@en;
+        sh:description "A managed artifact unit that supersedes a prior version may identify it."@en;
+        sh:nodeKind sh:IRI;
+        sh:severity sh:Info;
+        sh:message "If present, dcterms:replaces should identify the superseded version."@en;
+    ];
+
+    sh:property [
+        sh:path dcterms:isReplacedBy;
+        sh:name "replaced by"@en;
+        sh:description "A managed artifact unit superseded by a later version may identify it."@en;
+        sh:nodeKind sh:IRI;
+        sh:severity sh:Info;
+        sh:message "If present, dcterms:isReplacedBy should identify the superseding version."@en;
+    ].
+
+kee:RetrievalChunkProfileShape
+    a sh:NodeShape;
+    rdfs:label "KEE Retrieval Chunk Mapping Shape"@en;
+    rdfs:comment "Minimal SHACL shape for AI/RAG retrieval chunks explicitly mapped to a governed artifact. Per this profile's Non-Goals, a retrieval chunk is not a governed knowledge artifact by default; this shape governs only the mapping, not the chunk's own content."@en;
+    sh:targetClass kee:RetrievalChunk;
+
+    sh:property [
+        sh:path kee:mapsToArtifact;
+        sh:name "maps to artifact"@en;
+        sh:description "A retrieval chunk indexed for AI/RAG grounding must resolve to a governed artifact identifier via an explicit mapping, not an implicit assumption."@en;
+        sh:minCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "A retrieval chunk must have at least one kee:mapsToArtifact IRI."@en;
+    ];
+
+    sh:property [
+        sh:path kee:mapsToContentHash;
+        sh:name "maps to content hash"@en;
+        sh:description "A retrieval chunk may pinpoint the exact content snapshot it was derived from, when the mapped artifact has more than one."@en;
+        sh:nodeKind sh:IRIOrLiteral;
+        sh:severity sh:Info;
+        sh:message "If present, kee:mapsToContentHash should identify a specific content snapshot of the mapped artifact."@en;
+    ].

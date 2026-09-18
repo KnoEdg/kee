@@ -1,0 +1,116 @@
+@prefix kee: <https://w3id.org/kee#>.
+@prefix profile: <https://w3id.org/kee/profile#>.
+@prefix prov: <http://www.w3.org/ns/prov#>.
+@prefix time: <http://www.w3.org/2006/time#>.
+@prefix dcterms: <http://purl.org/dc/terms/>.
+@prefix sh: <http://www.w3.org/ns/shacl#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+
+# KEE Historical and Bitemporal Querying Profile SHACL Shapes
+# Status: Draft / Non-Normative
+#
+# This shape separates query intent from query execution and query
+# capability from retained-history sufficiency. New writes identify a requested
+# temporal target with dcterms:temporal, exactly one time dimension, a query
+# pattern, and a history source that declares temporal coverage.
+#
+# Legacy reads remain compatible during the registered legacy compatibility window: records declaring only
+# kee:profileConformance may retain kee:queryInstant and kee:historyCompleteness.
+# The new-write branch is identified by dcterms:conformsTo and requires the
+# corrected dcterms:temporal + dcterms:source/coverage structure.
+
+kee:HistorySourceCoverageShape
+    a sh:NodeShape;
+    rdfs:label "History source temporal coverage shape"@en;
+    sh:property [
+        sh:path dcterms:temporal;
+        sh:name "history temporal coverage"@en;
+        sh:minCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "A history source used for point-in-time querying must declare at least one dcterms:temporal coverage resource."@en;
+    ].
+
+kee:HistoricalBitemporalQueryingProfileShape
+    a sh:NodeShape;
+    rdfs:label "KEE Historical and Bitemporal Querying Profile Shape"@en;
+    rdfs:comment "Minimal SHACL shape for point-in-time query records with explicit new-write query intent and history-source coverage while preserving legacy reads."@en;
+    sh:targetClass kee:PointInTimeQuery;
+
+    sh:property [
+        sh:path kee:queryPattern;
+        sh:name "query pattern"@en;
+        sh:minCount 1;
+        sh:maxCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "A point-in-time query record must have exactly one kee:queryPattern IRI."@en;
+    ];
+
+    sh:property [
+        sh:path kee:queryTimeDimension;
+        sh:name "query time dimension"@en;
+        sh:description "Declares the temporal axis meant by the requested time, e.g. valid/active-at versus transaction/known-as-of."@en;
+        sh:minCount 1;
+        sh:maxCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "A point-in-time query record must have exactly one kee:queryTimeDimension IRI."@en;
+    ];
+
+    sh:property [
+        sh:path [ sh:alternativePath ( dcterms:conformsTo kee:profileConformance ) ];
+        sh:name "profile conformance"@en;
+        sh:minCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "A point-in-time query record must declare profile conformance; new writes use dcterms:conformsTo and legacy kee:profileConformance remains accepted during the compatibility window."@en;
+    ];
+
+    sh:property [
+        sh:path dcterms:temporal;
+        sh:name "requested temporal target"@en;
+        sh:description "For new writes, the requested historical instant or interval is an OWL-Time resource linked with dcterms:temporal."@en;
+        sh:maxCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "If present, dcterms:temporal must identify at most one requested temporal target."@en;
+    ];
+
+    sh:property [
+        sh:path dcterms:source;
+        sh:name "history source"@en;
+        sh:description "For new writes, the retained history/dataset source against whose temporal coverage the answer is evaluated."@en;
+        sh:nodeKind sh:IRI;
+        sh:node kee:HistorySourceCoverageShape;
+        sh:message "If present, each history source must declare temporal coverage."@en;
+    ];
+
+    sh:or (
+        [
+            sh:property [ sh:path dcterms:conformsTo; sh:minCount 1; sh:nodeKind sh:IRI ];
+            sh:property [ sh:path dcterms:temporal; sh:minCount 1; sh:maxCount 1; sh:nodeKind sh:IRI ];
+            sh:property [ sh:path dcterms:source; sh:minCount 1; sh:nodeKind sh:IRI; sh:node kee:HistorySourceCoverageShape ]
+        ]
+        [
+            sh:property [ sh:path kee:profileConformance; sh:minCount 1; sh:nodeKind sh:IRI ]
+        ]
+    );
+
+    sh:property [
+        sh:path kee:queryInstant;
+        sh:name "legacy query instant"@en;
+        sh:nodeKind sh:IRIOrLiteral;
+        sh:severity sh:Info;
+        sh:message "Legacy kee:queryInstant remains readable, but new writes use dcterms:temporal for the requested instant/interval."@en;
+    ];
+
+    sh:property [
+        sh:path kee:historyCompleteness;
+        sh:name "legacy/profile history completeness assertion"@en;
+        sh:nodeKind sh:IRI;
+        sh:severity sh:Info;
+        sh:message "kee:historyCompleteness may remain as a profile-owned assertion but does not substitute for actual temporal coverage evidence on the history source."@en;
+    ];
+
+    sh:property [ sh:path kee:reconstructedArtifact; sh:name "reconstructed artifact"@en; sh:nodeKind sh:IRI; sh:severity sh:Warning; sh:message "If present, kee:reconstructedArtifact should identify the artifact produced by the historical reconstruction."@en ];
+    sh:property [ sh:path dcterms:description; sh:name "query text"@en; sh:severity sh:Warning; sh:message "A point-in-time query record should include the query text or human-readable description."@en ];
+    sh:property [ sh:path time:hasBeginning; sh:name "result valid interval start"@en; sh:nodeKind sh:IRI; sh:severity sh:Warning; sh:message "If present, time:hasBeginning should identify a time:Instant."@en ];
+    sh:property [ sh:path time:hasEnd; sh:name "result valid interval end"@en; sh:nodeKind sh:IRI; sh:severity sh:Warning; sh:message "If present, time:hasEnd should identify a time:Instant."@en ];
+    sh:property [ sh:path kee:crossReference; sh:name "cross reference"@en; sh:nodeKind sh:IRI; sh:severity sh:Info; sh:message "If present, kee:crossReference should identify another query record."@en ].

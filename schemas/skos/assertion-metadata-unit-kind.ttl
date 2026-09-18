@@ -6,7 +6,7 @@
 unit:AssertionUnitKindScheme
   a skos:ConceptScheme ;
   skos:prefLabel "KEE Assertion Managed-Unit Kind Scheme" ;
-  dcterms:identifier "kee-assertion-unit-kind-v0.8-rc4" ;
+  dcterms:identifier "kee-assertion-unit-kind-v0.9.2" ;
   dcterms:description "Open local vocabulary for the representation unit governed by assertion metadata. The slot remains open to additional representation patterns." .
 
 unit:Triple a skos:Concept ; skos:prefLabel "Triple" ; skos:definition "The managed assertion unit is a single RDF triple or RDF-star triple term." ; skos:scopeNote "Representation prior art: RDF/RDF-star." ; skos:exactMatch legacy:TripleUnit ; skos:inScheme unit:AssertionUnitKindScheme .

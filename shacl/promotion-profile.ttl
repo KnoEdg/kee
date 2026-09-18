@@ -1,0 +1,112 @@
+@prefix kee: <https://w3id.org/kee#>.
+@prefix prov: <http://www.w3.org/ns/prov#>.
+@prefix dcterms: <http://purl.org/dc/terms/>.
+@prefix sh: <http://www.w3.org/ns/shacl#>.
+@prefix skos: <http://www.w3.org/2004/02/skos/core#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+
+# KEE Promotion Profile SHACL Shapes
+# Status: Draft / Non-Normative
+#
+# narrows Promotion to authorized deliberate scope expansion.
+# removes validator-driven explicit multi-typing dependence: the
+# specialized Promotion shape explicitly composes the Governance Transition
+# parent shape. The reference validator loads that parent shape graph when this
+# specialized shape is evaluated, so a producer need only assert the
+# semantically sufficient kee:PromotionRecord type.
+
+kee:PromotionProfileShape
+    a sh:NodeShape;
+    rdfs:label "KEE Promotion Profile Shape"@en;
+    rdfs:comment "promotion constraints composed with the Governance Transition parent contract."@en;
+    sh:targetClass kee:PromotionRecord;
+    sh:node kee:GovernanceTransitionProfileShape;
+
+    sh:property [
+        sh:path kee:sourceScope;
+        sh:name "source scope"@en;
+        sh:minCount 1;
+        sh:maxCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "A promotion record must identify exactly one source-scope IRI in the reference representation."@en;
+    ];
+
+    sh:property [
+        sh:path kee:scope;
+        sh:name "target promotion scope"@en;
+        sh:minCount 1;
+        sh:maxCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "A promotion record must identify exactly one target-scope IRI in the reference representation."@en;
+    ];
+
+    sh:property [
+        sh:path kee:authorityEvidence;
+        sh:name "promotion authority evidence"@en;
+        sh:minCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "Promotion requires explicit authority evidence separate from provenance."@en;
+    ];
+
+    sh:sparql [
+        sh:message "Promotion requires the target scope to be broader than the source scope. In this SKOS reference representation, the source must reach the target through one or more skos:broader edges."@en;
+        sh:select """
+            PREFIX kee: <https://w3id.org/kee#>
+            PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+            SELECT $this
+            WHERE {
+                $this kee:sourceScope ?source;
+                      kee:scope ?target.
+                FILTER NOT EXISTS { ?source skos:broader+ ?target. }
+            }
+        """;
+    ];
+
+    sh:sparql [
+        sh:message "Promotion requires an acyclic scope ordering for the compared source and target scopes; a cycle cannot demonstrate that the target is strictly broader."@en;
+        sh:select """
+            PREFIX kee: <https://w3id.org/kee#>
+            PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+            SELECT $this
+            WHERE {
+                $this kee:sourceScope ?source;
+                      kee:scope ?target.
+                ?source skos:broader+ ?target.
+                ?target skos:broader+ ?source.
+            }
+        """;
+    ];
+
+    sh:property [
+        sh:path kee:reasonCode;
+        sh:name "reason code"@en;
+        sh:description "A reason is decision metadata, not proof of scope expansion or authority."@en;
+        sh:nodeKind sh:IRI;
+        sh:severity sh:Warning;
+        sh:message "If present, kee:reasonCode should be an IRI from a profile-defined controlled vocabulary."@en;
+    ];
+
+    sh:property [
+        sh:path dcterms:valid;
+        sh:name "effective date"@en;
+        sh:severity sh:Warning;
+        sh:message "A promotion record should have at least one dcterms:valid effective-date value."@en;
+    ];
+
+    sh:property [
+        sh:path kee:reviewDue;
+        sh:name "review due date"@en;
+        sh:datatype xsd:dateTime;
+        sh:severity sh:Warning;
+        sh:message "If present, kee:reviewDue should be typed as xsd:dateTime."@en;
+    ];
+
+    sh:property [
+        sh:path kee:knownContradiction;
+        sh:name "known contradiction"@en;
+        sh:description "Supplied contradiction links remain structurally valid here, but completeness of carry-forward is a procedural conformance obligation and is tested separately."@en;
+        sh:nodeKind sh:IRI;
+        sh:severity sh:Info;
+        sh:message "If present, kee:knownContradiction should identify a contradiction record."@en;
+    ].

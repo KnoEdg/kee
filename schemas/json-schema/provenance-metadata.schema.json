@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://knoedg.org/schemas/provenance-metadata.schema.json",
+  "title": "KEE Provenance Metadata",
+  "description": "Draft schema for provenance metadata attached to governed KEE artifacts.",
+  "type": "object",
+  "required": [
+    "artifactId",
+    "source",
+    "generatedAtTime"
+  ],
+  "properties": {
+    "artifactId": {
+      "type": "string"
+    },
+    "source": {
+      "type": "string",
+      "description": "Source, agent, system, or document from which the artifact originated."
+    },
+    "wasAttributedTo": {
+      "type": "string",
+      "description": "Agent responsible for the artifact, aligned with PROV-O usage."
+    },
+    "wasGeneratedBy": {
+      "type": "string",
+      "description": "Activity that generated the artifact."
+    },
+    "wasDerivedFrom": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "generatedAtTime": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "recordedAtTime": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "method": {
+      "type": "string"
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}

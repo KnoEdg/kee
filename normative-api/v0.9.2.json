@@ -1,33 +1,40 @@
 {
-  "version": "0.9.0",
-  "specification": "docs/specs/KEE-Specification-v0.9.0.md",
-  "historicalSourceTag": "v0.8.2",
-  "historicalSourceCommit": "7b3c490005a43c7312e055369d7cb0c85a83f295",
+  "version": "0.9.2",
+  "specification": "docs/specs/KEE-Specification-v0.9.2.md",
+  "supersedesCurrentVersionIdentifier": "0.9.1",
+  "changeType": "PATCH",
+  "normativeChange": false,
+  "implementationChangeRequired": false,
+  "selfContained": true,
+  "compatibilityPolicy": "strict pre-1.0 SemVer: a published PATCH release must not hide an incompatible change",
   "acceptedProfiles": [
     "assertion-metadata",
     "scientific-claim",
     "software-engineering"
   ],
-  "termRegistry": "docs/release/KEE-v0.8.1-amendment-01-term-registry.tsv (historical path, incorporated by v0.8.2)",
-  "nonCollapseRules": [
-    "Section 7.1 rule 1",
-    "Section 7.1 rule 2",
-    "Section 7.1 rule 3",
-    "Section 7.1 rule 4",
-    "Section 7.1 rule 5",
-    "Section 7.1 rule 6",
-    "Section 7.1 rule 7",
-    "Section 7.1 rule 8",
-    "Section 7.1 rule 9",
-    "Section 7.1 rule 10",
-    "Section 7.1 rule 11",
-    "Section 7.1 rule 12",
-    "Section 7.1 rule 13",
-    "Section 7.1 rule 14",
-    "Section 7.1 rule 15",
-    "Section 7.1 rule 16",
-    "Section 7.1 rule 17"
+  "profileStatuses": {
+    "software-engineering": "Accepted / Normative",
+    "scientific-claim": "Accepted / Normative",
+    "assertion-metadata": "Accepted / Normative",
+    "assertion": "Draft",
+    "decision": "Draft",
+    "organizational-memory": "Draft",
+    "lifecycle-crosswalk": "Draft / Non-Normative",
+    "governance-transition": "Draft / Non-Normative",
+    "promotion": "Draft / Non-Normative",
+    "authority-delegation": "Draft / Non-Normative",
+    "contradiction-records": "Draft / Non-Normative",
+    "ai-grounded-retrieval": "Draft / Non-Normative",
+    "artifact-identity-granularity": "Draft / Non-Normative",
+    "historical-bitemporal-querying": "Draft / Non-Normative"
+  },
+  "excludedFromPublicAPI": [
+    "Draft profiles",
+    "Non-Normative profiles",
+    "Experimental surfaces"
   ],
+  "termDeclarations": "vocab/kee.ttl",
+  "termRegistry": "Section 18.3 of the published specification defines the term-registry contract; vocab/kee.ttl is its published declaration document.",
   "nonCollapseRuleIdentifiers": {
     "NC-01": "Section 7.1 rule 1",
     "NC-02": "Section 7.1 rule 2",
@@ -46,6 +53,15 @@
     "NC-15": "Section 7.1 rule 15",
     "NC-16": "Section 7.1 rule 16",
     "NC-17": "Section 7.1 rule 17"
+  },
+  "nonCollapseBehaviouralCoverage": {
+    "demonstrated": 15,
+    "total": 17,
+    "notDemonstrable": [
+      "NC-03",
+      "NC-06"
+    ],
+    "reason": "representational: accountability and trust are not represented as surfaces distinct from authority and confidence"
   },
   "conformanceDimensions": [
     "structural",
@@ -96,7 +112,6 @@
     "legacyReads": "only where the migration registry explicitly records a compatibility policy",
     "retirement": "requires a separately versioned decision and migration notice naming the legacy surface, last dual-read version, first rejecting version, and migration path or explicit absence of a safe automatic migration"
   },
-  "compatibilityPolicy": "ADR-0074 strict SemVer",
   "interoperabilityObligations": [
     "source-neutrality",
     "consumer-neutrality",
@@ -113,9 +128,24 @@
     "RO-Crate-KEEpack-experiment",
     "public-API-diff"
   ],
+  "sharedContractCount": "NOT PUBLISHED. The question-(a) figure is carried as a band after the classification predicate failed blind replication, and must not be narrowed by drafting alone. No count is part of this API.",
+  "openItems": [
+    "shared-contract band not settled; no drafting-only narrowing authorized",
+    "NC-03 and NC-06 representationally non-demonstrable",
+    "accountable-root severity escalation to sh:Violation outstanding, requires a MINOR release",
+    "KEEpack Experimental / Non-Normative pending independent producer/consumer evidence",
+    "w3id registration submitted, not yet merged or independently verified"
+  ],
   "status": "Published public normative API snapshot",
-  "supersedesCurrentVersionIdentifier": "0.8.2",
-  "candidateProvenance": "normative-api/v0.9.0-candidate.json",
-  "changeClassifications": "normative-api/v0.9.0-change-classifications.json",
-  "sharedContractCount": "NOT PUBLISHED. ADR-0077 restates the question-(a) figure as a band after the classification predicate failed blind replication; ADR-0078 forbids narrowing it by drafting alone. No count is part of this API."
+  "publishedSurfaces": {
+    "specification": "docs/specs/KEE-Specification-v0.9.2.md",
+    "termDeclarations": "vocab/kee.ttl",
+    "shapeGraphs": "shacl/",
+    "conceptSchemes": "schemas/skos/",
+    "jsonSchemas": "schemas/json-schema/",
+    "jsonLdContext": "context/kee-context.jsonld",
+    "profileStatus": "docs/profiles/README.md"
+  },
+  "shapeContractVersion": "0.9.2",
+  "shapeGraphNote": "The published shape graphs are byte-identical to those the reference validator executes. A structural result from a Draft or Non-Normative shape has no normative effect."
 }

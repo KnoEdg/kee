@@ -1,0 +1,232 @@
+@prefix kee: <https://w3id.org/kee#>.
+@prefix profile: <https://w3id.org/kee/profile#>.
+@prefix artifact: <https://w3id.org/kee/artifact#>.
+@prefix lifecycle: <https://w3id.org/kee/lifecycle#>.
+@prefix governance: <https://w3id.org/kee/governance#>.
+@prefix prov: <http://www.w3.org/ns/prov#>.
+@prefix dcterms: <http://purl.org/dc/terms/>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix sh: <http://www.w3.org/ns/shacl#>.
+@prefix skos: <http://www.w3.org/2004/02/skos/core#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+
+# KEE Organizational Memory Profile SHACL Shapes
+# Status: Draft / Non-Normative
+# Shape-contract version: 0.9.2
+# Repository path: shacl/organizational-memory-profile.ttl
+#
+# Semantic-surface rule:
+# - new writes use dcterms:type for controlled artifact classification;
+# - new writes use dcterms:conformsTo for profile declarations;
+# - legacy kee:artifactType and kee:profileConformance remain dual-read inputs
+# during the registered legacy compatibility window.
+#
+# This file remains a structural Draft-profile shape. It intentionally does not
+# encode a universal knowledge-decay formula, retention/disposition algorithm,
+# renewal/retirement workflow, escalation engine, or risk calculus.
+#
+# This shape separates source/provenance attribution, governance authority,
+# and continuing stewardship. prov:wasAttributedTo remains origin/attribution;
+# kee:authority remains governance authority; optional prov:qualifiedAttribution
+# may carry an explicit steward/owner role when an RDF implementation chooses
+# that prior-art representation. Procedural policy completeness is not proven by
+# structural validation.
+#
+# The shape composes prior-art vocabularies:
+# - PROV-O for provenance and qualified stewardship attribution
+# - Dublin Core Terms for classification, profile conformance, source, timestamps, and replacement links
+# - SKOS for summaries, scope notes, and change notes
+# - SHACL for validation
+
+kee:OrganizationalMemoryStewardshipAttributionShape
+    a sh:NodeShape;
+    rdfs:label "Organizational Memory Stewardship Attribution Shape"@en;
+    sh:property [
+        sh:path prov:agent;
+        sh:minCount 1;
+        sh:maxCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "A qualified stewardship attribution must identify exactly one prov:agent IRI."@en;
+    ];
+    sh:property [
+        sh:path prov:hadRole;
+        sh:minCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "A qualified stewardship attribution must identify at least one prov:hadRole IRI declaring the steward/owner role."@en;
+    ].
+
+kee:OrganizationalMemoryProfileShape
+    a sh:NodeShape;
+    rdfs:label "KEE Organizational Memory Profile Shape"@en;
+    rdfs:comment "Minimal structural SHACL shape for Draft organizational-memory artifacts; keeps stewardship distinct from provenance and authority."@en;
+    sh:targetClass kee:OrganizationalMemoryArtifact;
+
+    sh:property [
+        sh:path [ sh:alternativePath ( dcterms:type kee:artifactType ) ];
+        sh:name "artifact type"@en;
+        sh:description "Organizational-memory artifacts must declare controlled artifact classification using dcterms:type. Legacy kee:artifactType remains accepted for registered legacy reads only."@en;
+        sh:minCount 1;
+        sh:maxCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "An organizational-memory artifact must have exactly one dcterms:type IRI; legacy kee:artifactType is accepted during the registered legacy compatibility window."@en;
+    ];
+
+    sh:property [
+        sh:path kee:lifecycleState;
+        sh:name "lifecycle state"@en;
+        sh:description "Organizational-memory artifacts must declare a lifecycle state."@en;
+        sh:minCount 1;
+        sh:maxCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "An organizational-memory artifact must have exactly one kee:lifecycleState IRI."@en;
+    ];
+
+    sh:property [
+        sh:path [ sh:alternativePath ( dcterms:conformsTo kee:profileConformance ) ];
+        sh:name "profile conformance"@en;
+        sh:description "Organizational-memory artifacts must identify the profile they claim to conform to using dcterms:conformsTo. Legacy kee:profileConformance remains accepted for registered legacy reads only."@en;
+        sh:minCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "An organizational-memory artifact must declare at least one dcterms:conformsTo IRI; legacy kee:profileConformance is accepted during the registered legacy compatibility window."@en;
+    ];
+
+    sh:property [
+        sh:path rdfs:label;
+        sh:name "title"@en;
+        sh:description "Organizational-memory artifacts must have a human-readable title."@en;
+        sh:minCount 1;
+        sh:datatype rdf:langString;
+        sh:message "An organizational-memory artifact must have at least one rdfs:label language-tagged string."@en;
+    ];
+
+    sh:property [
+        sh:path skos:definition;
+        sh:name "memory statement"@en;
+        sh:description "Organizational-memory artifacts must summarize the remembered knowledge, lesson, practice, or observation."@en;
+        sh:minCount 1;
+        sh:datatype rdf:langString;
+        sh:message "An organizational-memory artifact must include at least one skos:definition language-tagged string."@en;
+    ];
+
+    sh:property [
+        sh:path prov:wasAttributedTo;
+        sh:name "contributor or source agent"@en;
+        sh:description "Organizational-memory artifacts must identify at least one attributed contributor, source agent, or originating system. does not interpret this property alone as current stewardship."@en;
+        sh:minCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "An organizational-memory artifact must have at least one prov:wasAttributedTo IRI."@en;
+    ];
+
+    sh:property [
+        sh:path prov:qualifiedAttribution;
+        sh:name "qualified stewardship or ownership attribution"@en;
+        sh:description "When an RDF implementation declares stewardship explicitly with PROV qualified attribution, the attribution identifies the steward/owner agent and role. This is optional structural evidence, not a universal stewardship vocabulary."@en;
+        sh:node kee:OrganizationalMemoryStewardshipAttributionShape;
+        sh:severity sh:Info;
+        sh:message "If present, prov:qualifiedAttribution used for stewardship should identify prov:agent and prov:hadRole."@en;
+    ];
+
+    sh:property [
+        sh:path prov:generatedAtTime;
+        sh:name "generation time"@en;
+        sh:description "Organizational-memory artifacts must record when the artifact was generated or captured."@en;
+        sh:minCount 1;
+        sh:maxCount 1;
+        sh:datatype xsd:dateTime;
+        sh:message "An organizational-memory artifact must have exactly one prov:generatedAtTime value typed as xsd:dateTime."@en;
+    ];
+
+    sh:property [
+        sh:path dcterms:source;
+        sh:name "source"@en;
+        sh:description "Organizational-memory artifacts should identify source events, source documents, evidence, or originating artifacts."@en;
+        sh:minCount 1;
+        sh:nodeKind sh:IRIOrLiteral;
+        sh:severity sh:Warning;
+        sh:message "An organizational-memory artifact should have at least one dcterms:source value."@en;
+    ];
+
+    sh:property [
+        sh:path kee:scope;
+        sh:name "scope"@en;
+        sh:description "Organizational-memory artifacts should declare the organizational, project, community, or domain scope where the memory applies."@en;
+        sh:minCount 1;
+        sh:nodeKind sh:IRI;
+        sh:severity sh:Warning;
+        sh:message "An organizational-memory artifact should declare at least one kee:scope IRI."@en;
+    ];
+
+    sh:property [
+        sh:path kee:context;
+        sh:name "context"@en;
+        sh:description "Organizational-memory artifacts should declare the interpretive or operational context for the memory."@en;
+        sh:minCount 1;
+        sh:nodeKind sh:IRI;
+        sh:severity sh:Warning;
+        sh:message "An organizational-memory artifact should declare at least one kee:context IRI."@en;
+    ];
+
+    sh:property [
+        sh:path kee:authority;
+        sh:name "governance authority"@en;
+        sh:description "A governed organizational-memory artifact may identify the authority or authority rule for review, approval, retirement, or archival actions. Authority is distinct from stewardship responsibility and provenance attribution."@en;
+        sh:minCount 1;
+        sh:nodeKind sh:IRI;
+        sh:severity sh:Warning;
+        sh:message "A governed organizational-memory artifact should identify at least one kee:authority IRI when governed actions require explicit authority."@en;
+    ];
+
+    sh:property [
+        sh:path kee:reviewDue;
+        sh:name "review due"@en;
+        sh:description "Organizational-memory artifacts should declare a review due timestamp when the implementation's stewardship/review policy uses explicit review dates."@en;
+        sh:datatype xsd:dateTime;
+        sh:severity sh:Warning;
+        sh:message "If review is date-driven, kee:reviewDue should be present and typed as xsd:dateTime."@en;
+    ];
+
+    sh:property [
+        sh:path skos:scopeNote;
+        sh:name "applicability note"@en;
+        sh:description "Organizational-memory artifacts should explain applicability, limitations, or operational context."@en;
+        sh:datatype rdf:langString;
+        sh:severity sh:Info;
+        sh:message "If present, skos:scopeNote should be a language-tagged string."@en;
+    ];
+
+    sh:property [
+        sh:path skos:changeNote;
+        sh:name "review or change note"@en;
+        sh:description "Organizational-memory artifacts may include review notes, update rationale, or retirement rationale."@en;
+        sh:datatype rdf:langString;
+        sh:severity sh:Info;
+        sh:message "If present, skos:changeNote should be a language-tagged string."@en;
+    ];
+
+    sh:property [
+        sh:path dcterms:isReplacedBy;
+        sh:name "replacement artifact"@en;
+        sh:description "Superseded or retired organizational-memory artifacts may point to a replacement artifact."@en;
+        sh:nodeKind sh:IRI;
+        sh:severity sh:Info;
+        sh:message "If present, dcterms:isReplacedBy should be an IRI identifying the replacement artifact."@en;
+    ];
+
+    sh:property [
+        sh:path prov:wasRevisionOf;
+        sh:name "revision lineage"@en;
+        sh:description "Organizational-memory artifacts that revise prior memory artifacts may identify the prior entity."@en;
+        sh:nodeKind sh:IRI;
+        sh:severity sh:Info;
+        sh:message "If present, prov:wasRevisionOf should be an IRI identifying the revised memory artifact."@en;
+    ];
+
+    sh:property [
+        sh:path prov:invalidatedAtTime;
+        sh:name "invalidation time"@en;
+        sh:description "Retired, withdrawn, or invalidated organizational-memory artifacts may record invalidation time."@en;
+        sh:datatype xsd:dateTime;
+        sh:severity sh:Info;
+        sh:message "If present, prov:invalidatedAtTime should be typed as xsd:dateTime."@en;
+    ].

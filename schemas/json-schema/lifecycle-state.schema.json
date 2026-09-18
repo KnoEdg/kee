@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://knoedg.org/schemas/lifecycle-state.schema.json",
+  "title": "KEE Lifecycle State",
+  "description": "Draft schema for lifecycle state declarations used by KEE profiles.",
+  "type": "object",
+  "required": [
+    "id",
+    "label",
+    "definition",
+    "profile",
+    "status"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Stable lifecycle state identifier."
+    },
+    "label": {
+      "type": "string"
+    },
+    "definition": {
+      "type": "string"
+    },
+    "profile": {
+      "type": "string",
+      "description": "Profile that defines this lifecycle state."
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "proposed",
+        "accepted",
+        "deprecated",
+        "superseded",
+        "archived"
+      ]
+    },
+    "broaderState": {
+      "type": "string",
+      "description": "Optional broader lifecycle category or crosswalk target."
+    },
+    "allowedTransitionsTo": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "requiresAuthority": {
+      "type": "boolean"
+    },
+    "requiresReason": {
+      "type": "boolean"
+    },
+    "requiresTimestamp": {
+      "type": "boolean"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}

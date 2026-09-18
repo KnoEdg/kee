@@ -1,0 +1,185 @@
+@prefix kee: <https://w3id.org/kee#>.
+@prefix profile: <https://w3id.org/kee/profile#>.
+@prefix artifact: <https://w3id.org/kee/artifact#>.
+@prefix lifecycle: <https://w3id.org/kee/lifecycle#>.
+@prefix governance: <https://w3id.org/kee/governance#>.
+@prefix prov: <http://www.w3.org/ns/prov#>.
+@prefix dcterms: <http://purl.org/dc/terms/>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix sh: <http://www.w3.org/ns/shacl#>.
+@prefix skos: <http://www.w3.org/2004/02/skos/core#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+
+# KEE Software Engineering Profile SHACL Shapes
+# Status: Accepted / Normative
+# Shape-contract version: 0.9.2
+# Repository path: shacl/software-engineering-profile.ttl
+#
+# Semantic-surface rule:
+# - new writes use dcterms:type for controlled artifact classification;
+# - new writes use dcterms:conformsTo for profile declarations;
+# - legacy kee:artifactType and kee:profileConformance remain dual-read inputs
+# during the registered legacy compatibility window.
+#
+# This shape is the common structural metadata floor. It
+# does not attempt to encode every engineering relationship. Generic DCTerms
+# relation/source links remain valid fallback links; where relationship kind is
+# machine-significant, the producing profile/system should use established
+# domain relations/identifiers (for example OSLC RM, W3C Trace Context,
+# Package-URL, SPDX/CycloneDX, OSV, canonical source URLs, or SWHIDs) rather
+# than minting KEE relationship predicates.
+#
+# The shape composes prior-art vocabularies:
+# - PROV-O for provenance
+# - Dublin Core Terms for classification, profile conformance, source, related-system, and replacement links
+# - SKOS for controlled concepts
+# - SHACL for validation
+
+kee:SoftwareEngineeringProfileShape
+    a sh:NodeShape;
+    rdfs:label "KEE Software Engineering Profile Shape"@en;
+    rdfs:comment "Minimal SHACL shape for software-engineering KEE artifacts."@en;
+    sh:targetClass kee:SoftwareEngineeringArtifact;
+
+    sh:property [
+        sh:path [ sh:alternativePath ( dcterms:type kee:artifactType ) ];
+        sh:name "artifact type"@en;
+        sh:description "Software engineering artifacts must declare controlled artifact classification using dcterms:type. Legacy kee:artifactType remains accepted for registered legacy reads only."@en;
+        sh:minCount 1;
+        sh:maxCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "A software engineering artifact must have exactly one dcterms:type IRI; legacy kee:artifactType is accepted during the registered legacy compatibility window."@en;
+    ];
+
+    sh:property [
+        sh:path kee:lifecycleState;
+        sh:name "lifecycle state"@en;
+        sh:description "Software engineering artifacts must declare a lifecycle state."@en;
+        sh:minCount 1;
+        sh:maxCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "A software engineering artifact must have exactly one kee:lifecycleState IRI."@en;
+    ];
+
+    sh:property [
+        sh:path [ sh:alternativePath ( dcterms:conformsTo kee:profileConformance ) ];
+        sh:name "profile conformance"@en;
+        sh:description "Software engineering artifacts must identify the profile they claim to conform to using dcterms:conformsTo. Legacy kee:profileConformance remains accepted for registered legacy reads only."@en;
+        sh:minCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "A software engineering artifact must declare at least one dcterms:conformsTo IRI; legacy kee:profileConformance is accepted during the registered legacy compatibility window."@en;
+    ];
+
+    sh:property [
+        sh:path rdfs:label;
+        sh:name "title"@en;
+        sh:description "Software engineering artifacts must have a human-readable title."@en;
+        sh:minCount 1;
+        sh:datatype rdf:langString;
+        sh:message "A software engineering artifact must have at least one rdfs:label language-tagged string."@en;
+    ];
+
+    sh:property [
+        sh:path skos:definition;
+        sh:name "content or reference"@en;
+        sh:description "Software engineering artifacts must state their content or reference clearly."@en;
+        sh:minCount 1;
+        sh:datatype rdf:langString;
+        sh:message "A software engineering artifact must include at least one skos:definition language-tagged string."@en;
+    ];
+
+    sh:property [
+        sh:path prov:wasAttributedTo;
+        sh:name "owner or steward"@en;
+        sh:description "Software engineering artifacts must identify the owning or stewarding agent."@en;
+        sh:minCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "A software engineering artifact must have at least one prov:wasAttributedTo IRI."@en;
+    ];
+
+    sh:property [
+        sh:path prov:generatedAtTime;
+        sh:name "creation time"@en;
+        sh:description "Software engineering artifacts must record when the artifact was created."@en;
+        sh:minCount 1;
+        sh:maxCount 1;
+        sh:datatype xsd:dateTime;
+        sh:message "A software engineering artifact must have exactly one prov:generatedAtTime value typed as xsd:dateTime."@en;
+    ];
+
+    sh:property [
+        sh:path dcterms:source;
+        sh:name "source system"@en;
+        sh:description "Software engineering artifacts should identify the originating source system."@en;
+        sh:minCount 1;
+        sh:nodeKind sh:IRIOrLiteral;
+        sh:severity sh:Warning;
+        sh:message "A software engineering artifact should have at least one dcterms:source value."@en;
+    ];
+
+    sh:property [
+        sh:path kee:scope;
+        sh:name "scope"@en;
+        sh:description "Software engineering artifacts should declare the scope where the artifact applies."@en;
+        sh:minCount 1;
+        sh:nodeKind sh:IRI;
+        sh:severity sh:Warning;
+        sh:message "A software engineering artifact should declare at least one kee:scope IRI."@en;
+    ];
+
+    sh:property [
+        sh:path kee:context;
+        sh:name "context"@en;
+        sh:description "Software engineering artifacts should declare the interpretive context for the artifact."@en;
+        sh:minCount 1;
+        sh:nodeKind sh:IRI;
+        sh:severity sh:Warning;
+        sh:message "A software engineering artifact should declare at least one kee:context IRI."@en;
+    ];
+
+    sh:property [
+        sh:path dcterms:relation;
+        sh:name "generic related engineering resource"@en;
+        sh:description "Fallback relation for a related repository, system, service, project, commit, issue, test, trace, package, or other engineering resource when no more specific machine-queryable relationship is required. does not infer a typed domain relationship from this generic predicate."@en;
+        sh:minCount 1;
+        sh:nodeKind sh:IRIOrLiteral;
+        sh:severity sh:Warning;
+        sh:message "A software engineering artifact should have at least one dcterms:relation value identifying a related engineering resource; use an established typed domain relation when consumers depend on relationship kind."@en;
+    ];
+
+    sh:property [
+        sh:path kee:confidenceStatus;
+        sh:name "confidence or epistemic status"@en;
+        sh:description "Confidence or epistemic status is optional and profile-defined."@en;
+        sh:nodeKind sh:IRI;
+        sh:severity sh:Info;
+        sh:message "If present, kee:confidenceStatus should be an IRI from a profile-defined controlled vocabulary."@en;
+    ];
+
+    sh:property [
+        sh:path kee:reviewDue;
+        sh:name "review due"@en;
+        sh:description "Software engineering artifacts may declare a review due timestamp when the artifact is subject to periodic review."@en;
+        sh:datatype xsd:dateTime;
+        sh:severity sh:Info;
+        sh:message "If present, kee:reviewDue should be typed as xsd:dateTime."@en;
+    ];
+
+    sh:property [
+        sh:path dcterms:isReplacedBy;
+        sh:name "replacement artifact"@en;
+        sh:description "Deprecated, superseded, or retired software engineering artifacts may point to a replacement artifact."@en;
+        sh:nodeKind sh:IRI;
+        sh:severity sh:Info;
+        sh:message "If present, dcterms:isReplacedBy should be an IRI identifying the replacement artifact."@en;
+    ];
+
+    sh:property [
+        sh:path prov:wasRevisionOf;
+        sh:name "revision lineage"@en;
+        sh:description "Software engineering artifacts that revise prior artifacts may identify the prior entity."@en;
+        sh:nodeKind sh:IRI;
+        sh:severity sh:Info;
+        sh:message "If present, prov:wasRevisionOf should be an IRI identifying the revised artifact."@en;
+    ].

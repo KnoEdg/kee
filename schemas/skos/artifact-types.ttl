@@ -7,8 +7,8 @@
 artifact:ArtifactTypeScheme
   a skos:ConceptScheme ;
   skos:prefLabel "KEE Artifact Type Scheme" ;
-  dcterms:identifier "kee-artifact-type-v0.8-rc4" ;
-  dcterms:description "Canonical RC4 SKOS concept scheme for KEE controlled artifact classifications used with dcterms:type. The artifact# namespace is the new-write surface; historical knoedg.org/vocab/*Artifact terms are legacy identifiers with explicit mappings where reviewed." .
+  dcterms:identifier "kee-artifact-type-v0.9.2" ;
+  dcterms:description "Canonical SKOS concept scheme for KEE controlled artifact classifications used with dcterms:type. The artifact# namespace is the new-write surface; historical knoedg.org/vocab/*Artifact terms are legacy identifiers with explicit mappings where reviewed." .
 
 artifact:Assertion
   a skos:Concept ;
@@ -93,9 +93,9 @@ artifact:Profile
   skos:exactMatch legacy:ProfileArtifact ;
   skos:inScheme artifact:ArtifactTypeScheme .
 
-# Legacy concepts are preserved as migration identifiers. Their historical
-# descriptions remain recoverable from git history; RC4 does not claim that
-# same-label RDF classes are owl:sameAs these classification concepts.
+# Legacy concepts are preserved as migration identifiers. This scheme does not
+# claim that same-label RDF classes are owl:sameAs these classification
+# concepts.
 legacy:AssertionArtifact skos:exactMatch artifact:Assertion .
 legacy:DecisionArtifact skos:exactMatch artifact:Decision .
 legacy:MemoryArtifact skos:exactMatch artifact:OrganizationalMemory .

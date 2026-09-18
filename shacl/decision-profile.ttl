@@ -1,0 +1,203 @@
+@prefix kee: <https://w3id.org/kee#>.
+@prefix profile: <https://w3id.org/kee/profile#>.
+@prefix artifact: <https://w3id.org/kee/artifact#>.
+@prefix lifecycle: <https://w3id.org/kee/lifecycle#>.
+@prefix governance: <https://w3id.org/kee/governance#>.
+@prefix prov: <http://www.w3.org/ns/prov#>.
+@prefix dcterms: <http://purl.org/dc/terms/>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix sh: <http://www.w3.org/ns/shacl#>.
+@prefix skos: <http://www.w3.org/2004/02/skos/core#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+
+# KEE Decision Profile SHACL Shapes
+# Status: Draft / Non-Normative
+# Shape-contract version: 0.9.2
+# Repository path: shacl/decision-profile.ttl
+#
+# Semantic-surface rule:
+# - new writes use dcterms:type for controlled artifact classification;
+# - new writes use dcterms:conformsTo for profile declarations;
+# - legacy kee:artifactType and kee:profileConformance remain dual-read inputs
+# during the registered legacy compatibility window.
+#
+# This file remains a structural Draft-profile shape. preserves the
+# existing legacy SKOS annotation checks so old fixtures remain readable, but
+# no longer describes skos:scopeNote or skos:changeNote as exact ADR context,
+# rationale, or consequences semantics. New implementations may preserve native
+# ADR fields or link structured section resources through standard metadata/
+# container relations such as dcterms:hasPart.
+#
+# The shape follows ADR-style decision practice while composing prior art:
+# - PROV-O for provenance and revision lineage
+# - Dublin Core Terms for classification, profile conformance, descriptions,
+# structured section containment, and replacement links
+# - SKOS only as legacy/general documentation annotation
+# - SHACL for validation
+
+kee:DecisionProfileShape
+    a sh:NodeShape;
+    rdfs:label "KEE Decision Profile Shape"@en;
+    rdfs:comment "Minimal structural SHACL shape for Draft decision artifacts, with decision-field semantic-fit guidance."@en;
+    sh:targetClass kee:Decision;
+
+    sh:property [
+        sh:path [ sh:alternativePath ( dcterms:type kee:artifactType ) ];
+        sh:name "artifact type"@en;
+        sh:description "Decision artifacts must declare controlled artifact classification using dcterms:type. Legacy kee:artifactType remains accepted for registered legacy reads only."@en;
+        sh:minCount 1;
+        sh:maxCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "A decision must have exactly one dcterms:type IRI; legacy kee:artifactType is accepted during the registered legacy compatibility window."@en;
+    ];
+
+    sh:property [
+        sh:path kee:lifecycleState;
+        sh:name "lifecycle state"@en;
+        sh:description "Decision artifacts must declare a lifecycle state."@en;
+        sh:minCount 1;
+        sh:maxCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "A decision must have exactly one kee:lifecycleState IRI."@en;
+    ];
+
+    sh:property [
+        sh:path [ sh:alternativePath ( dcterms:conformsTo kee:profileConformance ) ];
+        sh:name "profile conformance"@en;
+        sh:description "Decision artifacts must identify the profile they claim to conform to using dcterms:conformsTo. Legacy kee:profileConformance remains accepted for registered legacy reads only."@en;
+        sh:minCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "A decision must declare at least one dcterms:conformsTo IRI; legacy kee:profileConformance is accepted during the registered legacy compatibility window."@en;
+    ];
+
+    sh:property [
+        sh:path rdfs:label;
+        sh:name "title"@en;
+        sh:description "Decision artifacts must have a human-readable title."@en;
+        sh:minCount 1;
+        sh:datatype rdf:langString;
+        sh:message "A decision must have at least one rdfs:label language-tagged string."@en;
+    ];
+
+    sh:property [
+        sh:path skos:definition;
+        sh:name "decision statement"@en;
+        sh:description "Decision artifacts must state the decision clearly."@en;
+        sh:minCount 1;
+        sh:datatype rdf:langString;
+        sh:message "A decision must include at least one skos:definition language-tagged string describing the decision."@en;
+    ];
+
+    sh:property [
+        sh:path skos:scopeNote;
+        sh:name "legacy prose context annotation"@en;
+        sh:description "Legacy Decision fixtures use skos:scopeNote for prose context. accepts that annotation for compatibility but does not claim that SKOS scope-note semantics are identical to the ADR context field."@en;
+        sh:minCount 1;
+        sh:datatype rdf:langString;
+        sh:severity sh:Warning;
+        sh:message "Legacy Decision fixtures should include at least one skos:scopeNote language-tagged string; new mappings may preserve explicit/native context fields instead."@en;
+    ];
+
+    sh:property [
+        sh:path skos:changeNote;
+        sh:name "legacy rationale or consequences annotation"@en;
+        sh:description "Legacy Decision fixtures use skos:changeNote for rationale/consequences prose. accepts it for compatibility but does not treat that generic annotation as exact ADR rationale or consequences semantics."@en;
+        sh:minCount 1;
+        sh:datatype rdf:langString;
+        sh:severity sh:Warning;
+        sh:message "Legacy Decision fixtures should include at least one skos:changeNote language-tagged string; new mappings should preserve explicit/native ADR fields when available."@en;
+    ];
+
+    sh:property [
+        sh:path dcterms:description;
+        sh:name "decision context or summary description"@en;
+        sh:description "A new-write application profile may use dcterms:description for a prose context or summary when separately queryable ADR sections are not required."@en;
+        sh:nodeKind sh:Literal;
+        sh:severity sh:Info;
+        sh:message "If present, dcterms:description should be a literal context or summary description."@en;
+    ];
+
+    sh:property [
+        sh:path dcterms:hasPart;
+        sh:name "structured ADR section"@en;
+        sh:description "A new-write application profile may link structured context, rationale, consequences, or other ADR section resources with dcterms:hasPart and declare their application/profile roles separately."@en;
+        sh:nodeKind sh:IRI;
+        sh:severity sh:Info;
+        sh:message "If present, dcterms:hasPart should identify a structured decision-section resource."@en;
+    ];
+
+    sh:property [
+        sh:path prov:wasAttributedTo;
+        sh:name "decision author or owner"@en;
+        sh:description "Decision artifacts must identify the agent to whom the decision is attributed."@en;
+        sh:minCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "A decision must have at least one prov:wasAttributedTo IRI."@en;
+    ];
+
+    sh:property [
+        sh:path prov:generatedAtTime;
+        sh:name "decision generation time"@en;
+        sh:description "Decision artifacts must record when the decision artifact was generated or recorded."@en;
+        sh:minCount 1;
+        sh:maxCount 1;
+        sh:datatype xsd:dateTime;
+        sh:message "A decision must have exactly one prov:generatedAtTime value typed as xsd:dateTime."@en;
+    ];
+
+    sh:property [
+        sh:path kee:authority;
+        sh:name "decision authority"@en;
+        sh:description "Governed decision artifacts should identify the accepting authority or authority rule."@en;
+        sh:minCount 1;
+        sh:nodeKind sh:IRI;
+        sh:severity sh:Warning;
+        sh:message "A governed decision should identify at least one kee:authority IRI."@en;
+    ];
+
+    sh:property [
+        sh:path kee:scope;
+        sh:name "scope"@en;
+        sh:description "Decision artifacts should declare the scope where the decision applies."@en;
+        sh:minCount 1;
+        sh:nodeKind sh:IRI;
+        sh:severity sh:Warning;
+        sh:message "A decision should declare at least one kee:scope IRI."@en;
+    ];
+
+    sh:property [
+        sh:path kee:context;
+        sh:name "structured interpretive context"@en;
+        sh:description "Decision artifacts may declare a structured interpretive-context IRI in addition to native/prose ADR context."@en;
+        sh:nodeKind sh:IRI;
+        sh:severity sh:Info;
+        sh:message "If present, kee:context should be an IRI identifying structured interpretive context."@en;
+    ];
+
+    sh:property [
+        sh:path dcterms:isReplacedBy;
+        sh:name "superseding decision"@en;
+        sh:description "Superseded decisions may point to a replacement decision."@en;
+        sh:nodeKind sh:IRI;
+        sh:severity sh:Info;
+        sh:message "If present, dcterms:isReplacedBy should be an IRI identifying the superseding decision."@en;
+    ];
+
+    sh:property [
+        sh:path dcterms:replaces;
+        sh:name "replaced decision"@en;
+        sh:description "A decision that replaces a prior decision may identify that resource with DCTerms replacement semantics."@en;
+        sh:nodeKind sh:IRI;
+        sh:severity sh:Info;
+        sh:message "If present, dcterms:replaces should be an IRI identifying the replaced decision."@en;
+    ];
+
+    sh:property [
+        sh:path prov:wasRevisionOf;
+        sh:name "revision lineage"@en;
+        sh:description "Decision artifacts that are actual revisions of prior decisions may identify the prior entity with PROV revision semantics; this is not automatically identical to replacement."@en;
+        sh:nodeKind sh:IRI;
+        sh:severity sh:Info;
+        sh:message "If present, prov:wasRevisionOf should be an IRI identifying the revised decision."@en;
+    ].

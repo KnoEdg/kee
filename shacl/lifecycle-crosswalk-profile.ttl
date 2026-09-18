@@ -1,0 +1,176 @@
+@prefix kee: <https://w3id.org/kee#>.
+@prefix profile: <https://w3id.org/kee/profile#>.
+@prefix artifact: <https://w3id.org/kee/artifact#>.
+@prefix lifecycle: <https://w3id.org/kee/lifecycle#>.
+@prefix confidence: <https://w3id.org/kee/confidence#>.
+@prefix prov: <http://www.w3.org/ns/prov#>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix dcterms: <http://purl.org/dc/terms/>.
+@prefix sh: <http://www.w3.org/ns/shacl#>.
+@prefix skos: <http://www.w3.org/2004/02/skos/core#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+
+# KEE Lifecycle Crosswalk Profile SHACL Shapes
+# Status: Draft / Non-Normative
+# Shape-contract version: 0.9.2
+# Repository path: shacl/lifecycle-crosswalk-profile.ttl
+#
+# Semantic-surface rule: new writes use dcterms:conformsTo for
+# profile declarations; legacy kee:profileConformance remains accepted for
+# reads during the registered legacy compatibility window.
+#
+# This shape targets kee:LifecycleCrosswalkMapping: a crosswalk-record resource
+# that documents source/target vocabulary identity, terms, relation, rationale,
+# scope/context, provenance, temporal qualification, and review state.
+#
+# This shape makes the mapping relation explicit prior art. New writes use
+# the standard SKOS mapping relations exactMatch, closeMatch, broadMatch,
+# narrowMatch, or relatedMatch. The record does not merge source/target
+# vocabularies into a universal KEE lifecycle ontology and does not authorize
+# source-data replacement merely because a mapping exists.
+#
+# The shape composes prior-art vocabularies:
+# - SKOS for mapping relationships and controlled concepts
+# - PROV-O for provenance
+# - Dublin Core Terms / SKOS for rationale, metadata, and profile conformance
+# - SHACL for validation
+
+kee:LifecycleCrosswalkProfileShape
+    a sh:NodeShape;
+    rdfs:label "KEE Lifecycle Crosswalk Profile Shape"@en;
+    rdfs:comment "Minimal structural SHACL shape for Draft lifecycle/status crosswalk mapping records; maps rather than unifies vocabularies."@en;
+    sh:targetClass kee:LifecycleCrosswalkMapping;
+
+    sh:property [
+        sh:path kee:sourceVocabulary;
+        sh:name "source vocabulary"@en;
+        sh:description "A crosswalk record must identify the source vocabulary or system supplying the source term; the source vocabulary remains independently identifiable after mapping."@en;
+        sh:minCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "A lifecycle crosswalk mapping must have at least one kee:sourceVocabulary IRI."@en;
+    ];
+
+    sh:property [
+        sh:path kee:sourceTerm;
+        sh:name "source term"@en;
+        sh:description "A crosswalk record must identify the source lifecycle/status term being mapped rather than silently replacing it with a target term."@en;
+        sh:minCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "A lifecycle crosswalk mapping must have at least one kee:sourceTerm IRI."@en;
+    ];
+
+    sh:property [
+        sh:path kee:targetVocabulary;
+        sh:name "target vocabulary"@en;
+        sh:description "A crosswalk record must identify the target profile or vocabulary used as the mapping target."@en;
+        sh:minCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "A lifecycle crosswalk mapping must have at least one kee:targetVocabulary IRI."@en;
+    ];
+
+    sh:property [
+        sh:path kee:targetTerm;
+        sh:name "target term"@en;
+        sh:description "A crosswalk record must identify the target lifecycle/status term or category used for comparison."@en;
+        sh:minCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "A lifecycle crosswalk mapping must have at least one kee:targetTerm IRI."@en;
+    ];
+
+    sh:property [
+        sh:path kee:mappingRelationship;
+        sh:name "SKOS mapping relationship"@en;
+        sh:description "new writes must preserve whether the mapping is exact, close, broad, narrow, or related by using the corresponding standard SKOS mapping-property IRI."@en;
+        sh:minCount 1;
+        sh:maxCount 1;
+        sh:nodeKind sh:IRI;
+        sh:in ( skos:exactMatch skos:closeMatch skos:broadMatch skos:narrowMatch skos:relatedMatch );
+        sh:message "A lifecycle crosswalk mapping must use exactly one of skos:exactMatch, skos:closeMatch, skos:broadMatch, skos:narrowMatch, or skos:relatedMatch for new writes."@en;
+    ];
+
+    sh:property [
+        sh:path kee:lifecycleState;
+        sh:name "review status"@en;
+        sh:description "A crosswalk record must declare the review state of the mapping itself, distinct from source/target lifecycle terms."@en;
+        sh:minCount 1;
+        sh:maxCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "A lifecycle crosswalk mapping must have exactly one kee:lifecycleState IRI."@en;
+    ];
+
+    sh:property [
+        sh:path [ sh:alternativePath ( dcterms:conformsTo kee:profileConformance ) ];
+        sh:name "profile conformance"@en;
+        sh:description "Lifecycle crosswalk mappings must identify the profile used to interpret the metadata using dcterms:conformsTo. Legacy kee:profileConformance remains accepted for registered legacy reads only."@en;
+        sh:minCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "A lifecycle crosswalk mapping must declare at least one dcterms:conformsTo IRI; legacy kee:profileConformance is accepted during the registered legacy compatibility window."@en;
+    ];
+
+    sh:property [
+        sh:path prov:wasAttributedTo;
+        sh:name "provenance"@en;
+        sh:description "A crosswalk record must identify who or what created, reviewed, imported, derived, or changed the mapping."@en;
+        sh:minCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "A lifecycle crosswalk mapping must have at least one prov:wasAttributedTo IRI."@en;
+    ];
+
+    sh:property [
+        sh:path prov:generatedAtTime;
+        sh:name "temporal qualification"@en;
+        sh:description "A crosswalk record must declare at least one temporal anchor (mapping creation time)."@en;
+        sh:minCount 1;
+        sh:maxCount 1;
+        sh:datatype xsd:dateTime;
+        sh:message "A lifecycle crosswalk mapping must have exactly one prov:generatedAtTime value typed as xsd:dateTime."@en;
+    ];
+
+    sh:property [
+        sh:path skos:changeNote;
+        sh:name "rationale"@en;
+        sh:description "A crosswalk record should include rationale, especially when the mapping is not exact or when a local term is mapped to a broader/narrower category."@en;
+        sh:minCount 1;
+        sh:datatype rdf:langString;
+        sh:severity sh:Warning;
+        sh:message "A lifecycle crosswalk mapping should have at least one skos:changeNote language-tagged rationale string."@en;
+    ];
+
+    sh:property [
+        sh:path kee:scope;
+        sh:name "scope"@en;
+        sh:description "Lifecycle crosswalk mappings should declare the scope where the mapping applies."@en;
+        sh:nodeKind sh:IRI;
+        sh:severity sh:Warning;
+        sh:message "A lifecycle crosswalk mapping should declare at least one kee:scope IRI."@en;
+    ];
+
+    sh:property [
+        sh:path kee:context;
+        sh:name "context"@en;
+        sh:description "Lifecycle crosswalk mappings should declare the interpretive context for the mapping."@en;
+        sh:nodeKind sh:IRI;
+        sh:severity sh:Warning;
+        sh:message "A lifecycle crosswalk mapping should declare at least one kee:context IRI."@en;
+    ];
+
+    sh:property [
+        sh:path kee:confidenceStatus;
+        sh:name "confidence status"@en;
+        sh:description "Confidence status is optional and profile-defined, and must not be collapsed into review status or mapping relation kind."@en;
+        sh:nodeKind sh:IRI;
+        sh:severity sh:Info;
+        sh:message "If present, kee:confidenceStatus should be an IRI from a profile-defined controlled vocabulary."@en;
+    ];
+
+    sh:property [
+        sh:path kee:confidenceValue;
+        sh:name "confidence value"@en;
+        sh:description "Numeric confidence is optional and profile-defined. Profiles must define scale and interpretation before using it normatively."@en;
+        sh:datatype xsd:decimal;
+        sh:minInclusive 0;
+        sh:maxInclusive 1;
+        sh:severity sh:Info;
+        sh:message "If present, kee:confidenceValue must be a decimal between 0 and 1. The value has no normative meaning unless a profile defines it."@en;
+    ].
