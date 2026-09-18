@@ -39,7 +39,7 @@ kee:AccountableAuthorityRootShape
 # Severity is sh:Warning for the registered legacy compatibility window: the rule is
 # normative, but data that was structurally valid under an earlier baseline must not become
 # invalid in a patch release. It becomes sh:Violation in the next minor
-# version (the published baseline Section 12.3).
+# version (specification Section 12.3).
 kee:SoftwareAgentAuthorityRootShape
     a sh:NodeShape;
     rdfs:label "KEE Non-Person Grantee Accountable Root Shape"@en;
