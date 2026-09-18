@@ -597,7 +597,7 @@ A system claiming an operational capability MUST be able to demonstrate the beha
 
 A conformance claim MUST use `dcterms:conformsTo` for new writes. A KEE conformance declaration MUST identify:
 
-- the KEE specification baseline claimed;
+- the KEE specification baseline or release candidate claimed;
 - each Accepted / Normative profile claimed (and any Draft profile the implementation intends to follow, without binding effect);
 - representation or serialization assumptions material to interoperability;
 - applicable validation/conformance assets; and
