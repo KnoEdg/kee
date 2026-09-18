@@ -6,8 +6,8 @@
 alife:AssertionLifecycleScheme
   a skos:ConceptScheme ;
   skos:prefLabel "KEE Assertion Lifecycle Scheme" ;
-  dcterms:identifier "kee-assertion-lifecycle-v0.8-rc4" ;
-  dcterms:description "Canonical RC4 profile lifecycle/disposition scheme for assertions. Preference, challenge, and qualification are separate ranking/dispute/assessment dimensions." .
+  dcterms:identifier "kee-assertion-lifecycle-v0.9.2" ;
+  dcterms:description "Canonical profile lifecycle/disposition scheme for assertions. Preference, challenge, and qualification are separate ranking/dispute/assessment dimensions." .
 
 alife:Proposed a skos:Concept ; skos:prefLabel "Proposed" ; skos:definition "Assertion has been submitted or recorded but not yet accepted for ordinary use." ; skos:exactMatch legacy:ProposedAssertion ; skos:inScheme alife:AssertionLifecycleScheme .
 alife:Normal a skos:Concept ; skos:prefLabel "Normal" ; skos:definition "Assertion is active for ordinary use within its declared scope; this does not imply truth, preference, or absence of challenge." ; skos:exactMatch legacy:NormalAssertion ; skos:inScheme alife:AssertionLifecycleScheme .

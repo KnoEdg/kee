@@ -305,23 +305,23 @@ Conformance means only what the applicable KEE specification and profile explici
 
 ## Current release
 
-**KEE v0.9.1**
+**KEE v0.9.2**
 
 Status: **Published Normative Baseline**
 
-KEE v0.9.1 is a backward-compatible patch release under ADR-0074.
+KEE v0.9.2 is a backward-compatible patch release.
 
-It corrects public explanation and current-state documentation following the publication of v0.9.0.
+It consolidates the published contract into one self-contained specification: determining the meaning of a KEE obligation requires no other document.
 
-It does not change the normative behavior of conforming v0.9.0 implementations.
+It does not change the normative behavior of conforming v0.9.1 implementations.
 
 Current normative specification:
 
-[`docs/specs/KEE-Specification-v0.9.1.md`](docs/specs/KEE-Specification-v0.9.1.md)
+[`docs/specs/KEE-Specification-v0.9.2.md`](docs/specs/KEE-Specification-v0.9.2.md)
 
 Public normative API:
 
-[`normative-api/v0.9.1.json`](normative-api/v0.9.1.json)
+[`normative-api/v0.9.2.json`](normative-api/v0.9.2.json)
 
 Release history:
 
@@ -356,7 +356,7 @@ Until that registration is merged and resolution is independently verified, thes
 
 ## Versioning
 
-KEE follows Semantic Versioning under ADR-0074.
+KEE follows Semantic Versioning.
 
 - **PATCH** — backward-compatible corrections or consolidations
 - **MINOR** — backward-compatible additions or material extensions
@@ -392,4 +392,4 @@ https://github.com/KnoEdg/kee
 
 ---
 
-**Current baseline: KEE v0.9.1**
+**Current baseline: KEE v0.9.2**

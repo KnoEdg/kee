@@ -2,81 +2,78 @@
 
 Profiles adapt the KEE core specification to a specific artifact type, domain, or implementation context. Domain details remain outside the core wherever practical.
 
-## Published v0.8 Baseline
+## Published baseline
 
 The current published normative baseline is:
 
-- `docs/specs/KEE-Specification-v0.9.0.md`.
+- [`docs/specs/KEE-Specification-v0.9.2.md`](../specs/KEE-Specification-v0.9.2.md).
 
-v0.9.0 changes no profile status; the previous baseline `docs/specs/KEE-Specification-v0.8.2.md` is retained as historical provenance.
+v0.9.2 is a self-contained SemVer PATCH consolidation. It changes no profile status and promotes no profile.
 
-v0.8.2 is a SemVer PATCH consolidation of v0.8.1 + amendment-01 + amendment-02. It changes no profile status.
+Section 19 of the specification is the authoritative statement of profile status; this document restates it for convenience.
 
-Historical normative provenance includes:
+## Current profile status
 
-- `docs/specs/KEE-Specification-v0.8.1.md`;
-- `docs/specs/KEE-Specification-v0.8.1-amendment-01.md`;
-- `docs/specs/KEE-Specification-v0.8.1-amendment-02.md`;
-- `docs/specs/KEE-Specification-v0.8.1-rc1.md`; and
-- `docs/specs/KEE-Specification-v0.8.0-rc11.md`.
+| # | Profile | Status |
+|---|---|---|
+| 1 | Software Engineering Profile | Accepted / Normative |
+| 2 | Scientific Claim Profile | Accepted / Normative |
+| 3 | Assertion Metadata Profile | Accepted / Normative |
+| 4 | Assertion Profile | Draft |
+| 5 | Decision Profile | Draft |
+| 6 | Organizational Memory Profile | Draft |
+| 7 | Lifecycle Crosswalk Profile | Draft / Non-Normative |
+| 8 | Governance Transition Profile | Draft / Non-Normative |
+| 9 | Promotion Profile | Draft / Non-Normative |
+| 10 | Authority and Delegation Profile | Draft / Non-Normative |
+| 11 | Contradiction Records Profile | Draft / Non-Normative |
+| 12 | AI-Grounded Retrieval Profile | Draft / Non-Normative |
+| 13 | Artifact Identity and Granularity Profile | Draft / Non-Normative |
+| 14 | Historical and Bitemporal Querying Profile | Draft / Non-Normative |
 
-Earlier RC profile companions remain frozen evidence of the bounded decisions they introduced; publication does not rewrite them.
+A profile is not promoted merely because it has executable shapes, fixtures, examples, or tests. The existence of a profile identifier, document, shape graph, or passing structural validation does not by itself create normative force.
 
-Applicable frozen companions include:
+## Binding effect
 
-- `KEE-v0.8.0-rc3-lifecycle-status-overrides.md`;
-- `KEE-v0.8.0-rc5-confidence-evidence-overrides.md`;
-- `KEE-v0.8.0-rc6-authority-delegation-overrides.md`;
-- `KEE-v0.8.0-rc7-contradiction-promotion-overrides.md`;
-- `KEE-v0.8.0-rc8-temporal-history-retrieval-overrides.md`;
-- `KEE-v0.8.0-rc9-profile-conformance-overrides.md`; and
-- `KEE-v0.8.0-rc10-domain-profile-overrides.md`.
+A profile has binding normative effect for a result only when both conditions hold:
 
-## Current Profile Status
+1. the profile is Accepted / Normative in the applicable baseline; and
+2. the implementation or resource actually claims conformance to it.
 
-1. Assertion Profile — Draft.
-2. Assertion Metadata Profile — Accepted / Normative (ADR-0040).
-3. Lifecycle Crosswalk Profile — Draft / Non-Normative.
-4. Governance Transition Profile — Draft / Non-Normative.
-5. Promotion Profile — Draft / Non-Normative.
-6. Authority and Delegation Profile — Draft / Non-Normative.
-7. Contradiction Records Profile — Draft / Non-Normative.
-8. AI-Grounded Retrieval Profile — Draft / Non-Normative.
-9. Artifact Identity and Granularity Profile — Draft / Non-Normative.
-10. Historical and Bitemporal Querying Profile — Draft / Non-Normative.
-11. Decision Profile — Draft.
-12. Organizational Memory Profile — Draft.
-13. Software Engineering Profile — Accepted / Normative (ADR-0032).
-14. Scientific Claim Profile — Accepted / Normative (ADR-0035).
+Draft and Non-Normative profiles are excluded from the public normative API. Claiming a Draft profile records which designated contract an implementation intends to follow; it creates no obligation.
 
-v0.8.2 promotes no Draft profile merely because it has executable shapes, fixtures, examples, or tests. Profile status is unchanged from v0.8.1.
+Where a shared dimension is assigned to a profile that is not yet Accepted / Normative, the owner of record for that dimension is the core interoperability contract (specification Section 6.4).
 
-## Cross-Profile Rules
+## Cross-profile rules
 
-Profiles MUST preserve Source and Consumer Neutrality. Producer or consumer type alone MUST NOT establish epistemic status.
+Profiles MUST preserve Source and Consumer Neutrality. Producer or consumer type alone MUST NOT establish epistemic standing.
 
-Profiles MUST NOT collapse independent lifecycle, publication, review/currency, archival/disposition, epistemic/evidential, ranking, confidence, evidence-strength, replication, authority, scope/context, retrieval, or retained-history dimensions merely because implementations call them “status” or store them together.
+Profiles MUST NOT collapse independent lifecycle, publication, review/currency, archival/disposition, epistemic/evidential, ranking, confidence, evidence-strength, replication, authority, scope/context, retrieval, or retained-history dimensions merely because implementations call them "status" or store them together.
 
-The v0.8.2 conformance contract requires:
+The conformance contract requires:
 
 - new profile-conformance claims use `dcterms:conformsTo`;
 - structural, profile-semantic, procedural, governance/policy, and interoperability conformance remain separate;
 - Capability Levels are not aggregate conformance results;
-- Draft structural PASS does not create normative effect; and
-- normative effect requires both Accepted / Normative profile status and an actual conformance claim.
+- a Draft structural PASS creates no normative effect; and
+- normative effect requires both Accepted / Normative status and an actual conformance claim.
 
-## Release Controls Affecting Profiles
+## Promotion
 
-v0.8.2 carries forward the v0.8.1 release evidence and both amendments without changing profile semantics.
+A new profile promotion or graduation claim MUST be supported by independent interoperability evidence. Reference self-roundtrip is insufficient: a producer and a consumer that share an implementation demonstrate that the implementation is self-consistent, not that the contract is interoperable.
 
-The effective non-collapse behavioral coverage incorporated from amendment-02 is fifteen of the seventeen Section 7.1 rules. Rules 3 and 6 remain non-demonstrable because accountability and trust are not represented as distinct KEE surfaces at this baseline.
+This requirement is not retroactive. An existing conformance claim does not become non-conforming for want of it.
 
-The relevant historical evidence remains under `docs/release/KEE-v0.8.1-*` and `docs/migration/KEE-v0.8.1-*`. The frozen RC11 set remains publication provenance for v0.8.0.
+## Non-collapse coverage
+
+Behavioural coverage of the seventeen non-collapse rules at this baseline is fifteen of seventeen.
+
+NC-03 (authority vs. responsibility) and NC-06 (confidence vs. trust) are not demonstrable, because KEE represents authority and confidence but does not represent accountability and trust as distinct semantic surfaces. The obstacle is representational, not epistemic, and closing it is a term-admission question rather than a testing question.
 
 ## Workflow
 
 ```text
-Research Brief -> ADR -> SemVer Release -> Profile -> Release Evidence
+Observation -> Evidence / Research Question -> Research Brief -> Decision Record -> PATCH / MINOR / MAJOR release -> Profile or Implementation
 ```
 
-Future profile semantics that change the published v0.8.2 contract require the appropriate governed PATCH, MINOR, or MAJOR release under ADR-0074 rather than an in-place semantic edit.
+Future profile semantics that change the published contract require the appropriate governed PATCH, MINOR, or MAJOR release rather than an in-place semantic edit.

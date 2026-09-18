@@ -6,7 +6,7 @@
 ccause:ContradictionCauseScheme
   a skos:ConceptScheme ;
   skos:prefLabel "KEE Contradiction Cause Scheme" ;
-  dcterms:identifier "kee-contradiction-cause-v0.8-rc4" ;
+  dcterms:identifier "kee-contradiction-cause-v0.9.2" ;
   dcterms:description "Governed open local vocabulary for common contradiction causes. Profiles may use other declared taxonomies; this scheme is not a closed conformance enumeration." .
 
 ccause:DirectContradiction a skos:Concept ; skos:prefLabel "Direct Contradiction" ; skos:definition "Two artifacts make incompatible claims within the same scope, context, and time frame." ; skos:exactMatch legacy:DirectContradiction ; skos:inScheme ccause:ContradictionCauseScheme .
