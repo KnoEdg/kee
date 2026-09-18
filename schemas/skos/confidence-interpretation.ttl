@@ -1,0 +1,43 @@
+@prefix confidence: <https://w3id.org/kee/confidence#> .
+@prefix legacy: <https://knoedg.org/vocab/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+# Canonical home for the one confidence-related term KEE owns (ADR-0062).
+#
+# Section 11 assigns confidence semantics to profiles: a profile that permits a
+# confidence representation MUST declare its vocabulary, interpretation, method,
+# assigning agent, timing, evidence relation, calibration and revision rules.
+# KEE's role is the composition boundary, so KEE defines no confidence levels,
+# scales, or scores, and this scheme deliberately contains no such value.
+#
+# It contains exactly one concept: the sentinel that says a profile owns the
+# interpretation. That marker is the composition boundary made explicit, which
+# is the one thing Section 11 does give KEE.
+#
+# The illustrative labels at https://knoedg.org/vocab/ (Low, Moderate, High,
+# Conflicting, Unassessed) are registered legacy and are NOT migrated here.
+# Their own definitions say their semantics are profile-defined and must not be
+# inferred from the scheme alone, so canonicalizing them would mint the
+# confidence vocabulary Section 11 declined to have.
+
+confidence:ConfidenceInterpretationScheme
+  a skos:ConceptScheme ;
+  skos:prefLabel "KEE Confidence Interpretation Scheme"@en ;
+  dcterms:identifier "kee-confidence-interpretation-v0.8.1" ;
+  dcterms:publisher "KEE (KnoEdg + Eidos)" ;
+  dcterms:description "Canonical scheme for the confidence-interpretation sentinel. Owner: KEE core, Section 11. Status: informative; it creates no normative effect and no profile is required to use it. Open: a profile MAY use its own vocabulary IRI instead, and Section 11 expects it to. Versioning: additions require a governed decision; this scheme holds no confidence level, scale, score, or ranking and is not an extension point for one. External mappings: none asserted — profiles are directed to ECO, SEPIO, GRADE, or a declared domain vocabulary (Section 11)."@en ;
+  dcterms:conformsTo <https://www.w3.org/TR/skos-reference/> ;
+  dcterms:isReferencedBy "docs/adr/ADR-0062-canonicalize-the-confidence-interpretation-sentinel.md" ;
+  skos:hasTopConcept confidence:ProfileDefined .
+
+confidence:ProfileDefined
+  a skos:Concept ;
+  skos:prefLabel "Profile Defined"@en ;
+  skos:definition "Sentinel indicating that confidence interpretation is owned by the applicable profile. It is not itself a confidence level, score, ranking, or assessment, and it asserts nothing about how confident anyone is."@en ;
+  skos:scopeNote "Use as the value of kee:confidenceStatus when the record defers confidence interpretation to its profile's declared contract (Section 11). A profile MAY instead use its own vocabulary IRI; the SHACL shapes accept any IRI and impose no vocabulary."@en ;
+  skos:inScheme confidence:ConfidenceInterpretationScheme ;
+  skos:topConceptOf confidence:ConfidenceInterpretationScheme ;
+  skos:exactMatch legacy:ProfileDefinedConfidence .
+
+legacy:ProfileDefinedConfidence skos:exactMatch confidence:ProfileDefined .
