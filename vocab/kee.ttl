@@ -47,7 +47,7 @@ kee:AssertionMetadataRecord
     rdfs:label "Assertion Metadata Record"@en ;
     skos:definition "Identify the managed assertion unit a metadata record governs, and keep managed-unit, content, record, occurrence, and container identities distinct."@en ;
     rdfs:isDefinedBy <https://w3id.org/kee> ;
-    skos:scopeNote "Assertion Metadata Profile (Accepted / Normative, ). Accepted / Normative profile surface"@en ;
+    skos:scopeNote "Assertion Metadata Profile (Accepted / Normative). Accepted / Normative profile surface"@en ;
     skos:note "External relationship: Managed-unit kinds map to RDF/nanopublication/record representation prior art through the assertion-unit-kind scheme (§10)."@en ;
     skos:historyNote "Migration: Retained; no migration. Legacy kee:assertionTime is registry-registered (§14.1)."@en .
 
@@ -56,7 +56,7 @@ kee:AssertionOccurrence
     rdfs:label "Assertion Occurrence"@en ;
     skos:definition "Identify the managed assertion unit a metadata record governs, and keep managed-unit, content, record, occurrence, and container identities distinct."@en ;
     rdfs:isDefinedBy <https://w3id.org/kee> ;
-    skos:scopeNote "Assertion Metadata Profile (Accepted / Normative, ). Accepted / Normative profile surface"@en ;
+    skos:scopeNote "Assertion Metadata Profile (Accepted / Normative). Accepted / Normative profile surface"@en ;
     skos:note "External relationship: Managed-unit kinds map to RDF/nanopublication/record representation prior art through the assertion-unit-kind scheme (§10)."@en ;
     skos:historyNote "Migration: Retained; no migration. Legacy kee:assertionTime is registry-registered (§14.1)."@en .
 
@@ -182,7 +182,7 @@ kee:ScientificClaim
     rdfs:label "Scientific Claim"@en ;
     skos:definition "Attach profile-defined confidence, evidence strength, and replication assessment to a scientific claim as dimensions independent of publication lifecycle."@en ;
     rdfs:isDefinedBy <https://w3id.org/kee> ;
-    skos:scopeNote "Scientific Claim Profile (Accepted / Normative, ). Accepted / Normative profile surface"@en ;
+    skos:scopeNote "Scientific Claim Profile (Accepted / Normative). Accepted / Normative profile surface"@en ;
     skos:note "External relationship: Values are expected to come from ECO/SEPIO/GRADE or a declared domain vocabulary; the slots are open IRI/literal carriers."@en ;
     skos:historyNote "Migration: Retained; no migration. kee:evidenceStrength is additionally registered as legacy-readable."@en .
 
@@ -191,7 +191,7 @@ kee:SoftwareEngineeringArtifact
     rdfs:label "Software Engineering Artifact"@en ;
     skos:definition "Identify a governed software-engineering knowledge artifact and its lifecycle state."@en ;
     rdfs:isDefinedBy <https://w3id.org/kee> ;
-    skos:scopeNote "Software Engineering Profile (Accepted / Normative, ). Accepted / Normative profile surface"@en ;
+    skos:scopeNote "Software Engineering Profile (Accepted / Normative). Accepted / Normative profile surface"@en ;
     skos:note "External relationship: Relationship semantics are delegated to OSLC/Trace Context/purl/SPDX/CycloneDX/OSV/SWHID (§16.1)."@en ;
     skos:historyNote "Migration: Retained; no migration."@en .
 
@@ -210,7 +210,7 @@ kee:assertionContent
     rdfs:label "Assertion Content"@en ;
     skos:definition "Reference to or embedded representation of assertion content. Content identity is not automatically the same as metadata-record, managed-unit, occurrence, or container identity."@en ;
     rdfs:isDefinedBy <https://w3id.org/kee> ;
-    skos:scopeNote "Assertion Metadata Profile (Accepted / Normative, ). Accepted / Normative profile surface"@en ;
+    skos:scopeNote "Assertion Metadata Profile (Accepted / Normative). Accepted / Normative profile surface"@en ;
     skos:note "External relationship: Managed-unit kinds map to RDF/nanopublication/record representation prior art through the assertion-unit-kind scheme (§10)."@en ;
     skos:historyNote "Migration: Retained; no migration. Legacy kee:assertionTime is registry-registered (§14.1)."@en .
 
@@ -219,7 +219,7 @@ kee:assertionTime
     rdfs:label "Assertion Time"@en ;
     skos:definition "Identify the managed assertion unit a metadata record governs, and keep managed-unit, content, record, occurrence, and container identities distinct."@en ;
     rdfs:isDefinedBy <https://w3id.org/kee> ;
-    skos:scopeNote "Assertion Metadata Profile (Accepted / Normative, ). legacy-readable"@en ;
+    skos:scopeNote "Assertion Metadata Profile (Accepted / Normative). legacy-readable"@en ;
     skos:note "External relationship: canonical surface: PROV activity timing / prov:generatedAtTime / dcterms:valid / OWL-Time"@en ;
     skos:historyNote "Deprecated: registered legacy. Migration: Registry: intentionally-unmapped-semantic-split, rewrite_safe=false (§14.1)."@en ;
     owl:deprecated true .
@@ -292,7 +292,7 @@ kee:confidenceStatus
     rdfs:label "Confidence Status"@en ;
     skos:definition "Confidence status is optional and profile-defined."@en ;
     rdfs:isDefinedBy <https://w3id.org/kee> ;
-    skos:scopeNote "Scientific Claim Profile (Accepted / Normative, ). Accepted / Normative profile surface"@en ;
+    skos:scopeNote "Scientific Claim Profile (Accepted / Normative). Accepted / Normative profile surface"@en ;
     skos:note "External relationship: Values are expected to come from ECO/SEPIO/GRADE or a declared domain vocabulary; the slots are open IRI/literal carriers."@en ;
     skos:historyNote "Migration: Retained; no migration. kee:evidenceStrength is additionally registered as legacy-readable."@en .
 
@@ -301,7 +301,7 @@ kee:confidenceValue
     rdfs:label "Confidence Value"@en ;
     skos:definition "Numeric confidence is optional and profile-defined. Profiles must define scale and interpretation before using it normatively."@en ;
     rdfs:isDefinedBy <https://w3id.org/kee> ;
-    skos:scopeNote "Scientific Claim Profile (Accepted / Normative, ). Accepted / Normative profile surface"@en ;
+    skos:scopeNote "Scientific Claim Profile (Accepted / Normative). Accepted / Normative profile surface"@en ;
     skos:note "External relationship: Values are expected to come from ECO/SEPIO/GRADE or a declared domain vocabulary; the slots are open IRI/literal carriers."@en ;
     skos:historyNote "Migration: Retained; no migration. kee:evidenceStrength is additionally registered as legacy-readable."@en .
 
@@ -371,7 +371,7 @@ kee:crossReference
 kee:eligibilityBasis
     a rdf:Property ;
     rdfs:label "Eligibility Basis"@en ;
-    skos:definition "Names the upstream metadata or policy facts claimed to have been consulted. Procedural conformance tests verify that the basis actually affects decision behaviour."@en ;
+    skos:definition "Names the upstream metadata or policy facts claimed to have been consulted. procedural tests verify that the basis actually affects decision behavior."@en ;
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "AI-Grounded Retrieval Profile (Draft / Non-Normative); core is owner of record (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: Composes prov:wasGeneratedBy/prov:generatedAtTime for decision provenance; categories are open IRI slots."@en ;
@@ -401,7 +401,7 @@ kee:evidenceStrength
     rdfs:label "Evidence Strength"@en ;
     skos:definition "Evidence strength is optional and distinct from confidence. This open compatibility/convenience slot may carry an IRI from SEPIO, ECO, GRADE, another domain evidence vocabulary, or a declared profile vocabulary; KEE defi"@en ;
     rdfs:isDefinedBy <https://w3id.org/kee> ;
-    skos:scopeNote "Scientific Claim Profile (Accepted / Normative, ). legacy-readable"@en ;
+    skos:scopeNote "Scientific Claim Profile (Accepted / Normative). legacy-readable"@en ;
     skos:note "External relationship: canonical surface: profile-declared evidence model (ECO/SEPIO/GRADE) or open IRI slot"@en ;
     skos:historyNote "Deprecated: registered legacy. Migration: Registry: deprecated-without-direct-replacement, rewrite_safe=false (§11)."@en ;
     owl:deprecated true .
@@ -484,7 +484,7 @@ kee:managedAssertionUnit
     rdfs:label "Managed Assertion Unit"@en ;
     skos:definition "The metadata record must identify the managed assertion unit it governs. This does not assert that the managed unit is identical to assertion content/proposition, assertion occurrence, metadata record, or containing repr"@en ;
     rdfs:isDefinedBy <https://w3id.org/kee> ;
-    skos:scopeNote "Assertion Metadata Profile (Accepted / Normative, ). Accepted / Normative profile surface"@en ;
+    skos:scopeNote "Assertion Metadata Profile (Accepted / Normative). Accepted / Normative profile surface"@en ;
     skos:note "External relationship: Managed-unit kinds map to RDF/nanopublication/record representation prior art through the assertion-unit-kind scheme (§10)."@en ;
     skos:historyNote "Migration: Retained; no migration. Legacy kee:assertionTime is registry-registered (§14.1)."@en .
 
@@ -493,7 +493,7 @@ kee:managedAssertionUnitKind
     rdfs:label "Managed Assertion Unit Kind"@en ;
     skos:definition "Managed-unit kind is optional and open. Implementations are recommended to use a term from the shared assertion-unit-kind scheme where applicable or another declared profile/domain IRI for a representation pattern the sc"@en ;
     rdfs:isDefinedBy <https://w3id.org/kee> ;
-    skos:scopeNote "Assertion Metadata Profile (Accepted / Normative, ). Accepted / Normative profile surface"@en ;
+    skos:scopeNote "Assertion Metadata Profile (Accepted / Normative). Accepted / Normative profile surface"@en ;
     skos:note "External relationship: Managed-unit kinds map to RDF/nanopublication/record representation prior art through the assertion-unit-kind scheme (§10)."@en ;
     skos:historyNote "Migration: Retained; no migration. Legacy kee:assertionTime is registry-registered (§14.1)."@en .
 
@@ -502,9 +502,9 @@ kee:managedUnit
     rdfs:label "Managed Unit"@en ;
     skos:definition "Identify the managed assertion unit a metadata record governs, and keep managed-unit, content, record, occurrence, and container identities distinct."@en ;
     rdfs:isDefinedBy <https://w3id.org/kee> ;
-    skos:scopeNote "Assertion Metadata Profile (Accepted / Normative, ). orphan; used in one RO-Crate example and by no shape, profile, or specification section"@en ;
+    skos:scopeNote "Assertion Metadata Profile (Accepted / Normative). orphan; used in one RO-Crate example and by no shape, profile, or specification section"@en ;
     skos:note "External relationship: Managed-unit kinds map to RDF/nanopublication/record representation prior art through the assertion-unit-kind scheme (§10)."@en ;
-    skos:historyNote "Deprecated: registered legacy. Migration: No registry row exists; retirement requires a separately versioned decision (§17.3). Retired: exact-replacement to https://w3id.org/kee#managedAssertionUnit; read policy dual-read-registered, rewrite_safe=true. Disposition: retired (exact-replacement) by a governed decision."@en ;
+    skos:historyNote "Deprecated: registered legacy. Migration: No registry row exists; retirement requires a separately versioned decision (§17.3). Retired by a governed decision: exact-replacement to https://w3id.org/kee#managedAssertionUnit; read policy dual-read-registered, rewrite_safe=true. Disposition: retired (exact-replacement) by a governed decision."@en ;
     owl:deprecated true .
 
 kee:mappingRelationship
@@ -613,7 +613,7 @@ kee:replicationStatus
     rdfs:label "Replication Status"@en ;
     skos:definition "Replication status is optional and profile-defined, and is deliberately independent of kee:lifecycleState. A profile needing interoperable replication semantics should also identify the underlying replication attempt/res"@en ;
     rdfs:isDefinedBy <https://w3id.org/kee> ;
-    skos:scopeNote "Scientific Claim Profile (Accepted / Normative, ). Accepted / Normative profile surface"@en ;
+    skos:scopeNote "Scientific Claim Profile (Accepted / Normative). Accepted / Normative profile surface"@en ;
     skos:note "External relationship: Values are expected to come from ECO/SEPIO/GRADE or a declared domain vocabulary; the slots are open IRI/literal carriers."@en ;
     skos:historyNote "Migration: Retained; no migration. kee:evidenceStrength is additionally registered as legacy-readable."@en .
 
