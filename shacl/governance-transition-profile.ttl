@@ -36,7 +36,7 @@
 #
 # kee:governedArtifact, kee:newLifecycleState, kee:previousLifecycleState,
 # kee:lifecycleStatusVocabulary, kee:authorityEvidence, and
-# kee:roleOrCapacity are new predicates introduced by this ADR -- they
+# kee:roleOrCapacity are new predicates introduced by this profile -- they
 # compose the profile's own "Baseline Transition Metadata Categories"
 # table rather than introducing new primitives. "Review status" (the
 # transition record's own governance status, distinct from the previous/

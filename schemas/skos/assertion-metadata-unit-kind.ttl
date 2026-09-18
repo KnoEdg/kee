@@ -17,6 +17,8 @@ unit:NanopublicationAssertionGraph a skos:Concept ; skos:prefLabel "Nanopublicat
 unit:DocumentAssertion a skos:Concept ; skos:prefLabel "Document Assertion" ; skos:definition "The managed assertion unit is a document-level assertion such as a passage or section of a non-RDF document." ; skos:exactMatch legacy:DocumentAssertionUnit ; skos:inScheme unit:AssertionUnitKindScheme .
 unit:ClaimObject a skos:Concept ; skos:prefLabel "Claim Object" ; skos:definition "The managed assertion unit is an application-specific claim object with no required RDF representation." ; skos:exactMatch legacy:ClaimObjectUnit ; skos:inScheme unit:AssertionUnitKindScheme .
 
+# The vocabulary is intentionally open: kee:managedAssertionUnitKind remains an
+# IRI-valued extension slot and validators must not close it to this enumeration.
 legacy:TripleUnit skos:exactMatch unit:Triple .
 legacy:ReifierUnit skos:exactMatch unit:Reifier .
 legacy:StatementNodeUnit skos:exactMatch unit:StatementNode .

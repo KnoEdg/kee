@@ -112,7 +112,7 @@ kee:OrganizationalMemoryProfileShape
     sh:property [
         sh:path prov:wasAttributedTo;
         sh:name "contributor or source agent"@en;
-        sh:description "Organizational-memory artifacts must identify at least one attributed contributor, source agent, or originating system. does not interpret this property alone as current stewardship."@en;
+        sh:description "Organizational-memory artifacts must identify at least one attributed contributor, source agent, or originating system. This shape does not interpret this property alone as current stewardship."@en;
         sh:minCount 1;
         sh:nodeKind sh:IRI;
         sh:message "An organizational-memory artifact must have at least one prov:wasAttributedTo IRI."@en;

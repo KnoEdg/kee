@@ -141,7 +141,7 @@ kee:SoftwareEngineeringProfileShape
     sh:property [
         sh:path dcterms:relation;
         sh:name "generic related engineering resource"@en;
-        sh:description "Fallback relation for a related repository, system, service, project, commit, issue, test, trace, package, or other engineering resource when no more specific machine-queryable relationship is required. does not infer a typed domain relationship from this generic predicate."@en;
+        sh:description "Fallback relation for a related repository, system, service, project, commit, issue, test, trace, package, or other engineering resource when no more specific machine-queryable relationship is required. This shape does not infer a typed domain relationship from this generic predicate."@en;
         sh:minCount 1;
         sh:nodeKind sh:IRIOrLiteral;
         sh:severity sh:Warning;

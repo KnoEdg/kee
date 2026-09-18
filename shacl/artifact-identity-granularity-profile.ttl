@@ -40,7 +40,7 @@
 # own Non-Goals, unless explicitly mapped to one via kee:mapsToArtifact).
 #
 # kee:contentIdentifier, kee:containerIdentifier, kee:mapsToArtifact, and
-# kee:mapsToContentHash are new predicates introduced by this ADR -- they
+# kee:mapsToContentHash are new predicates introduced by this profile -- they
 # compose this profile's own Baseline categories table. Version/revision
 # identity reuses Dublin Core Terms (dcterms:hasVersion, dcterms:isVersionOf,
 # dcterms:replaces, dcterms:isReplacedBy), per this profile's own
