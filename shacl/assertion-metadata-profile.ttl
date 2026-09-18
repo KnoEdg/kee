@@ -1,0 +1,94 @@
+@prefix kee: <https://w3id.org/kee#>.
+@prefix unit: <https://w3id.org/kee/vocab/assertion-unit-kind#>.
+@prefix prov: <http://www.w3.org/ns/prov#>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix dcterms: <http://purl.org/dc/terms/>.
+@prefix sh: <http://www.w3.org/ns/shacl#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+
+# KEE Assertion Metadata Profile SHACL Shapes
+# Status: Accepted / Normative
+# Shape-contract version: 0.9.2
+#
+# This shape deprecates kee:assertionTime as a new-write catch-all because
+# earlier text allowed it to mean assertion time or valid time. New RDF writes
+# compose role-specific prior art: prov:generatedAtTime for metadata-resource
+# generation/recording time, PROV activity timing for a modeled asserting act,
+# and dcterms:valid / OWL-Time for valid/applicability time.
+#
+# Legacy kee:assertionTime remains structurally readable at Info severity. Its
+# temporal role must not be inferred without additional profile/context evidence.
+#
+# This shape preserves the representation-neutral non-collapse contract:
+# managed assertion unit, assertion content/proposition, assertion metadata
+# record, assertion occurrence, and representation/container identities are
+# distinct roles even when a particular representation chooses the same RDF
+# resource for more than one role. The open managed-unit-kind slot remains
+# extensible; JSON-LD convenience aliases do not change these semantics.
+
+kee:AssertionMetadataProfileShape
+    a sh:NodeShape;
+    rdfs:label "KEE Assertion Metadata Profile Shape"@en;
+    rdfs:comment "Minimal SHACL shape for assertion metadata records governing a representation-neutral managed assertion unit,."@en;
+    sh:targetClass kee:AssertionMetadataRecord;
+
+    sh:property [
+        sh:path kee:managedAssertionUnit;
+        sh:name "managed assertion unit"@en;
+        sh:description "The metadata record must identify the managed assertion unit it governs. This does not assert that the managed unit is identical to assertion content/proposition, assertion occurrence, metadata record, or containing representation."@en;
+        sh:minCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "An assertion metadata record must have at least one kee:managedAssertionUnit IRI."@en;
+    ];
+
+    sh:property [
+        sh:path kee:lifecycleState;
+        sh:name "lifecycle state"@en;
+        sh:description "Assertion metadata records must declare a lifecycle state from the applicable profile-controlled vocabulary."@en;
+        sh:minCount 1;
+        sh:maxCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "An assertion metadata record must have exactly one kee:lifecycleState IRI."@en;
+    ];
+
+    sh:property [
+        sh:path [ sh:alternativePath ( dcterms:conformsTo kee:profileConformance ) ];
+        sh:name "profile conformance"@en;
+        sh:minCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "An assertion metadata record must declare at least one dcterms:conformsTo IRI; legacy kee:profileConformance is accepted during the registered legacy compatibility window."@en;
+    ];
+
+    sh:property [
+        sh:path prov:wasAttributedTo;
+        sh:name "source or asserting agent"@en;
+        sh:minCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "An assertion metadata record must have at least one prov:wasAttributedTo IRI."@en;
+    ];
+
+    sh:property [
+        sh:path prov:generatedAtTime;
+        sh:name "metadata generation/recording time"@en;
+        sh:description "Time at which the assertion-metadata record was generated/recorded. This is not automatically assertion time or valid time."@en;
+        sh:minCount 1;
+        sh:maxCount 1;
+        sh:datatype xsd:dateTime;
+        sh:message "An assertion metadata record must have exactly one prov:generatedAtTime value typed as xsd:dateTime."@en;
+    ];
+
+    sh:property [ sh:path kee:assertionContent; sh:name "assertion content"@en; sh:description "Reference to or embedded representation of assertion content. Content identity is not automatically the same as metadata-record, managed-unit, occurrence, or container identity."@en; sh:minCount 1; sh:nodeKind sh:IRIOrLiteral; sh:severity sh:Warning; sh:message "An assertion metadata record should have at least one kee:assertionContent value."@en ];
+    sh:property [ sh:path prov:wasGeneratedBy; sh:name "recording/asserting activity"@en; sh:nodeKind sh:IRI; sh:severity sh:Warning; sh:message "An assertion metadata record should identify at least one prov:wasGeneratedBy activity; activity timing may be used when the act of asserting must be timed explicitly."@en ];
+    sh:property [ sh:path dcterms:valid; sh:name "valid/applicability time"@en; sh:nodeKind sh:IRIOrLiteral; sh:severity sh:Warning; sh:message "If present, dcterms:valid identifies valid/applicability time and must not be interpreted as record-generation time."@en ];
+    sh:property [ sh:path kee:assertionTime; sh:name "legacy ambiguous assertion time"@en; sh:nodeKind sh:IRIOrLiteral; sh:severity sh:Info; sh:message "Legacy kee:assertionTime remains readable, but new writes should use role-specific PROV, DCTerms, or OWL-Time terms; do not infer assertion-time versus valid-time meaning from this predicate alone."@en ];
+    sh:property [ sh:path kee:scope; sh:name "scope"@en; sh:nodeKind sh:IRI; sh:severity sh:Warning; sh:message "An assertion metadata record should declare at least one kee:scope IRI."@en ];
+    sh:property [ sh:path kee:context; sh:name "context"@en; sh:nodeKind sh:IRI; sh:severity sh:Warning; sh:message "An assertion metadata record should declare at least one kee:context IRI."@en ];
+    sh:property [ sh:path dcterms:source; sh:name "additional source or evidence"@en; sh:nodeKind sh:IRIOrLiteral; sh:severity sh:Warning; sh:message "If present, dcterms:source should identify supporting evidence."@en ];
+    sh:property [ sh:path kee:managedAssertionUnitKind; sh:name "managed assertion unit kind"@en; sh:description "Managed-unit kind is optional and open. Implementations are recommended to use a term from the shared assertion-unit-kind scheme where applicable or another declared profile/domain IRI for a representation pattern the scheme does not cover."@en; sh:nodeKind sh:IRI; sh:severity sh:Info; sh:message "If present, kee:managedAssertionUnitKind should be an IRI from the shared unit-kind scheme or another declared profile/domain vocabulary."@en ];
+    sh:property [ sh:path kee:authority; sh:name "authority"@en; sh:nodeKind sh:IRI; sh:severity sh:Info; sh:message "A governed assertion metadata record may identify a kee:authority IRI."@en ];
+    sh:property [ sh:path kee:confidenceStatus; sh:name "confidence status"@en; sh:nodeKind sh:IRI; sh:severity sh:Info; sh:message "If present, kee:confidenceStatus should be an IRI from a profile-defined controlled vocabulary."@en ];
+    sh:property [ sh:path kee:confidenceValue; sh:name "confidence value"@en; sh:datatype xsd:decimal; sh:minInclusive 0; sh:maxInclusive 1; sh:severity sh:Info; sh:message "If present, kee:confidenceValue must be a decimal between 0 and 1. The value has no normative meaning unless a profile defines it."@en ];
+    sh:property [ sh:path kee:contradicts; sh:name "contradicts"@en; sh:nodeKind sh:IRI; sh:severity sh:Info; sh:message "If present, kee:contradicts should point to another assertion metadata record or contradiction record."@en ];
+    sh:property [ sh:path dcterms:isReplacedBy; sh:name "replacement artifact"@en; sh:nodeKind sh:IRI; sh:severity sh:Info; sh:message "If present, dcterms:isReplacedBy should be an IRI identifying the replacement artifact."@en ];
+    sh:property [ sh:path prov:wasRevisionOf; sh:name "revision lineage"@en; sh:nodeKind sh:IRI; sh:severity sh:Info; sh:message "If present, prov:wasRevisionOf should be an IRI identifying the revised artifact."@en ].

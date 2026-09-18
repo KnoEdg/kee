@@ -1,0 +1,16 @@
+@prefix kee: <https://knoedg.org/vocab/>.
+@prefix skos: <http://www.w3.org/2004/02/skos/core#>.
+@prefix dcterms: <http://purl.org/dc/terms/>.
+
+kee:ConfidenceStatusScheme
+  a skos:ConceptScheme;
+  skos:prefLabel "KEE Confidence Status Scheme";
+  dcterms:identifier "kee-confidence-status-informative-the published baseline";
+  dcterms:description "Informative / Non-Normative illustrative SKOS scheme. Low, Moderate, and High are not interoperable confidence semantics without profile-defined interpretation, method, scale/calibration, assignment process, and temporal/revision rules.".
+
+kee:UnassessedConfidence a skos:Concept; skos:prefLabel "Unassessed"; skos:definition "No confidence assessment has been assigned."; skos:inScheme kee:ConfidenceStatusScheme.
+kee:LowConfidence a skos:Concept; skos:prefLabel "Low Confidence"; skos:definition "Illustrative label only; its semantics are profile-defined and MUST NOT be inferred from this scheme alone."; skos:inScheme kee:ConfidenceStatusScheme.
+kee:ModerateConfidence a skos:Concept; skos:prefLabel "Moderate Confidence"; skos:definition "Illustrative label only; its semantics are profile-defined and MUST NOT be inferred from this scheme alone."; skos:inScheme kee:ConfidenceStatusScheme.
+kee:HighConfidence a skos:Concept; skos:prefLabel "High Confidence"; skos:definition "Illustrative label only; its semantics are profile-defined and MUST NOT be inferred from this scheme alone."; skos:inScheme kee:ConfidenceStatusScheme.
+kee:ConflictingConfidence a skos:Concept; skos:prefLabel "Conflicting"; skos:definition "Illustrative indication that confidence assessments conflict or depend on unresolved differences; interpretation remains profile-defined."; skos:inScheme kee:ConfidenceStatusScheme.
+kee:ProfileDefinedConfidence a skos:Concept; skos:prefLabel "Profile Defined"; skos:definition "Sentinel indicating that confidence interpretation is owned by the applicable profile. This is not itself a confidence level."; skos:inScheme kee:ConfidenceStatusScheme.

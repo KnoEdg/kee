@@ -1,0 +1,194 @@
+@prefix kee: <https://w3id.org/kee#>.
+@prefix profile: <https://w3id.org/kee/profile#>.
+@prefix artifact: <https://w3id.org/kee/artifact#>.
+@prefix lifecycle: <https://w3id.org/kee/lifecycle#>.
+@prefix governance: <https://w3id.org/kee/governance#>.
+@prefix confidence: <https://w3id.org/kee/confidence#>.
+@prefix contradiction: <https://w3id.org/kee/contradiction#>.
+@prefix prov: <http://www.w3.org/ns/prov#>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix dcterms: <http://purl.org/dc/terms/>.
+@prefix sh: <http://www.w3.org/ns/shacl#>.
+@prefix skos: <http://www.w3.org/2004/02/skos/core#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+
+# KEE Assertion Profile SHACL Shapes
+# Status: Draft
+# Shape-contract version: 0.9.2
+# Timestamp: 2026-06-25T19:54:00Z (2026-06-25 15:54:00 EDT)
+# Repository path: shacl/assertion-profile.ttl
+#
+# Semantic-surface rule:
+# - new writes use dcterms:type for controlled artifact classification;
+# - new writes use dcterms:conformsTo for profile declarations;
+# - legacy kee:artifactType and kee:profileConformance remain dual-read inputs
+# during the registered legacy compatibility window.
+#
+# This file is intentionally minimal. It validates structural requirements for
+# assertion-like artifacts without enforcing workflow, confidence calculation,
+# contradiction resolution, or authorization behavior.
+#
+# The shape composes prior-art vocabularies:
+# - PROV-O for provenance
+# - Dublin Core Terms for classification, profile conformance, and metadata
+# - SKOS for controlled concepts
+# - SHACL for validation
+
+kee:AssertionProfileShape
+    a sh:NodeShape;
+    rdfs:label "KEE Assertion Profile Shape"@en;
+    rdfs:comment "Minimal SHACL shape for assertion-like KEE artifacts."@en;
+    sh:targetClass kee:Assertion;
+
+    sh:property [
+        sh:path [ sh:alternativePath ( dcterms:type kee:artifactType ) ];
+        sh:name "artifact type"@en;
+        sh:description "Assertion artifacts must declare controlled artifact classification using dcterms:type. Legacy kee:artifactType remains accepted for registered legacy reads only."@en;
+        sh:minCount 1;
+        sh:maxCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "An assertion must have exactly one dcterms:type IRI; legacy kee:artifactType is accepted during the registered legacy compatibility window."@en;
+    ];
+
+    sh:property [
+        sh:path kee:lifecycleState;
+        sh:name "lifecycle state"@en;
+        sh:description "Assertion artifacts must declare a lifecycle state."@en;
+        sh:minCount 1;
+        sh:maxCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "An assertion must have exactly one kee:lifecycleState IRI."@en;
+    ];
+
+    sh:property [
+        sh:path [ sh:alternativePath ( dcterms:conformsTo kee:profileConformance ) ];
+        sh:name "profile conformance"@en;
+        sh:description "Assertion artifacts must identify the profile they claim to conform to using dcterms:conformsTo. Legacy kee:profileConformance remains accepted for registered legacy reads only."@en;
+        sh:minCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "An assertion must declare at least one dcterms:conformsTo IRI; legacy kee:profileConformance is accepted during the registered legacy compatibility window."@en;
+    ];
+
+    sh:property [
+        sh:path rdfs:label;
+        sh:name "title"@en;
+        sh:description "Assertion artifacts must have a human-readable title."@en;
+        sh:minCount 1;
+        sh:datatype rdf:langString;
+        sh:message "An assertion must have at least one rdfs:label language-tagged string."@en;
+    ];
+
+    sh:property [
+        sh:path skos:definition;
+        sh:name "assertion statement"@en;
+        sh:description "Assertion artifacts must state the assertion clearly."@en;
+        sh:minCount 1;
+        sh:datatype rdf:langString;
+        sh:message "An assertion must include at least one skos:definition language-tagged string describing the assertion."@en;
+    ];
+
+    sh:property [
+        sh:path prov:wasAttributedTo;
+        sh:name "attributed agent"@en;
+        sh:description "Assertion artifacts must identify the agent to whom the assertion is attributed."@en;
+        sh:minCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "An assertion must have at least one prov:wasAttributedTo IRI."@en;
+    ];
+
+    sh:property [
+        sh:path prov:generatedAtTime;
+        sh:name "generation time"@en;
+        sh:description "Assertion artifacts must record when the asserted artifact was generated or recorded."@en;
+        sh:minCount 1;
+        sh:maxCount 1;
+        sh:datatype xsd:dateTime;
+        sh:message "An assertion must have exactly one prov:generatedAtTime value typed as xsd:dateTime."@en;
+    ];
+
+    sh:property [
+        sh:path dcterms:source;
+        sh:name "source"@en;
+        sh:description "Assertion artifacts should identify at least one source, evidence artifact, or supporting reference."@en;
+        sh:minCount 1;
+        sh:nodeKind sh:IRIOrLiteral;
+        sh:severity sh:Warning;
+        sh:message "An assertion should have at least one dcterms:source value."@en;
+    ];
+
+    sh:property [
+        sh:path kee:scope;
+        sh:name "scope"@en;
+        sh:description "Assertion artifacts should declare the scope where the assertion applies."@en;
+        sh:minCount 1;
+        sh:nodeKind sh:IRI;
+        sh:severity sh:Warning;
+        sh:message "An assertion should declare at least one kee:scope IRI."@en;
+    ];
+
+    sh:property [
+        sh:path kee:context;
+        sh:name "context"@en;
+        sh:description "Assertion artifacts should declare the interpretive context for the assertion."@en;
+        sh:minCount 1;
+        sh:nodeKind sh:IRI;
+        sh:severity sh:Warning;
+        sh:message "An assertion should declare at least one kee:context IRI."@en;
+    ];
+
+    sh:property [
+        sh:path kee:authority;
+        sh:name "authority"@en;
+        sh:description "Governed assertion artifacts should identify an authority or authority rule where the profile requires one."@en;
+        sh:nodeKind sh:IRI;
+        sh:severity sh:Info;
+        sh:message "A governed assertion may identify a kee:authority IRI."@en;
+    ];
+
+    sh:property [
+        sh:path kee:confidenceStatus;
+        sh:name "confidence status"@en;
+        sh:description "Confidence status is optional and profile-defined."@en;
+        sh:nodeKind sh:IRI;
+        sh:severity sh:Info;
+        sh:message "If present, kee:confidenceStatus should be an IRI from a profile-defined controlled vocabulary."@en;
+    ];
+
+    sh:property [
+        sh:path kee:confidenceValue;
+        sh:name "confidence value"@en;
+        sh:description "Numeric confidence is optional and profile-defined. Profiles must define scale and interpretation before using it normatively."@en;
+        sh:datatype xsd:decimal;
+        sh:minInclusive 0;
+        sh:maxInclusive 1;
+        sh:severity sh:Info;
+        sh:message "If present, kee:confidenceValue must be a decimal between 0 and 1. The value has no normative meaning unless a profile defines it."@en;
+    ];
+
+    sh:property [
+        sh:path kee:contradicts;
+        sh:name "contradicts"@en;
+        sh:description "Contradiction links are optional and profile-defined."@en;
+        sh:nodeKind sh:IRI;
+        sh:severity sh:Info;
+        sh:message "If present, kee:contradicts should point to another assertion-like artifact."@en;
+    ];
+
+    sh:property [
+        sh:path dcterms:isReplacedBy;
+        sh:name "replacement artifact"@en;
+        sh:description "Deprecated or superseded assertions may point to a replacement artifact."@en;
+        sh:nodeKind sh:IRI;
+        sh:severity sh:Info;
+        sh:message "If present, dcterms:isReplacedBy should be an IRI identifying the replacement artifact."@en;
+    ];
+
+    sh:property [
+        sh:path prov:wasRevisionOf;
+        sh:name "revision lineage"@en;
+        sh:description "Assertions that revise prior assertions may identify the prior entity."@en;
+        sh:nodeKind sh:IRI;
+        sh:severity sh:Info;
+        sh:message "If present, prov:wasRevisionOf should be an IRI identifying the revised artifact."@en;
+    ].

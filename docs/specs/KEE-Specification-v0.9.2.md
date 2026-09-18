@@ -35,7 +35,9 @@ The key words MUST, MUST NOT, REQUIRED, SHALL, SHALL NOT, SHOULD, SHOULD NOT, RE
 
 This specification is self-contained. A reader SHALL NOT need any other document to determine the ordinary normative meaning of a KEE obligation stated here.
 
-Where this specification names a repository artifact — a SHACL shape graph, a SKOS concept scheme, a JSON Schema, the JSON-LD context, the term-declaration document, or the published public-API manifest — that artifact is published alongside this specification and is the machine-readable expression of an obligation this document states in prose. The prose controls where the two differ, except where this document explicitly delegates a machine-checkable decision to a named shape.
+Where this specification names a repository artifact — a SHACL shape graph in `shacl/`, a SKOS concept scheme in `schemas/skos/`, a JSON Schema in `schemas/json-schema/`, the JSON-LD context in `context/`, the term-declaration document `vocab/kee.ttl`, or the published public-API manifest in `normative-api/` — that artifact is published alongside this specification and is the machine-readable expression of an obligation this document states in prose. The prose controls where the two differ, except where this document explicitly delegates a machine-checkable decision to a named shape.
+
+The shape graphs published here are byte-identical to those the reference validator executes. A shape graph carries a shape-contract version, which Section 15.5 requires status-aware tooling to report.
 
 ### 0.3 KEE's role and ownership boundary
 
@@ -425,7 +427,7 @@ The Assertion lifecycle scheme MUST NOT use `Preferred`, `Challenged`, or `Quali
 
 The Organizational Memory lifecycle scheme MUST NOT use `Under Review`, `Qualified`, or `Stale` as values on the same lifecycle axis as lifecycle/disposition states. The scheme is limited to Draft, Active, Deprecated, Superseded, Retired, and Archived. Review/currency assessment MAY use review timestamps, review-due policy, provenance, explicit profile-defined assessment, or other declared mechanisms. A stale artifact MUST NOT be inferred false merely because it is stale. An archived artifact MUST NOT be inferred currently applicable merely because it is preserved.
 
-Validators SHOULD reject known legacy mixed-axis values where the active profile now defines them as another semantic dimension; the reference validator does so for the three schemes above (Section 17.4).
+Validators SHOULD reject known legacy mixed-axis values where the active profile now defines them as another semantic dimension. `shacl/lifecycle-status-constraints.ttl` does so for the three schemes above, composed with the lifecycle-owning profile shapes (Section 17.4).
 
 ### 9.4 Crosswalks
 
@@ -523,7 +525,7 @@ Promotion means an authorized, deliberate governance transition that expands the
 
 A promotion record MUST NOT conform merely because source and target scopes are different. The applicable profile/domain MUST declare a machine-checkable scope ordering relation or decision procedure demonstrating that the target scope is broader than the source scope: for example a declared SKOS broader/narrower hierarchy, a containment relation over organizational, geographic, jurisdictional, audience, or applicability scopes, another profile-declared partial order, or a deterministic decision procedure with equivalent behaviour. The ordering mechanism is profile/domain-owned; KEE defines no universal scope lattice. A narrowing, incomparable scope change, equal scopes, or a mere unequal pair MUST NOT be classified as Promotion, and **an ordering that is cyclic between source and target cannot demonstrate breadth**.
 
-The cyclic case is machine-checkable and MUST be rejected by the Promotion shape: a `skos:broader` ordering in which `kee:sourceScope` and `kee:scope` are mutually broader does not demonstrate breadth, and a record whose scopes are related only by such a cycle does not conform.
+`shacl/promotion-profile.ttl` implements the cyclic case: a `skos:broader` ordering in which `kee:sourceScope` and `kee:scope` are mutually broader is rejected. A record whose scopes are related only by such a cycle does not conform to the Promotion shape.
 
 Promotion MUST NOT suppress, erase, hide, or silently detach known contradictions associated with the source artifact, and does not resolve a contradiction merely by broadening scope. This is a procedural obligation; structural validation of a supplied `kee:knownContradiction` link cannot prove that every known contradiction was carried forward. Executable conformance evidence MUST detect omission where the applicable procedure requires carry-forward.
 
@@ -774,7 +776,7 @@ Registration under the W3ID project has been submitted and is pending review. Un
 While registration is outstanding:
 
 - this specification, its profiles, and its release evidence MUST NOT describe these namespaces as stable, resolvable, or dereferenceable;
-- a consumer MUST NOT rely on dereferencing a KEE IRI to retrieve its definition, and SHOULD read the term-declaration document `vocab/kee.ttl` and the SKOS concept schemes published with this specification instead;
+- a consumer MUST NOT rely on dereferencing a KEE IRI to retrieve its definition, and SHOULD read the term-declaration document `vocab/kee.ttl` and the SKOS and SHACL assets published with this specification instead;
 - the identifiers remain canonical for new writes under Sections 8.2, 9.2, and 10 — an identifier can be canonical without yet being resolvable; and
 - exclusive control of the `w3id.org/kee` path is not yet secured, so the Section 4.3 "stable identifiers" criterion is satisfied only in the sense of a governed, versioned, non-changing identifier, not in the sense of a guaranteed persistent-resolution commitment.
 
@@ -797,7 +799,7 @@ A specification or amendment MUST state which kind each release artifact is. Whe
 The following are published as optional, non-required surfaces. An implementation that ignores all of them remains conforming:
 
 - obligation lineage registry;
-- JSON profile declaration and its schema;
+- JSON profile declaration and its schema (`schemas/json-schema/v0.9-profile-declaration.schema.json`);
 - EARL / PROV / SHACL evidence graph;
 - RO-Crate KEEpack packaging experiment — **Experimental / Non-Normative**;
 - public API diff.

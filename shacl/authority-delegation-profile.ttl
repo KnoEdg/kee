@@ -1,0 +1,82 @@
+@prefix kee: <https://w3id.org/kee#>.
+@prefix prov: <http://www.w3.org/ns/prov#>.
+@prefix dcterms: <http://purl.org/dc/terms/>.
+@prefix sh: <http://www.w3.org/ns/shacl#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+
+# KEE Authority and Delegation Profile SHACL Shapes
+# Status: Draft / Non-Normative
+# Shape-contract version: 0.9.2
+#
+# Corrections remain controlling for authority semantics.
+# removes validator-driven explicit multi-typing dependence: the
+# Authority shape explicitly composes the Governance Transition parent shape,
+# and the reference validator loads that parent graph when this shape runs.
+
+kee:AuthorityGrantAssociationShape
+    a sh:NodeShape;
+    rdfs:label "KEE Authority Grant Association Shape"@en;
+    sh:property [ sh:path prov:agent; sh:minCount 1; sh:maxCount 1; sh:nodeKind sh:IRI; sh:message "An authority grant association must identify exactly one prov:agent IRI."@en ];
+    sh:property [ sh:path prov:hadRole; sh:minCount 1; sh:nodeKind sh:IRI; sh:message "An authority grant association must identify at least one prov:hadRole IRI."@en ].
+
+kee:AuthorityGrantActivityShape
+    a sh:NodeShape;
+    rdfs:label "KEE Authority Grant Activity Shape"@en;
+    sh:class prov:Activity;
+    sh:property [ sh:path prov:qualifiedAssociation; sh:node kee:AuthorityGrantAssociationShape; sh:message "If an authority grant activity uses prov:qualifiedAssociation, each association must pair an agent and role explicitly."@en ].
+
+kee:AccountableAuthorityRootShape
+    a sh:NodeShape;
+    rdfs:label "KEE Accountable Authority Root Shape"@en;
+    sh:or ( [ sh:class prov:Person ] [ sh:class prov:Organization ] );
+    sh:property [ sh:path prov:actedOnBehalfOf; sh:maxCount 0; sh:message "An accountable authority root is terminal for the delegation chain being evaluated."@en ].
+
+# Specification Section 12.3: any grantee that is not itself a
+# prov:Person or prov:Organization must resolve through the delegation chain
+# to such a root. Absence of a prov:SoftwareAgent type does not exempt it.
+#
+# Severity is sh:Warning for the registered legacy compatibility window: the rule is
+# normative, but data that was structurally valid under an earlier baseline must not become
+# invalid in a patch release. It becomes sh:Violation in the next minor
+# version (the published baseline Section 12.3).
+kee:SoftwareAgentAuthorityRootShape
+    a sh:NodeShape;
+    rdfs:label "KEE Non-Person Grantee Accountable Root Shape"@en;
+    sh:targetObjectsOf kee:grantedTo;
+    sh:or (
+        [ sh:class prov:Person ]
+        [ sh:class prov:Organization ]
+        [ sh:property [ sh:path [ sh:oneOrMorePath prov:actedOnBehalfOf ]; sh:qualifiedValueShape kee:AccountableAuthorityRootShape; sh:qualifiedMinCount 1 ] ]
+    );
+    sh:severity sh:Warning;
+    sh:message "A grantee that is not a prov:Person or prov:Organization must resolve through prov:actedOnBehalfOf to a terminal prov:Person or prov:Organization authority root. Reported as a warning during the registered legacy compatibility window; it becomes a violation in the next minor version."@en.
+
+kee:AuthorityProfileShape
+    a sh:NodeShape;
+    rdfs:label "KEE Authority Profile Shape"@en;
+    sh:targetClass kee:AuthorityRecord;
+    sh:node kee:GovernanceTransitionProfileShape;
+
+    sh:property [ sh:path kee:grantedTo; sh:minCount 1; sh:nodeKind sh:IRI; sh:message "An authority record must have at least one kee:grantedTo IRI."@en ];
+    sh:property [ sh:path kee:authorityEvidence; sh:minCount 1; sh:nodeKind sh:IRI; sh:message "An authority record must identify authority-basis evidence separately from provenance."@en ];
+    sh:property [ sh:path kee:authorityScope; sh:minCount 1; sh:nodeKind sh:IRI; sh:message "An authority record must have at least one kee:authorityScope IRI."@en ];
+    sh:property [ sh:path prov:wasGeneratedBy; sh:minCount 1; sh:node kee:AuthorityGrantActivityShape; sh:message "An authority record must reference a prov:Activity grant event; qualified agent/role associations are validated when used."@en ];
+    sh:property [ sh:path prov:actedOnBehalfOf; sh:maxCount 0; sh:message "Do not place prov:actedOnBehalfOf on kee:AuthorityRecord; assert delegation from the granted-to/delegate Agent."@en ];
+    sh:property [ sh:path kee:validFrom; sh:severity sh:Warning; sh:message "An authority record should declare when the granted authority begins to hold."@en ];
+    sh:property [ sh:path kee:validUntil; sh:severity sh:Warning; sh:message "If present, kee:validUntil is scheduled validity end/expiration, distinct from revocation."@en ];
+    sh:property [ sh:path prov:invalidatedAtTime; sh:datatype xsd:dateTime; sh:severity sh:Info; sh:message "If present, prov:invalidatedAtTime denotes revocation/invalidation, distinct from expiration."@en ].
+
+kee:ContestedAuthorityProfileShape
+    a sh:NodeShape;
+    rdfs:label "KEE Contested Authority Claim Shape"@en;
+    sh:targetClass kee:ContestedAuthorityClaim;
+
+    sh:property [ sh:path kee:claimant; sh:minCount 2; sh:nodeKind sh:IRI; sh:message "A contested authority claim must have at least two kee:claimant IRIs."@en ];
+    sh:property [ sh:path kee:lifecycleState; sh:minCount 1; sh:maxCount 1; sh:nodeKind sh:IRI; sh:message "A contested authority claim must have exactly one kee:lifecycleState IRI."@en ];
+    sh:property [ sh:path [ sh:alternativePath ( dcterms:conformsTo kee:profileConformance ) ]; sh:minCount 1; sh:nodeKind sh:IRI; sh:message "A contested authority claim must declare profile conformance."@en ];
+    sh:property [ sh:path prov:wasAttributedTo; sh:minCount 1; sh:nodeKind sh:IRI; sh:message "A contested authority claim must identify who or what recorded it."@en ];
+    sh:property [ sh:path prov:generatedAtTime; sh:minCount 1; sh:maxCount 1; sh:datatype xsd:dateTime; sh:message "A contested authority claim must have exactly one prov:generatedAtTime value typed as xsd:dateTime."@en ];
+    sh:property [ sh:path kee:contestedScope; sh:nodeKind sh:IRI; sh:severity sh:Warning; sh:message "If present, kee:contestedScope should be an IRI."@en ];
+    sh:property [ sh:path dcterms:description; sh:severity sh:Warning; sh:message "A contested authority claim should have at least one dcterms:description explanation."@en ];
+    sh:property [ sh:path kee:knownContradiction; sh:nodeKind sh:IRI; sh:severity sh:Info; sh:message "If present, kee:knownContradiction should identify a contradiction record."@en ].

@@ -1,0 +1,149 @@
+@prefix kee: <https://w3id.org/kee#>.
+@prefix ccause: <https://w3id.org/kee/vocab/contradiction-cause#>.
+@prefix prov: <http://www.w3.org/ns/prov#>.
+@prefix dcterms: <http://purl.org/dc/terms/>.
+@prefix oa: <http://www.w3.org/ns/oa#>.
+@prefix sh: <http://www.w3.org/ns/shacl#>.
+@prefix skos: <http://www.w3.org/2004/02/skos/core#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+
+# KEE Contradiction Records Profile SHACL Shapes
+# Status: Draft / Non-Normative
+#
+# This shape corrects the earlier flat kee:evidenceForSide representation.
+# The selected RDF reference pattern uses dcterms:hasPart to link explicit
+# Web Annotation side/evidence nodes. Each node pairs one conflicting target
+# with one or more evidence bodies. Equivalent profile-declared explicit
+# pairing structures remain permitted by the normative contract.
+#
+# Legacy kee:evidenceForSide remains structurally readable during the registered legacy
+# compatibility window. New-write examples and fixtures use explicit
+# dcterms:hasPart side/evidence nodes, and this shape validates that explicit
+# representation whenever it is present. The new-write pairing obligation is
+# governed by the profile/migration contract rather than by invalidating
+# historical records at the base structural layer.
+
+kee:ContradictionSideEvidenceShape
+    a sh:NodeShape;
+    rdfs:label "Contradiction side/evidence annotation shape"@en;
+    sh:class oa:Annotation;
+    sh:property [
+        sh:path oa:hasTarget;
+        sh:minCount 1;
+        sh:maxCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "A contradiction side/evidence annotation must identify exactly one conflicting artifact or position with oa:hasTarget."@en;
+    ];
+    sh:property [
+        sh:path oa:hasBody;
+        sh:minCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "A contradiction side/evidence annotation must identify at least one evidence resource with oa:hasBody."@en;
+    ].
+
+kee:ContradictionRecordsProfileShape
+    a sh:NodeShape;
+    rdfs:label "KEE Contradiction Records Profile Shape"@en;
+    rdfs:comment "Minimal SHACL shape for contradiction records linking two or more conflicting artifacts, with validation of explicit evidence-to-side pairing when represented."@en;
+    sh:targetClass kee:ContradictionRecord;
+
+    sh:property [
+        sh:path kee:conflictingArtifact;
+        sh:name "conflicting artifact"@en;
+        sh:minCount 2;
+        sh:nodeKind sh:IRI;
+        sh:message "A contradiction record must have at least two kee:conflictingArtifact IRIs."@en;
+    ];
+
+    sh:property [
+        sh:path kee:lifecycleState;
+        sh:name "contradiction-record review status"@en;
+        sh:description "A contradiction record must declare its own review status, distinct from the lifecycle state of either conflicting artifact."@en;
+        sh:minCount 1;
+        sh:maxCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "A contradiction record must have exactly one kee:lifecycleState IRI."@en;
+    ];
+
+    sh:property [
+        sh:path [ sh:alternativePath ( dcterms:conformsTo kee:profileConformance ) ];
+        sh:name "profile conformance"@en;
+        sh:minCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "A contradiction record must declare at least one dcterms:conformsTo IRI; legacy kee:profileConformance is accepted during the registered legacy compatibility window."@en;
+    ];
+
+    sh:property [
+        sh:path prov:wasGeneratedBy;
+        sh:name "detection activity"@en;
+        sh:minCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "A contradiction record must have at least one prov:wasGeneratedBy IRI referencing the detection activity."@en;
+    ];
+
+    sh:property [
+        sh:path prov:wasAttributedTo;
+        sh:name "provenance"@en;
+        sh:minCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "A contradiction record must have at least one prov:wasAttributedTo IRI."@en;
+    ];
+
+    sh:property [
+        sh:path prov:generatedAtTime;
+        sh:name "temporal anchor"@en;
+        sh:minCount 1;
+        sh:maxCount 1;
+        sh:datatype xsd:dateTime;
+        sh:message "A contradiction record must have exactly one prov:generatedAtTime value typed as xsd:dateTime."@en;
+    ];
+
+    sh:property [
+        sh:path kee:causeType;
+        sh:name "cause or type"@en;
+        sh:description "A contradiction record should classify the cause using the governed open KEE contradiction-cause scheme (ccause:) or another declared profile/domain taxonomy. The slot remains open and is not constrained by sh:in."@en;
+        sh:nodeKind sh:IRI;
+        sh:severity sh:Warning;
+        sh:message "If present, kee:causeType should be an IRI from a declared contradiction-cause taxonomy; the KEE ccause: scheme is recommended but not mandatory."@en;
+    ];
+
+    sh:property [
+        sh:path dcterms:description;
+        sh:name "explanation"@en;
+        sh:minCount 1;
+        sh:severity sh:Warning;
+        sh:message "A contradiction record should have at least one dcterms:description explanation."@en;
+    ];
+
+    sh:property [
+        sh:path dcterms:hasPart;
+        sh:name "qualified contradiction side/evidence"@en;
+        sh:node kee:ContradictionSideEvidenceShape;
+        sh:message "Each dcterms:hasPart side/evidence node must be a Web Annotation pairing one target side with its evidence body or bodies."@en;
+    ];
+
+    sh:property [
+        sh:path kee:evidenceForSide;
+        sh:name "legacy flat evidence for side"@en;
+        sh:nodeKind sh:IRI;
+        sh:severity sh:Info;
+        sh:message "Legacy kee:evidenceForSide remains readable during the registered legacy compatibility window; new writes use an explicit side/evidence pairing structure."@en;
+    ];
+
+    sh:property [
+        sh:path kee:resolutionOutcome;
+        sh:name "resolution outcome"@en;
+        sh:description "A resolution outcome is a link to a separate disposition/governance record; contradiction detection itself does not imply lifecycle disposition."@en;
+        sh:nodeKind sh:IRI;
+        sh:severity sh:Info;
+        sh:message "If present, kee:resolutionOutcome should identify a separate Governance Transition, Promotion, or profile-declared resolution record."@en;
+    ];
+
+    sh:property [
+        sh:path kee:unresolvedSince;
+        sh:name "unresolved since"@en;
+        sh:nodeKind sh:IRIOrLiteral;
+        sh:severity sh:Info;
+        sh:message "If present, kee:unresolvedSince should identify or embed a temporal anchor."@en;
+    ].

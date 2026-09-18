@@ -1,0 +1,204 @@
+@prefix kee: <https://w3id.org/kee#>.
+@prefix profile: <https://w3id.org/kee/profile#>.
+@prefix artifact: <https://w3id.org/kee/artifact#>.
+@prefix lifecycle: <https://w3id.org/kee/lifecycle#>.
+@prefix confidence: <https://w3id.org/kee/confidence#>.
+@prefix prov: <http://www.w3.org/ns/prov#>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix dcterms: <http://purl.org/dc/terms/>.
+@prefix sh: <http://www.w3.org/ns/shacl#>.
+@prefix skos: <http://www.w3.org/2004/02/skos/core#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+
+# KEE Scientific Claim Profile SHACL Shapes
+# Status: Accepted / Normative
+# Shape-contract version: 0.9.2
+# Repository path: shacl/scientific-claim-profile.ttl
+#
+# Carry-forward compatibility:
+# - new writes use dcterms:type and dcterms:conformsTo; legacy
+# kee:artifactType and kee:profileConformance remain dual-read inputs.
+# - lifecycle is publication/governance lifecycle and does not absorb
+# evidential support/challenge or replication dimensions.
+# - KEE defines no universal confidence scale. Structural validation of
+# a confidence value does not supply profile-defined interpretation.
+#
+# kee:evidenceStrength remains an open compatibility/convenience IRI slot.
+# Profiles should compose SEPIO, ECO, GRADE, or another appropriate domain
+# evidence model/vocabulary directly when stronger evidence semantics are
+# required. Evidence is not provenance; evidence strength is not confidence.
+#
+# kee:replicationStatus remains an open profile-defined summary slot and is
+# deliberately independent of kee:lifecycleState.
+#
+# The shape composes prior-art vocabularies:
+# - PROV-O for provenance
+# - Dublin Core Terms for classification, profile conformance, metadata timestamps and supersession links
+# - SKOS for controlled concepts
+# - SHACL for structural validation
+
+kee:ScientificClaimProfileShape
+    a sh:NodeShape;
+    rdfs:label "KEE Scientific Claim Profile Shape"@en;
+    rdfs:comment "Minimal structural SHACL shape for scientific-claim KEE artifacts. confidence/evidence semantic conformance additionally depends on the claimed profile's interpretation contract."@en;
+    sh:targetClass kee:ScientificClaim;
+
+    sh:property [
+        sh:path [ sh:alternativePath ( dcterms:type kee:artifactType ) ];
+        sh:name "artifact type"@en;
+        sh:description "Scientific claim artifacts must declare controlled artifact classification using dcterms:type. Legacy kee:artifactType remains accepted for compatibility reads."@en;
+        sh:minCount 1;
+        sh:maxCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "A scientific claim must have exactly one dcterms:type IRI; legacy kee:artifactType is accepted during the migration window."@en;
+    ];
+
+    sh:property [
+        sh:path kee:lifecycleState;
+        sh:name "lifecycle state"@en;
+        sh:description "Scientific claim artifacts must declare a profile-owned publication/governance lifecycle state. Evidential assessment and replication are independent dimensions."@en;
+        sh:minCount 1;
+        sh:maxCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "A scientific claim must have exactly one kee:lifecycleState IRI for its profile-owned lifecycle dimension."@en;
+    ];
+
+    sh:property [
+        sh:path [ sh:alternativePath ( dcterms:conformsTo kee:profileConformance ) ];
+        sh:name "profile conformance"@en;
+        sh:description "Scientific claim artifacts must identify the profile they claim to conform to using dcterms:conformsTo. Legacy kee:profileConformance remains accepted for compatibility reads."@en;
+        sh:minCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "A scientific claim must declare at least one dcterms:conformsTo IRI; legacy kee:profileConformance is accepted during the migration window."@en;
+    ];
+
+    sh:property [
+        sh:path rdfs:label;
+        sh:name "title"@en;
+        sh:description "Scientific claim artifacts must have a human-readable title."@en;
+        sh:minCount 1;
+        sh:datatype rdf:langString;
+        sh:message "A scientific claim must have at least one rdfs:label language-tagged string."@en;
+    ];
+
+    sh:property [
+        sh:path skos:definition;
+        sh:name "claim text"@en;
+        sh:description "Scientific claim artifacts must state the claim clearly."@en;
+        sh:minCount 1;
+        sh:datatype rdf:langString;
+        sh:message "A scientific claim must include at least one skos:definition language-tagged string stating the claim."@en;
+    ];
+
+    sh:property [
+        sh:path prov:wasAttributedTo;
+        sh:name "attributed agent"@en;
+        sh:description "Scientific claim artifacts must identify the asserting agent or source."@en;
+        sh:minCount 1;
+        sh:nodeKind sh:IRI;
+        sh:message "A scientific claim must have at least one prov:wasAttributedTo IRI."@en;
+    ];
+
+    sh:property [
+        sh:path prov:generatedAtTime;
+        sh:name "generation time"@en;
+        sh:description "Scientific claim artifacts must record when the claim was asserted."@en;
+        sh:minCount 1;
+        sh:maxCount 1;
+        sh:datatype xsd:dateTime;
+        sh:message "A scientific claim must have exactly one prov:generatedAtTime value typed as xsd:dateTime."@en;
+    ];
+
+    sh:property [
+        sh:path dcterms:source;
+        sh:name "evidence source"@en;
+        sh:description "Scientific claim artifacts should link to at least one evidence item or source. Domain profiles should compose an appropriate evidence vocabulary/model when generic source links are insufficient."@en;
+        sh:minCount 1;
+        sh:nodeKind sh:IRIOrLiteral;
+        sh:severity sh:Warning;
+        sh:message "A scientific claim should have at least one dcterms:source value identifying evidence."@en;
+    ];
+
+    sh:property [
+        sh:path kee:scope;
+        sh:name "scope"@en;
+        sh:description "Scientific claim artifacts should declare the scope where the claim applies."@en;
+        sh:minCount 1;
+        sh:nodeKind sh:IRI;
+        sh:severity sh:Warning;
+        sh:message "A scientific claim should declare at least one kee:scope IRI."@en;
+    ];
+
+    sh:property [
+        sh:path kee:context;
+        sh:name "context"@en;
+        sh:description "Scientific claim artifacts should declare the interpretive context for the claim."@en;
+        sh:minCount 1;
+        sh:nodeKind sh:IRI;
+        sh:severity sh:Warning;
+        sh:message "A scientific claim should declare at least one kee:context IRI."@en;
+    ];
+
+    sh:property [
+        sh:path kee:confidenceStatus;
+        sh:name "confidence status"@en;
+        sh:description "Confidence status is optional and profile-defined. The base KEE profile defines no universal confidence vocabulary or ordering."@en;
+        sh:nodeKind sh:IRI;
+        sh:severity sh:Info;
+        sh:message "If present, kee:confidenceStatus should be an IRI whose interpretation is defined by the claimed profile; structural validity alone does not establish confidence semantics."@en;
+    ];
+
+    sh:property [
+        sh:path kee:confidenceValue;
+        sh:name "confidence value"@en;
+        sh:description "Numeric confidence is optional and profile-defined. defines no universal range, scale, calibration, or propagation semantics. The claimed profile must define interpretation."@en;
+        sh:datatype xsd:decimal;
+        sh:severity sh:Info;
+        sh:message "If present, kee:confidenceValue must be a decimal. Its range and meaning come from the claimed profile; passing this structural check does not establish semantic interoperability."@en;
+    ];
+
+    sh:property [
+        sh:path kee:evidenceStrength;
+        sh:name "evidence strength"@en;
+        sh:description "Evidence strength is optional and distinct from confidence. This open compatibility/convenience slot may carry an IRI from SEPIO, ECO, GRADE, another domain evidence vocabulary, or a declared profile vocabulary; KEE defines no universal evidence-strength scale."@en;
+        sh:nodeKind sh:IRI;
+        sh:severity sh:Info;
+        sh:message "If present, kee:evidenceStrength should be an IRI from a declared profile/domain evidence vocabulary. Evidence strength is not confidence."@en;
+    ];
+
+    sh:property [
+        sh:path kee:replicationStatus;
+        sh:name "replication status"@en;
+        sh:description "Replication status is optional and profile-defined, and is deliberately independent of kee:lifecycleState. A profile needing interoperable replication semantics should also identify the underlying replication attempt/result evidence."@en;
+        sh:nodeKind sh:IRI;
+        sh:severity sh:Info;
+        sh:message "If present, kee:replicationStatus should be an IRI from a profile-defined controlled vocabulary and must not be interpreted as lifecycle state."@en;
+    ];
+
+    sh:property [
+        sh:path kee:contradicts;
+        sh:name "contradicts"@en;
+        sh:description "Contradiction or dispute links are optional and profile-defined."@en;
+        sh:nodeKind sh:IRI;
+        sh:severity sh:Info;
+        sh:message "If present, kee:contradicts should point to another scientific-claim-like artifact."@en;
+    ];
+
+    sh:property [
+        sh:path dcterms:isReplacedBy;
+        sh:name "replacement artifact"@en;
+        sh:description "Corrected, retracted, or superseded claims may point to a replacement or follow-up claim."@en;
+        sh:nodeKind sh:IRI;
+        sh:severity sh:Info;
+        sh:message "If present, dcterms:isReplacedBy should be an IRI identifying the replacement artifact."@en;
+    ];
+
+    sh:property [
+        sh:path prov:wasRevisionOf;
+        sh:name "revision lineage"@en;
+        sh:description "Claims that revise or correct prior claims may identify the prior entity."@en;
+        sh:nodeKind sh:IRI;
+        sh:severity sh:Info;
+        sh:message "If present, prov:wasRevisionOf should be an IRI identifying the revised artifact."@en;
+    ].

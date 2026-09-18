@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://knoedg.org/schemas/profile-conformance.schema.json",
+  "title": "KEE Profile Conformance Declaration",
+  "description": "Draft schema for declaring support/conformance claims to a KEE profile. This schema separates declaration maturity from Capability Levels and conformance dimensions.",
+  "type": "object",
+  "required": [
+    "implementationId",
+    "profileId",
+    "profileVersion",
+    "declaredAt"
+  ],
+  "oneOf": [
+    {
+      "required": ["declarationStatus"],
+      "not": {"required": ["conformanceLevel"]}
+    },
+    {
+      "required": ["conformanceLevel"],
+      "not": {"required": ["declarationStatus"]}
+    }
+  ],
+  "properties": {
+    "implementationId": {"type": "string"},
+    "profileId": {"type": "string"},
+    "profileVersion": {"type": "string"},
+    "declarationStatus": {
+      "description": "Canonical declaration/support-maturity axis. This is not Capability Level 0-4 and is not an aggregate conformance result.",
+      "type": "string",
+      "enum": ["experimental", "partial", "conformant", "extended"]
+    },
+    "conformanceLevel": {
+      "description": "Legacy compatibility field for the superseded declaration-maturity axis. Deprecated for new writes; use declarationStatus.",
+      "deprecated": true,
+      "type": "string",
+      "enum": ["experimental", "partial", "conformant", "extended"]
+    },
+    "capabilityLevel": {
+      "description": "Optional historical KEE Capability Level, kept separate from conformance dimensions and declaration status.",
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 4
+    },
+    "conformanceDimensions": {
+      "description": "Optional explicit outcomes for the five conformance dimensions.",
+      "type": "object",
+      "properties": {
+        "structural": {"enum": ["passed", "failed", "not-tested", "not-applicable"]},
+        "profileSemantic": {"enum": ["passed", "failed", "not-tested", "not-applicable"]},
+        "procedural": {"enum": ["passed", "failed", "not-tested", "not-applicable"]},
+        "governancePolicy": {"enum": ["passed", "failed", "not-tested", "not-applicable"]},
+        "interoperability": {"enum": ["passed", "failed", "not-tested", "not-applicable"]}
+      },
+      "additionalProperties": false
+    },
+    "supportedArtifactUnits": {"type": "array", "items": {"type": "string"}},
+    "supportedLifecycleStates": {"type": "array", "items": {"type": "string"}},
+    "supportedQueries": {"type": "array", "items": {"type": "string"}},
+    "unsupportedRequirements": {"type": "array", "items": {"type": "string"}},
+    "extensions": {"type": "array", "items": {"type": "string"}},
+    "declaredBy": {"type": "string"},
+    "declaredAt": {"type": "string", "format": "date-time"},
+    "notes": {"type": "string"}
+  },
+  "additionalProperties": false
+}

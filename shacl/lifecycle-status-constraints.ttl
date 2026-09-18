@@ -1,0 +1,38 @@
+@prefix kee: <https://w3id.org/kee#>.
+@prefix lifecycle: <https://w3id.org/kee/lifecycle#>.
+@prefix sh: <http://www.w3.org/ns/shacl#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+
+# lifecycle/status non-collapse constraints.
+# These shapes compose with the existing profile shapes and reject legacy
+# mixed-axis values when they are used as kee:lifecycleState.
+
+kee:ScientificClaimLifecycleAxisShape
+    a sh:NodeShape;
+    sh:targetClass kee:ScientificClaim;
+    rdfs:label "Scientific Claim lifecycle-axis constraint"@en;
+    sh:property [
+        sh:path kee:lifecycleState;
+        sh:not [ sh:in ( lifecycle:Supported lifecycle:Qualified lifecycle:Challenged ) ];
+        sh:message "Supported, Qualified, and Challenged are evidential/assessment standings, not Scientific Claim lifecycleState values."@en;
+    ].
+
+kee:AssertionLifecycleAxisShape
+    a sh:NodeShape;
+    sh:targetClass kee:Assertion;
+    rdfs:label "Assertion lifecycle-axis constraint"@en;
+    sh:property [
+        sh:path kee:lifecycleState;
+        sh:not [ sh:in ( lifecycle:Preferred lifecycle:Challenged lifecycle:Qualified ) ];
+        sh:message "Preferred, Challenged, and Qualified are ranking/dispute/assessment standings, not Assertion lifecycleState values."@en;
+    ].
+
+kee:OrganizationalMemoryLifecycleAxisShape
+    a sh:NodeShape;
+    sh:targetClass kee:OrganizationalMemoryArtifact;
+    rdfs:label "Organizational Memory lifecycle-axis constraint"@en;
+    sh:property [
+        sh:path kee:lifecycleState;
+        sh:not [ sh:in ( lifecycle:UnderReview lifecycle:Qualified lifecycle:Stale ) ];
+        sh:message "UnderReview, Qualified, and Stale are review/currency/assessment standings, not Organizational Memory lifecycleState values."@en;
+    ].
