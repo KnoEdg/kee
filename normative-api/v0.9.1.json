@@ -1,0 +1,18 @@
+{
+  "version": "0.9.1",
+  "specification": "docs/specs/KEE-Specification-v0.9.1.md",
+  "supersedesCurrentVersionIdentifier": "0.9.0",
+  "compatibilityPolicy": "ADR-0074 strict SemVer",
+  "changeType": "PATCH",
+  "normativeChange": false,
+  "implementationChangeRequired": false,
+  "carriedForwardPublicAPI": "normative-api/v0.9.0.json",
+  "clarifications": [
+    "public explanation introduces plain-language concepts before formal terminology",
+    "time is stated explicitly as a first-class cross-cutting concern",
+    "non-collapse is defined in plain language",
+    "public-facing terminology definitions added",
+    "stale pre-publication v0.9.0 status wording removed from current-state documentation"
+  ],
+  "status": "Published public normative API snapshot"
+}
