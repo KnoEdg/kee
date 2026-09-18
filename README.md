@@ -1,67 +1,307 @@
 # KEE
 
-**Knowledge, Epistemics & Eidos**  
-**KnoEdg + Eidos**
+**Knowledge, Epistemics & Eidos**
 
-## KEE in plain language
+KEE is a framework for keeping knowledge understandable as it moves between people, organizations, software systems, and through time.
 
-KEE is a framework for keeping knowledge understandable as it moves between people, organizations, software, and time.
+---
 
-A useful way to understand KEE is to start with a small set of questions:
+# For the General Public
 
-- **What is this?** — identity and granularity.
-- **Where did it come from?** — provenance.
-- **When was it true, known, recorded, published, reviewed, or applicable?** — time.
-- **What supports or challenges it?** — evidence and confidence.
-- **Who had authority to act, and who is responsible?** — authority, delegation, and accountability.
-- **What changed, and what must remain part of history?** — lifecycle, revision, supersession, retention, and archival.
+## What problem is KEE trying to solve?
 
-These questions are related, but they are not interchangeable.
+Knowledge does not stay still.
 
-A respected source is not automatically correct. A highly confident claim is not automatically strongly evidenced. An authorized decision is not automatically a correct decision. A record that was true five years ago is not automatically current today. A search result can be relevant without being valid. Removing something from current search does not mean it should be erased from history.
+It gets copied, summarized, challenged, corrected, superseded, reviewed, combined with other information, moved between organizations, and interpreted by different software systems.
 
-KEE calls this discipline **non-collapse**: do not collapse two related but meaningfully different ideas into one.
+During that process, important distinctions can disappear.
 
-### Time is a first-class concern
+A source can become confused with evidence.
+
+Confidence can become confused with certainty.
+
+Authority can become confused with correctness.
+
+A current statement can replace an older statement without preserving the history.
+
+A date can be reduced to one generic timestamp even though several different times matter.
+
+KEE exists to help prevent that loss of meaning.
+
+It asks systems to preserve the distinctions necessary to understand not only what a piece of knowledge says, but also where it came from, when it applied, what supports it, what happened to it over time, and what standing it currently has.
+
+## The basic questions
+
+A useful way to understand KEE is through a small set of questions.
+
+- What is this?
+- Where did it come from?
+- When was it true, observed, asserted, recorded, published, reviewed, or applicable?
+- What supports it?
+- What challenges it?
+- How confident are we in it?
+- Who had authority to act or decide?
+- Who is responsible?
+- What changed?
+- What came before it?
+- What replaced it?
+- What must remain part of the historical record?
+
+These questions are related.
+
+But they do not mean the same thing.
+
+KEE calls the discipline of preserving these differences **non-collapse**.
+
+## Non-collapse
+
+Non-collapse means that two related ideas should not be treated as identical when the difference matters.
+
+For example:
+
+A respected source is not automatically correct.
+
+Strong confidence is not the same thing as strong evidence.
+
+Having authority to make a decision does not prove the decision was correct.
+
+Something that was true in the past is not automatically true now.
+
+Something that has been superseded may no longer be current, but it can still be historically important.
+
+A search result can be relevant without being valid.
+
+Removing something from current search does not mean it should disappear from history.
+
+KEE tries to preserve these distinctions as knowledge moves between systems.
+
+## Time is part of the knowledge
 
 KEE does not treat knowledge as frozen.
 
-A claim may have one time when it was true, another when it was observed, another when it was asserted, another when it was recorded, another when it was published, another when it was reviewed, and another when it stopped applying.
+Consider a general scientific claim.
 
-Those times answer different questions and must not be silently treated as one generic timestamp when the distinction matters.
+An observation may have been made in January.
 
-Time therefore cuts across provenance, evidence, confidence, authority, lifecycle, retrieval, validity, history, and governance. KEE composes established temporal prior art rather than claiming a new theory or ontology of time.
+A researcher may have interpreted it in February.
 
-## A few terms used throughout KEE
+A report may have been written in March.
 
-- **Epistemic** — relating to knowledge: how something is known, what supports it, how it may be challenged, and what standing it has as knowledge.
-- **Provenance** — where information came from, who or what produced it, and how it was derived or changed.
-- **Temporal qualification** — identifying the relevant time or times for a claim, event, decision, record, or state.
-- **Authority** — recognized permission or power to act or decide.
-- **Responsibility / accountability** — who is answerable for an act or outcome.
-- **Evidence** — information that supports or challenges a claim.
-- **Confidence** — an assessment of how strongly a claim is supported or believed; it is not the evidence itself.
-- **Epistemic standing** — the standing a claim has as knowledge: for example, how supported, challenged, qualified, provisional, or accepted it is.
-- **Profile** — specialized rules for a particular kind of knowledge, artifact, domain, or use.
-- **Interoperability** — whether independently built systems can exchange and use information without losing the distinctions needed to interpret it correctly.
-- **Non-collapse** — preserving important distinctions instead of treating related concepts as though they were identical.
+The report may have been published in April.
+
+Another group may have reviewed it in June.
+
+New evidence may have challenged it in September.
+
+A later result may have superseded it the following year.
+
+All of those dates describe different things.
+
+Reducing them to one timestamp can destroy important information.
+
+KEE therefore treats time as a first-class concern.
+
+Time can affect provenance, evidence, confidence, authority, applicability, lifecycle, retrieval, validity, history, and governance.
+
+KEE does not claim to have invented a new theory of time.
+
+It uses established approaches for representing these distinctions.
+
+## What does epistemic mean?
+
+Epistemic simply means relating to knowledge.
+
+It concerns questions such as:
+
+How do we know this?
+
+What supports it?
+
+What challenges it?
+
+How certain or uncertain are we?
+
+Who made the claim?
+
+Under what conditions?
+
+Has it been reviewed?
+
+Has it been superseded?
+
+What standing should it currently have?
+
+KEE is therefore concerned not only with storing information, but with preserving enough context to understand how that information should be treated as knowledge.
+
+## What does Eidos mean?
+
+Eidos is an old philosophical term associated with form, structure, or the recognizable character of something.
+
+In KEE, Eidos points toward the thing being described.
+
+Epistemics concerns how we know something about it.
+
+Eidos concerns what the knowledge is about and how that thing is identified or structured.
+
+KEE tries to keep these concerns connected without collapsing them into one another.
+
+A simple way to put it is:
+
+**Eidos concerns what we are talking about.**
+
+**Epistemics concerns how we know what we say about it.**
+
+## Does KEE invent these ideas?
+
+Mostly, no.
+
+KEE deliberately follows a principle called **Prior Art First**.
+
+Many of the capabilities KEE needs already exist in established standards, technologies, research traditions, and other frameworks.
+
+KEE uses those rather than replacing them unnecessarily.
+
+Its proposed value is not that it invented provenance, time, evidence, semantic modeling, validation, or knowledge representation.
+
+Its proposed value is that it brings selected pieces of prior art together under a governed contract that says which distinctions must survive when knowledge moves between independently designed systems.
+
+That proposition remains open to testing.
+
+If existing frameworks can provide the same governed behavior without KEE, they should be preferred where appropriate.
+
+KEE should exist only where it provides useful discipline that is not already adequately supplied elsewhere.
+
+## What KEE does not decide
+
+KEE does not decide what is true in medicine, law, science, engineering, finance, history, philosophy, or any other field.
+
+Those domains define their own concepts, evidence, methods, and standards.
+
+KEE is concerned with how knowledge artifacts can preserve important distinctions while being exchanged, reviewed, revised, governed, and interpreted across systems.
+
+---
+
+# For Implementers
+
+## Formal definition
+
+KEE is a **governed application-profile family and interoperability framework for knowledge artifacts**.
+
+It is not a semantic foundation.
+
+KEE composes existing prior art and adds a governed cross-profile contract for preserving distinctions needed for interoperability.
 
 ## What KEE owns — and what it does not
 
-KEE does **not** claim ownership of the basic semantic building blocks used to represent knowledge.
+KEE does not claim ownership of the foundational semantic technologies it uses.
 
-- **Prior art owns foundational semantics.** RDF, OWL, SHACL, PROV-O, OWL-Time, SKOS, SPARQL, Dublin Core and related standards provide established machinery.
-- **Domains and specialized profiles own domain knowledge and artifact-specific behaviour.** KEE does not decide what medicine, law, science, WordPress, finance, philosophy, or another field means.
-- **The KEE family contract owns the published cross-profile rules** needed for independently designed profiles to remain interpretable to one another.
-- **KEE framework governance owns the standing of KEE's own normative instruments**: which decisions are proposals, which are accepted, which are integrated into a binding release, and how compatibility is governed.
+Prior art provides much of the underlying machinery, including:
 
-The formal definition is:
+- RDF
+- OWL
+- SHACL
+- PROV-O
+- OWL-Time
+- SKOS
+- SPARQL
+- Dublin Core
+- related standards and established practices
 
-> KEE is a **governed application-profile family and interoperability framework for knowledge artifacts** — not a semantic foundation.
+Domains and specialized profiles own domain-specific knowledge and artifact-specific behavior.
 
-Its value is disciplined composition of prior art, explicit non-collapse and behavioral rules, narrowly justified local controlled vocabularies, profile governance, migration and compatibility controls, and executable conformance/reference assets.
+KEE does not define what the concepts of a particular scientific, legal, technical, historical, philosophical, or commercial domain mean.
 
-KEE is source-neutral and consumer-neutral. Producer or consumer type may affect provenance, evidence, disclosure, validation, review, or governance requirements, but does not by itself establish epistemic standing.
+The KEE family contract owns the published cross-profile obligations required for independently developed profiles to remain interpretable to one another.
+
+KEE framework governance owns the standing of KEE's own normative instruments, including:
+
+- proposals
+- accepted decisions
+- specifications
+- profiles
+- releases
+- compatibility rules
+- migration requirements
+
+## Source neutrality
+
+KEE is source-neutral and consumer-neutral.
+
+The fact that information came from a human, organization, software system, machine process, model, database, or another source does not by itself establish its epistemic standing.
+
+Producer or consumer type may affect requirements concerning:
+
+- provenance
+- evidence
+- disclosure
+- validation
+- review
+- authority
+- governance
+
+But source type alone does not determine whether a claim should be accepted.
+
+## Profiles
+
+KEE uses profiles to specialize the framework for particular kinds of knowledge artifacts, domains, or uses.
+
+Profiles may be:
+
+- Accepted / Normative
+- Draft / Non-Normative
+- Experimental
+- Research-stage
+
+The existence of a profile does not imply that it is normative.
+
+Current profile status is documented in:
+
+[`docs/profiles/README.md`](docs/profiles/README.md)
+
+## Non-collapse rules
+
+KEE defines a set of cross-profile non-collapse obligations.
+
+Their purpose is to prevent independently designed profiles from silently treating meaningfully different concepts as equivalent.
+
+These rules concern areas such as:
+
+- identity
+- granularity
+- provenance
+- time
+- evidence
+- confidence
+- authority
+- responsibility
+- lifecycle
+- supersession
+- retrieval
+- validity
+- governance
+
+The current normative specification defines the binding behavior.
+
+## Conformance
+
+KEE distinguishes five conformance dimensions:
+
+1. structural
+2. profile-semantic
+3. procedural
+4. governance and policy
+5. interoperability
+
+Passing structural validation alone does not prove that information is:
+
+- true
+- authoritative
+- sufficiently evidenced
+- procedurally valid
+- current
+- fully interoperable
+
+Conformance means only what the applicable KEE specification and profile explicitly define.
 
 ## Current release
 
@@ -69,19 +309,11 @@ KEE is source-neutral and consumer-neutral. Producer or consumer type may affect
 
 Status: **Published Normative Baseline**
 
-v0.9.1 is a backward-compatible **PATCH** release under ADR-0074. It corrects the public explanation and stale current-state wording after v0.9.0 publication.
+KEE v0.9.1 is a backward-compatible patch release under ADR-0074.
 
-It adds:
+It corrects public explanation and current-state documentation following the publication of v0.9.0.
 
-- zero new normative requirements;
-- zero new KEE-owned semantic terms;
-- zero profile promotions or demotions;
-- zero new Capability Levels;
-- zero changes to the seventeen non-collapse rules;
-- zero conformance-behaviour changes; and
-- zero governed-data migration requirements.
-
-An implementation conforming to KEE v0.9.0 conforms to KEE v0.9.1 without implementation change.
+It does not change the normative behavior of conforming v0.9.0 implementations.
 
 Current normative specification:
 
@@ -95,47 +327,22 @@ Release history:
 
 [`CHANGELOG.md`](CHANGELOG.md)
 
-The immediately previous published baseline, KEE v0.9.0, remains immutable historical normative provenance.
-
-## Profiles
-
-KEE uses profiles to specialize the framework for particular kinds of knowledge artifacts or domains.
-
-Profiles may be:
-
-- **Accepted / Normative**
-- **Draft / Non-Normative**
-- experimental or under research
-
-A profile's existence does not imply that it is normative.
-
-Current profile status is documented in:
-
-[`docs/profiles/README.md`](docs/profiles/README.md)
-
-## Conformance
-
-KEE distinguishes five conformance dimensions:
-
-1. structural
-2. profile-semantic
-3. procedural
-4. governance/policy
-5. interoperability
-
-Passing structural validation alone does not prove that information is true, authoritative, sufficiently supported, procedurally valid, or fully interoperable.
-
-Conformance means only what the applicable KEE specification and profile explicitly claim it means.
+Published normative releases are immutable historical records.
 
 ## Repository purpose
 
-This repository is the **public publication surface for KEE**.
+This repository is the public publication surface for KEE.
 
-It contains the artifacts intended for public use, citation, implementation, interoperability, and long-term reference.
+It contains artifacts intended for:
 
-Published release artifacts are treated as immutable historical records.
+- public use
+- citation
+- implementation
+- interoperability
+- conformance
+- long-term reference
 
-Development, research, experiments, release preparation, and other working material may occur outside this public repository before publication.
+Development, research, experiments, release preparation, and other working material may occur outside this repository before publication.
 
 ## Persistent identifiers
 
@@ -143,9 +350,9 @@ KEE is registering persistent identifiers under:
 
 `https://w3id.org/kee`
 
-The registration has been submitted to the W3ID project for review. Until that registration is merged and resolution is verified, these identifiers must not be described as operationally persistent or dereferenceable.
+The registration has been submitted to the W3ID project for review.
 
-The public KEE repository already contains the redirect targets for the KEE core namespace, artifact classifications, lifecycle vocabularies, confidence interpretation sentinel, controlled vocabularies, profile index, and JSON-LD context.
+Until that registration is merged and resolution is independently verified, these identifiers must not be described as operationally persistent or dereferenceable.
 
 ## Versioning
 
@@ -157,7 +364,9 @@ KEE follows Semantic Versioning under ADR-0074.
 
 Published versions are immutable.
 
-KEE is currently pre-1.0. A future **v1.0.0** will be a stability baseline: a decision that the protected public normative contract is mature enough for long-term downstream reliance.
+KEE is currently pre-1.0.
+
+A future **v1.0.0** will represent a stability decision: that the protected public normative contract is mature enough for long-term downstream reliance.
 
 ## Governance discipline
 
@@ -169,7 +378,7 @@ Prior Art First applies before introducing KEE-owned semantic surfaces.
 
 A core project rule is:
 
-> **A KEE term may disappear; its governed obligation may not disappear silently.**
+**A KEE term may disappear; its governed obligation may not disappear silently.**
 
 ## Project
 
