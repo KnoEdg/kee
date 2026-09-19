@@ -41,7 +41,7 @@
 kee:ScientificClaimProfileShape
     a sh:NodeShape;
     rdfs:label "KEE Scientific Claim Profile Shape"@en;
-    rdfs:comment "Minimal structural SHACL shape for scientific-claim KEE artifacts. confidence/evidence semantic conformance additionally depends on the claimed profile's interpretation contract."@en;
+    rdfs:comment "Minimal structural SHACL shape for scientific-claim KEE artifacts. Confidence/evidence semantic conformance additionally depends on the claimed profile's interpretation contract."@en;
     sh:targetClass kee:ScientificClaim;
 
     sh:property [
@@ -152,7 +152,7 @@ kee:ScientificClaimProfileShape
     sh:property [
         sh:path kee:confidenceValue;
         sh:name "confidence value"@en;
-        sh:description "Numeric confidence is optional and profile-defined. defines no universal range, scale, calibration, or propagation semantics. The claimed profile must define interpretation."@en;
+        sh:description "Numeric confidence is optional and profile-defined. This shape defines no universal range, scale, calibration, or propagation semantics. The claimed profile must define interpretation."@en;
         sh:datatype xsd:decimal;
         sh:severity sh:Info;
         sh:message "If present, kee:confidenceValue must be a decimal. Its range and meaning come from the claimed profile; passing this structural check does not establish semantic interoperability."@en;

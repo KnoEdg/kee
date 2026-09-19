@@ -18,6 +18,9 @@ ccause:AuthorityConflict a skos:Concept ; skos:prefLabel "Authority Conflict" ; 
 ccause:MethodConflict a skos:Concept ; skos:prefLabel "Method Conflict" ; skos:definition "Artifacts conflict because different methods, assumptions, or procedures produce incompatible results." ; skos:exactMatch legacy:MethodConflict ; skos:inScheme ccause:ContradictionCauseScheme .
 ccause:SemanticConflict a skos:Concept ; skos:prefLabel "Semantic Conflict" ; skos:definition "Artifacts conflict because terms, categories, or meanings are interpreted differently." ; skos:exactMatch legacy:SemanticConflict ; skos:inScheme ccause:ContradictionCauseScheme .
 
+# Extension policy: the scheme is intentionally open. New shared KEE concepts
+# require the KEE-owned-term admission test; profile/domain concepts may use
+# their own namespaces without being copied into this scheme.
 legacy:DirectContradiction skos:exactMatch ccause:DirectContradiction .
 legacy:TemporalContradiction skos:exactMatch ccause:TemporalContradiction .
 legacy:ScopeMismatch skos:exactMatch ccause:ScopeMismatch .

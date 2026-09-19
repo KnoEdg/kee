@@ -1,6 +1,13 @@
 #!/usr/bin/env python3
 """Enforce the two invariants of the KEE public publication surface.
 
+This file is maintained in the KEE working repository and published verbatim to
+the public repository by `tools/publish.py`. The forbidden-pattern list below is
+the single definition of the publication scoping rule: the working repository's
+own manifest test imports it from here rather than restating it. An earlier
+hand-copy of this list had already fallen a pattern behind, so a source naming
+an amendment passed the working-repository gate and failed public CI.
+
 1. Self-containment — every repository-relative path the published files cite
    must resolve inside this repository.
 2. Publication scope — the public surface carries no reference to development

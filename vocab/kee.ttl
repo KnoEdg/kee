@@ -371,7 +371,7 @@ kee:crossReference
 kee:eligibilityBasis
     a rdf:Property ;
     rdfs:label "Eligibility Basis"@en ;
-    skos:definition "Names the upstream metadata or policy facts claimed to have been consulted. procedural tests verify that the basis actually affects decision behavior."@en ;
+    skos:definition "Names the upstream metadata or policy facts claimed to have been consulted. Procedural conformance tests verify that the basis actually affects decision behavior."@en ;
     rdfs:isDefinedBy <https://w3id.org/kee> ;
     skos:scopeNote "AI-Grounded Retrieval Profile (Draft / Non-Normative); core is owner of record (§6.4). Draft-profile surface; no normative effect from existence or structural validation (§0, §15.6)"@en ;
     skos:note "External relationship: Composes prov:wasGeneratedBy/prov:generatedAtTime for decision provenance; categories are open IRI slots."@en ;

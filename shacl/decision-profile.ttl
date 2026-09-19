@@ -22,7 +22,7 @@
 # - legacy kee:artifactType and kee:profileConformance remain dual-read inputs
 # during the registered legacy compatibility window.
 #
-# This file remains a structural Draft-profile shape. preserves the
+# This file remains a structural Draft-profile shape. This shape preserves the
 # existing legacy SKOS annotation checks so old fixtures remain readable, but
 # no longer describes skos:scopeNote or skos:changeNote as exact ADR context,
 # rationale, or consequences semantics. New implementations may preserve native
@@ -92,7 +92,7 @@ kee:DecisionProfileShape
     sh:property [
         sh:path skos:scopeNote;
         sh:name "legacy prose context annotation"@en;
-        sh:description "Legacy Decision fixtures use skos:scopeNote for prose context. accepts that annotation for compatibility but does not claim that SKOS scope-note semantics are identical to the ADR context field."@en;
+        sh:description "Legacy Decision fixtures use skos:scopeNote for prose context. This shape accepts that annotation for compatibility but does not claim that SKOS scope-note semantics are identical to the ADR context field."@en;
         sh:minCount 1;
         sh:datatype rdf:langString;
         sh:severity sh:Warning;
@@ -102,7 +102,7 @@ kee:DecisionProfileShape
     sh:property [
         sh:path skos:changeNote;
         sh:name "legacy rationale or consequences annotation"@en;
-        sh:description "Legacy Decision fixtures use skos:changeNote for rationale/consequences prose. accepts it for compatibility but does not treat that generic annotation as exact ADR rationale or consequences semantics."@en;
+        sh:description "Legacy Decision fixtures use skos:changeNote for rationale/consequences prose. This shape accepts it for compatibility but does not treat that generic annotation as exact ADR rationale or consequences semantics."@en;
         sh:minCount 1;
         sh:datatype rdf:langString;
         sh:severity sh:Warning;
