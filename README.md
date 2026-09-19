@@ -346,13 +346,24 @@ Development, research, experiments, release preparation, and other working mater
 
 ## Persistent identifiers
 
-KEE is registering persistent identifiers under:
+KEE publishes persistent identifiers under:
 
 `https://w3id.org/kee`
 
-The registration has been submitted to the W3ID project for review.
+The registration is merged with the W3ID project, and resolution was independently verified on 2026-09-19: every registered path was followed to its final response, and the bytes served were compared against the artifact published here.
 
-Until that registration is merged and resolution is independently verified, these identifiers must not be described as operationally persistent or dereferenceable.
+The base identifier content-negotiates. Turtle returns the term declarations, JSON-LD or JSON returns the context, and anything else returns this repository:
+
+```
+curl -H 'Accept: text/turtle'        https://w3id.org/kee/   # vocab/kee.ttl
+curl -H 'Accept: application/ld+json' https://w3id.org/kee/   # context/kee-context.jsonld
+```
+
+The concept schemes, the profile identifiers, and the artifact classification each dereference to the file published here — for example `https://w3id.org/kee/artifact` returns `schemas/skos/artifact-types.ttl`.
+
+The identifiers redirect to this repository's default branch, so they serve the current published artifact rather than a pinned version. Cite a release when you need a fixed one.
+
+The published specification was frozen while the registration was still pending, so Section 18.7 and Section 24 still describe it as submitted and unverified. A published specification is not edited in place; both are corrected by the next release.
 
 ## Versioning
 
