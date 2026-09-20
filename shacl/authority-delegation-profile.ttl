@@ -7,7 +7,7 @@
 
 # KEE Authority and Delegation Profile SHACL Shapes
 # Status: Draft / Non-Normative
-# Shape-contract version: 0.9.2
+# Shape-contract version: 0.10.0
 #
 # Corrections remain controlling for authority semantics.
 # removes validator-driven explicit multi-typing dependence: the
@@ -36,10 +36,10 @@ kee:AccountableAuthorityRootShape
 # prov:Person or prov:Organization must resolve through the delegation chain
 # to such a root. Absence of a prov:SoftwareAgent type does not exempt it.
 #
-# Severity is sh:Warning for the registered legacy compatibility window: the rule is
-# normative, but data that was structurally valid under an earlier baseline must not become
-# invalid in a patch release. It becomes sh:Violation in the next minor
-# version (specification Section 12.3).
+# Severity is sh:Violation from v0.10.0, the release that declares the escalation
+# (specification Section 12.3). Earlier baselines reported the same obligation at
+# sh:Warning for the registered legacy compatibility window, because data that was
+# structurally valid under an earlier baseline must not become invalid in a patch release.
 kee:SoftwareAgentAuthorityRootShape
     a sh:NodeShape;
     rdfs:label "KEE Non-Person Grantee Accountable Root Shape"@en;
@@ -49,8 +49,8 @@ kee:SoftwareAgentAuthorityRootShape
         [ sh:class prov:Organization ]
         [ sh:property [ sh:path [ sh:oneOrMorePath prov:actedOnBehalfOf ]; sh:qualifiedValueShape kee:AccountableAuthorityRootShape; sh:qualifiedMinCount 1 ] ]
     );
-    sh:severity sh:Warning;
-    sh:message "A grantee that is not a prov:Person or prov:Organization must resolve through prov:actedOnBehalfOf to a terminal prov:Person or prov:Organization authority root. Reported as a warning during the registered legacy compatibility window; it becomes a violation in the next minor version."@en.
+    sh:severity sh:Violation;
+    sh:message "A grantee that is not a prov:Person or prov:Organization must resolve through prov:actedOnBehalfOf to a terminal prov:Person or prov:Organization authority root. Reported as a violation from v0.10.0, the release that declares the escalation; earlier baselines reported it as a warning during the registered legacy compatibility window."@en.
 
 kee:AuthorityProfileShape
     a sh:NodeShape;

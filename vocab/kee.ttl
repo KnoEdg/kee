@@ -22,16 +22,18 @@
 # claim the specification does not make. External relationships are recorded
 # as prose at the strength the registry records, not as mapping triples.
 #
-# Section references are to docs/specs/KEE-Specification-v0.9.2.md.
+# Section references are to docs/specs/KEE-Specification-v0.10.0.md.
 
 <https://w3id.org/kee>
     a owl:Ontology ;
     rdfs:label "KEE term declarations"@en ;
     dcterms:title "KEE term declarations"@en ;
-    dcterms:description "Declarations for the KEE-owned classes, properties, and registered-legacy controlled values retained by the KEE v0.9.2 baseline. This document declares and defines terms; it is not a foundational ontology, and it introduces no semantics beyond the specification and the term registry it is generated from."@en ;
+    dcterms:description "Declarations for the KEE-owned classes, properties, and registered-legacy controlled values retained by the KEE v0.10.0 baseline. This document declares and defines terms; it is not a foundational ontology, and it introduces no semantics beyond the specification and the term registry it is generated from."@en ;
     dcterms:conformsTo <https://www.w3.org/TR/rdf-schema/> ;
-    dcterms:isReferencedBy "docs/specs/KEE-Specification-v0.9.2.md" ;
-    rdfs:comment "The canonical namespaces are persistent identifiers that are not yet registered and do not dereference; see Section 18.7. Read this file from the repository rather than by dereferencing a KEE IRI."@en .
+    dcterms:isReferencedBy "docs/specs/KEE-Specification-v0.10.0.md" ;
+    owl:versionIRI <https://w3id.org/kee/v0.10.0> ;
+    owl:versionInfo "v0.10.0"@en ;
+    rdfs:comment "The canonical namespaces are registered persistent identifiers. The base identifier and the specific namespaces Section 18.7 confirms resolve; that section also names which do not yet. The unversioned identifier serves the current published baseline, and the version IRI above names the release this document is. Resolution is verified for the confirmed identifiers; durable persistence is not thereby established, so a consumer whose correctness depends on these definitions should also be able to read this file from the repository."@en .
 
 kee:Assertion
     a rdfs:Class ;

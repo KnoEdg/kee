@@ -305,27 +305,29 @@ Conformance means only what the applicable KEE specification and profile explici
 
 ## Current release
 
-**KEE v0.9.2**
+**KEE v0.10.0**
 
 Status: **Published Normative Baseline**
 
-KEE v0.9.2 is a backward-compatible patch release.
+KEE v0.10.0 is a backward-compatible minor release.
 
-It consolidates the published contract into one self-contained specification: determining the meaning of a KEE obligation requires no other document.
-
-It does not change the normative behavior of conforming v0.9.1 implementations.
+It carries exactly one conformance-behaviour change: the Section 12.3 accountable-root constraint is enforced as a violation rather than a warning. A grantee that resolves to no accountable person or organization conformed structurally under v0.9.2 and does not conform under v0.10.0. The change is confined to the Authority and Delegation profile, which is Draft / Non-Normative and outside the public normative API. It adds no new normative requirement, KEE-owned semantic term, profile promotion, or Capability Level.
 
 Current normative specification:
 
-[`docs/specs/KEE-Specification-v0.9.2.md`](docs/specs/KEE-Specification-v0.9.2.md)
+[`docs/specs/KEE-Specification-v0.10.0.md`](docs/specs/KEE-Specification-v0.10.0.md)
 
 Public normative API:
 
-[`normative-api/v0.9.2.json`](normative-api/v0.9.2.json)
+[`normative-api/v0.10.0.json`](normative-api/v0.10.0.json)
 
 Release history:
 
 [`CHANGELOG.md`](CHANGELOG.md)
+
+Previous published baseline:
+
+[`docs/specs/KEE-Specification-v0.9.2.md`](docs/specs/KEE-Specification-v0.9.2.md) / [`normative-api/v0.9.2.json`](normative-api/v0.9.2.json)
 
 Published normative releases are immutable historical records.
 
@@ -363,7 +365,7 @@ The concept schemes, the profile identifiers, and the artifact classification ea
 
 The identifiers redirect to this repository's default branch, so they serve the current published artifact rather than a pinned version. Cite a release when you need a fixed one.
 
-The published specification was frozen while the registration was still pending, so Section 18.7 and Section 24 still describe it as submitted and unverified. A published specification is not edited in place; both are corrected by the next release.
+Starting with v0.10.0, the published term declarations also carry a version-specific identifier (`owl:versionIRI`), meant to keep denoting the release it was minted for even after the unversioned identifier moves on. That redirect is registered separately from the base identifier above and may not yet resolve for every past or current release; an identifier that does resolve may be described as registered, resolvable, and dereferenceable, and no identifier is described as guaranteed-persistent.
 
 ## Versioning
 
@@ -403,4 +405,4 @@ https://github.com/KnoEdg/kee
 
 ---
 
-**Current baseline: KEE v0.9.2**
+**Current baseline: KEE v0.10.0**

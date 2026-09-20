@@ -6,6 +6,26 @@ KEE follows Semantic Versioning 2.0.0 with a stricter pre-1.0 compatibility prom
 
 This changelog is informative release guidance. Normative force remains in the published specification and in the Accepted / Normative profiles.
 
+## [0.10.0] — 2026-09-19
+
+Published specification: [`docs/specs/KEE-Specification-v0.10.0.md`](docs/specs/KEE-Specification-v0.10.0.md).
+Published public API: [`normative-api/v0.10.0.json`](normative-api/v0.10.0.json).
+
+Backward-compatible MINOR release: it carries exactly one conformance-behaviour change, disclosed below, and adds no new normative requirement, KEE-owned semantic term, profile promotion, or Capability Level.
+
+### Changed
+
+- **The Section 12.3 accountable-root constraint is enforced.** The reference shape now rejects a grantee that resolves to no accountable person or organization, rather than only warning about it. A grantee that conformed structurally under v0.9.2 does not conform under v0.10.0. This is the release's one conformance-behaviour change, and the reason it is MINOR rather than PATCH.
+- The escalation is MINOR-compatible because the profile that owns this constraint, Authority and Delegation, is Draft / Non-Normative and excluded from the public normative API — the same ground the v0.9.0 release used for a comparable Promotion-shape change.
+- Section 18.7 is restated. The base identifier and the artifact and confidence namespaces are independently verified to resolve to RDF; the generic lifecycle namespace and the Section 5 profile identifiers redirect to a human-readable page rather than content-negotiating to RDF, and this release says so rather than generalizing from the identifiers actually tested.
+- The published term declarations now carry a version-specific identifier (`owl:versionIRI`) alongside the unversioned one, so a consumer can tell which release it received.
+
+### Compatibility
+
+- MINOR release: one disclosed incompatible conformance behaviour, confined to a Draft / Non-Normative profile outside the public normative API.
+- An implementation claiming the Authority and Delegation profile and relying on the prior warning-level behaviour must resolve its delegation chains to an accountable person or organization before adopting v0.10.0. No stored data requires rewriting; what changes is whether a structural validation passes.
+- No new KEE-owned semantic term, profile promotion or demotion, or new Capability Level.
+
 ## [0.9.2] — 2026-09-18
 
 Published specification: [`docs/specs/KEE-Specification-v0.9.2.md`](docs/specs/KEE-Specification-v0.9.2.md).
@@ -66,4 +86,5 @@ Backward-compatible MINOR release. The first KEE release published under the cur
 
 - MINOR release. No new KEE-owned semantic term, no profile promotion, no new Capability Level, and no change to the seventeen non-collapse rules.
 
+[0.10.0]: https://github.com/KnoEdg/kee/blob/main/docs/specs/KEE-Specification-v0.10.0.md
 [0.9.2]: https://github.com/KnoEdg/kee/blob/main/docs/specs/KEE-Specification-v0.9.2.md
