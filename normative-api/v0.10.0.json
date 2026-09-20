@@ -1,0 +1,169 @@
+{
+  "version": "0.10.0",
+  "specification": "docs/specs/KEE-Specification-v0.10.0.md",
+  "supersedesCurrentVersionIdentifier": "0.9.2",
+  "changeType": "MINOR",
+  "normativeChange": true,
+  "implementationChangeRequired": true,
+  "selfContained": true,
+  "compatibilityPolicy": "strict pre-1.0 SemVer: a published PATCH release must not hide an incompatible change",
+  "acceptedProfiles": [
+    "assertion-metadata",
+    "scientific-claim",
+    "software-engineering"
+  ],
+  "profileStatuses": {
+    "software-engineering": "Accepted / Normative",
+    "scientific-claim": "Accepted / Normative",
+    "assertion-metadata": "Accepted / Normative",
+    "assertion": "Draft",
+    "decision": "Draft",
+    "organizational-memory": "Draft",
+    "lifecycle-crosswalk": "Draft / Non-Normative",
+    "governance-transition": "Draft / Non-Normative",
+    "promotion": "Draft / Non-Normative",
+    "authority-delegation": "Draft / Non-Normative",
+    "contradiction-records": "Draft / Non-Normative",
+    "ai-grounded-retrieval": "Draft / Non-Normative",
+    "artifact-identity-granularity": "Draft / Non-Normative",
+    "historical-bitemporal-querying": "Draft / Non-Normative"
+  },
+  "excludedFromPublicAPI": [
+    "Draft profiles",
+    "Non-Normative profiles",
+    "Experimental surfaces"
+  ],
+  "termDeclarations": "vocab/kee.ttl",
+  "termRegistry": "Section 18.3 of the published specification defines the term-registry contract; vocab/kee.ttl is its published declaration document.",
+  "nonCollapseRuleIdentifiers": {
+    "NC-01": "Section 7.1 rule 1",
+    "NC-02": "Section 7.1 rule 2",
+    "NC-03": "Section 7.1 rule 3",
+    "NC-04": "Section 7.1 rule 4",
+    "NC-05": "Section 7.1 rule 5",
+    "NC-06": "Section 7.1 rule 6",
+    "NC-07": "Section 7.1 rule 7",
+    "NC-08": "Section 7.1 rule 8",
+    "NC-09": "Section 7.1 rule 9",
+    "NC-10": "Section 7.1 rule 10",
+    "NC-11": "Section 7.1 rule 11",
+    "NC-12": "Section 7.1 rule 12",
+    "NC-13": "Section 7.1 rule 13",
+    "NC-14": "Section 7.1 rule 14",
+    "NC-15": "Section 7.1 rule 15",
+    "NC-16": "Section 7.1 rule 16",
+    "NC-17": "Section 7.1 rule 17"
+  },
+  "nonCollapseBehaviouralCoverage": {
+    "demonstrated": 15,
+    "total": 17,
+    "notDemonstrable": [
+      "NC-03",
+      "NC-06"
+    ],
+    "reason": "representational: accountability and trust are not represented as surfaces distinct from authority and confidence"
+  },
+  "conformanceDimensions": [
+    "structural",
+    "profile-semantic",
+    "procedural",
+    "governance/policy",
+    "interoperability"
+  ],
+  "conformanceDimensionMachineTokens": {
+    "structural": "structural",
+    "profile-semantic": "profile-semantic",
+    "procedural": "procedural",
+    "governance-policy": "governance/policy",
+    "interoperability": "interoperability"
+  },
+  "capabilityLevels": {
+    "Level 0": "Informational alignment",
+    "Level 1": "Artifact registry",
+    "Level 2": "Governed lifecycle",
+    "Level 3": "Temporal and provenance-aware governance",
+    "Level 4": "Epistemic governance"
+  },
+  "declarationStatusValues": [
+    "experimental",
+    "partial",
+    "conformant",
+    "extended"
+  ],
+  "profileLifecycleNamespaces": [
+    "https://w3id.org/kee/lifecycle/assertion#",
+    "https://w3id.org/kee/lifecycle/scientific-claim#",
+    "https://w3id.org/kee/lifecycle/organizational-memory#",
+    "https://w3id.org/kee/lifecycle/decision#",
+    "https://w3id.org/kee/lifecycle/software-engineering#"
+  ],
+  "statusAwareToolingObligations": [
+    "report-profile-identity",
+    "report-profile-governance-status",
+    "report-shape-or-shape-contract-version",
+    "report-structural-result",
+    "report-normative-effect-for-evaluated-claim",
+    "report-untested-conformance-dimensions",
+    "make-claim-scoped-binding-explicit"
+  ],
+  "registeredLegacyCompatibilityWindow": {
+    "mode": "single-write canonical / dual-read registered legacy+canonical",
+    "newWrites": "canonical form only",
+    "legacyReads": "only where the migration registry explicitly records a compatibility policy",
+    "retirement": "requires a separately versioned decision and migration notice naming the legacy surface, last dual-read version, first rejecting version, and migration path or explicit absence of a safe automatic migration"
+  },
+  "interoperabilityObligations": [
+    "source-neutrality",
+    "consumer-neutrality",
+    "claim-scoped-binding",
+    "non-collapse"
+  ],
+  "promotionRequirements": [
+    "independent-interoperability-evidence"
+  ],
+  "candidateAdditions": [
+    "obligation-lineage-registry",
+    "JSON-profile-declaration-and-schema",
+    "EARL-PROV-SHACL-evidence-graph",
+    "RO-Crate-KEEpack-experiment",
+    "public-API-diff"
+  ],
+  "sharedContractCount": "NOT PUBLISHED. The question-(a) figure is carried as a band after the classification predicate failed blind replication, and must not be narrowed by drafting alone. No count is part of this API.",
+  "openItems": [
+    "shared-contract band not settled; no drafting-only narrowing authorized",
+    "NC-03 and NC-06 representationally non-demonstrable",
+    "KEEpack Experimental / Non-Normative pending independent producer/consumer evidence",
+    "the base w3id identifier and the artifact and confidence namespaces resolve and are verified; the generic lifecycle namespace and the Section 5 profile identifiers do not yet content-negotiate to RDF; durable persistence of any resolving identifier is not thereby established; and the version-identifier redirect rules are not yet registered"
+  ],
+  "status": "Published public normative API snapshot",
+  "publishedSurfaces": {
+    "specification": "docs/specs/KEE-Specification-v0.10.0.md",
+    "termDeclarations": "vocab/kee.ttl",
+    "shapeGraphs": "shacl/",
+    "conceptSchemes": "schemas/skos/",
+    "jsonSchemas": "schemas/json-schema/",
+    "jsonLdContext": "context/kee-context.jsonld",
+    "profileStatus": "docs/profiles/README.md"
+  },
+  "shapeContractVersion": "0.10.0",
+  "shapeGraphNote": "The published shape graphs are byte-identical to those the reference validator executes. A structural result from a Draft or Non-Normative shape has no normative effect.",
+  "conformanceBehaviourChanges": [
+    {
+      "specificationSection": "12.3",
+      "constraint": "accountable authority root for a non-person, non-organization grantee",
+      "shape": "shacl/authority-delegation-profile.ttl",
+      "severityBefore": "sh:Warning",
+      "severityAfter": "sh:Violation",
+      "owningProfile": "Authority and Delegation",
+      "owningProfileStatus": "Draft / Non-Normative",
+      "excludedFromPublicAPI": true,
+      "classification": "MINOR-compatible because the owning profile is excluded from the public normative API",
+      "negativeCase": {
+        "conformedUnder": "0.9.2",
+        "doesNotConformUnder": "0.10.0",
+        "case": "a grantee that is not a prov:Person or prov:Organization and resolves through no delegation chain to one"
+      },
+      "migrationObligation": "Implementations claiming the Authority and Delegation profile must resolve delegation chains to an accountable prov:Person or prov:Organization."
+    }
+  ]
+}
