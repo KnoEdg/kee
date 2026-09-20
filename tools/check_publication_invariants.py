@@ -2,7 +2,7 @@
 """Enforce the two invariants of the KEE public publication surface.
 
 This file is maintained in the KEE working repository and published verbatim to
-the public repository by `tools/publish.py`. The forbidden-pattern list below is
+the public repository by the publication script it is maintained beside. The forbidden-pattern list below is
 the single definition of the publication scoping rule: the working repository's
 own manifest test imports it from here rather than restating it. An earlier
 hand-copy of this list had already fallen a pattern behind, so a source naming

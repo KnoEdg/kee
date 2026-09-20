@@ -6,9 +6,9 @@ Profiles adapt the KEE core specification to a specific artifact type, domain, o
 
 The current published normative baseline is:
 
-- [`docs/specs/KEE-Specification-v0.9.2.md`](../specs/KEE-Specification-v0.9.2.md).
+- [`docs/specs/KEE-Specification-v0.10.0.md`](../specs/KEE-Specification-v0.10.0.md).
 
-v0.9.2 is a self-contained SemVer PATCH consolidation. It changes no profile status and promotes no profile.
+v0.10.0 is a backward-compatible SemVer MINOR release. Its one conformance-behaviour change is confined to the Authority and Delegation profile below (Draft / Non-Normative). It changes no profile status and promotes no profile.
 
 Section 19 of the specification is the authoritative statement of profile status; this document restates it for convenience.
 
