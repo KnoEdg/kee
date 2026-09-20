@@ -303,6 +303,10 @@ Passing structural validation alone does not prove that information is:
 
 Conformance means only what the applicable KEE specification and profile explicitly define.
 
+## Documentation
+
+Full documentation index: [`docs/`](docs/). Conceptual overview and tree diagram: [`docs/CONCEPTS.md`](docs/CONCEPTS.md).
+
 ## Current release
 
 **KEE v0.10.0**
