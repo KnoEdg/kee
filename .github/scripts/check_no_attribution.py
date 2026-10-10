@@ -25,6 +25,24 @@ def log(*rev):
     return ac.parse_log(r.stdout)
 
 
+def commit_exists(sha):
+    return subprocess.run(['git', 'cat-file', '-e', sha + '^{commit}'], capture_output=True).returncode == 0
+
+
+def new_commits(after, branch):
+    """Commits at `after` that no other branch on the remote has. In CI the checkout also fetches the pushed branch itself
+    (refs/remotes/origin/<branch>), so that one ref is left out, or a new branch would always scan as empty."""
+    r = subprocess.run(['git', 'for-each-ref', '--format=%(refname) %(objectname)', 'refs/remotes/'],
+                       capture_output=True, text=True)
+    others = []
+    for line in r.stdout.splitlines():
+        name, sha = line.split()
+        if name.endswith('/HEAD') or (branch and name.split('/', 3)[-1] == branch):
+            continue
+        others.append(sha)
+    return log(after, '--not', *others) if others else log(after)
+
+
 def main(argv):
     problems = []
     if '--all' in argv:
@@ -47,10 +65,11 @@ def main(argv):
             if p:
                 problems.append('pushed ' + p)
             before, after = payload.get('before', ZERO), payload.get('after') or 'HEAD'
+            branch = ref[len('refs/heads/'):] if ref.startswith('refs/heads/') else None
             if payload.get('deleted'):
                 recs = []
-            elif before == ZERO:
-                recs = log(after, '--not', '--remotes')
+            elif before == ZERO or not commit_exists(before):    # new branch, or a force-push that dropped `before`
+                recs = new_commits(after, branch)
             else:
                 recs = log(before + '..' + after)
         else:
