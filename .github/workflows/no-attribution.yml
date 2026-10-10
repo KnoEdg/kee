@@ -1,0 +1,21 @@
+name: No agent attribution
+
+on:
+  pull_request:
+  push:
+    branches: ["**"]
+    tags: ["**"]
+
+permissions:
+  contents: read
+
+jobs:
+  no-attribution:
+    name: No agent attribution
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Check commits, branch name and pull-request text
+        run: python3 .github/scripts/check_no_attribution.py
