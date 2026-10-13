@@ -1,0 +1,95 @@
+@prefix ex: <https://example.org/kee/test/> .
+@prefix kee: <https://w3id.org/kee#> .
+@prefix profile: <https://w3id.org/kee/profile#> .
+@prefix unitkind: <https://knoedg.org/vocab/> .
+@prefix confidence: <https://w3id.org/kee/confidence#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+# Tolerated-warning fixture for shacl/assertion-metadata-profile.ttl composed
+# with shacl/lifecycle-status-constraints.ttl.
+# Expected result: conforms, and only because of the severity policy.
+#
+# This fixture has the shape of a real downstream record: an assertion
+# metadata record for one source's statement about a place, in dispute with a
+# second source's record of the same place, that writes the dispute standing
+# `kee:ChallengedAssertion` as its kee:lifecycleState and declares its profile
+# through the registered legacy carrier kee:profileConformance. Section 9.3
+# keeps challenge off the lifecycle axis, and Section 17.1 makes new writes
+# use dcterms:conformsTo. Both are reported at sh:Warning, so `sh:conforms` is
+# true under the severity policy described in shacl/README.md and false without it.
+#
+# The lifecycle-axis guard on this class reports at sh:Warning because the
+# Assertion Metadata Profile is Accepted / Normative; the shape's message
+# states the staged escalation to sh:Violation.
+
+ex:assertion-metadata-challenged-001
+    a kee:AssertionMetadataRecord ;
+    rdfs:label "Assertion metadata: a place as one source reports it"@en ;
+
+    kee:managedAssertionUnit ex:assertion-place-per-source-a ;
+    kee:managedAssertionUnitKind unitkind:DocumentAssertionUnit ;
+    kee:assertionContent ex:assertion-place-per-source-a ;
+    kee:lifecycleState kee:ChallengedAssertion ;
+    kee:profileConformance profile:AssertionMetadataProfile ;
+    kee:scope ex:scope-test ;
+    kee:context ex:context-test ;
+    kee:confidenceStatus confidence:ProfileDefined ;
+    kee:confidenceValue "0.75"^^xsd:decimal ;
+    kee:contradicts ex:assertion-metadata-challenged-002 ;
+
+    prov:wasAttributedTo ex:agent-test ;
+    prov:generatedAtTime "2026-10-12T16:00:00Z"^^xsd:dateTime ;
+    dcterms:source ex:source-a .
+
+ex:assertion-metadata-challenged-002
+    a kee:AssertionMetadataRecord ;
+    rdfs:label "Assertion metadata: the same place as a second source reports it"@en ;
+
+    kee:managedAssertionUnit ex:assertion-place-per-source-b ;
+    kee:managedAssertionUnitKind unitkind:DocumentAssertionUnit ;
+    kee:assertionContent ex:assertion-place-per-source-b ;
+    kee:lifecycleState kee:ChallengedAssertion ;
+    kee:profileConformance profile:AssertionMetadataProfile ;
+    kee:scope ex:scope-test ;
+    kee:context ex:context-test ;
+    kee:confidenceStatus confidence:ProfileDefined ;
+    kee:confidenceValue "0.75"^^xsd:decimal ;
+    kee:contradicts ex:assertion-metadata-challenged-001 ;
+
+    prov:wasAttributedTo ex:agent-test ;
+    prov:generatedAtTime "2026-10-12T16:00:00Z"^^xsd:dateTime ;
+    dcterms:source ex:source-b .
+
+ex:assertion-place-per-source-a
+    a prov:Entity ;
+    rdfs:label "A place, per source A"@en ;
+    skos:definition "Source A's record of the place."@en .
+
+ex:assertion-place-per-source-b
+    a prov:Entity ;
+    rdfs:label "A place, per source B"@en ;
+    skos:definition "Source B's record of the place."@en .
+
+ex:agent-test
+    a prov:Agent ;
+    rdfs:label "Test agent"@en .
+
+ex:scope-test
+    a skos:Concept ;
+    skos:prefLabel "Test scope"@en .
+
+ex:context-test
+    a skos:Concept ;
+    skos:prefLabel "Test context"@en .
+
+ex:source-a
+    a prov:Entity ;
+    rdfs:label "Source A"@en .
+
+ex:source-b
+    a prov:Entity ;
+    rdfs:label "Source B"@en .

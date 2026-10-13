@@ -10,7 +10,6 @@
 
 # KEE Artifact Identity and Granularity Profile SHACL Shapes
 # Status: Draft / Non-Normative
-# Shape-contract version: 0.9.2
 # Repository path: shacl/artifact-identity-granularity-profile.ttl
 #
 # Semantic-surface rule:

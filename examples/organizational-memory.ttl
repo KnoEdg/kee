@@ -1,0 +1,83 @@
+@prefix ex: <https://example.org/kee/> .
+@prefix kee: <https://w3id.org/kee#> .
+@prefix profile: <https://w3id.org/kee/profile#> .
+@prefix artifact: <https://w3id.org/kee/artifact#> .
+@prefix omlife: <https://w3id.org/kee/lifecycle/organizational-memory#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+# KEE Organizational Memory Profile Example
+# Status: Draft profile example (specification Section 19); legacy-readable compatibility example
+#
+# Compatibility note (registered legacy compatibility window, specification Section 17): this example intentionally
+# exercises registered legacy-readable carriers (kee:profileConformance and
+# kee:artifactType). It is compatibility evidence, not canonical new-write
+# guidance. Canonical new writes use dcterms:conformsTo and dcterms:type.
+# kee:lifecycleState is written in the profile-specific omlife: scheme
+# (https://w3id.org/kee/lifecycle/organizational-memory#), not the generic
+# https://w3id.org/kee/lifecycle# namespace, which is compatibility-only where
+# a profile scheme owns the state (v0.10.0 Section 9.2).
+# Run `kee normalize --rewrite-safe examples/<file>` to see the safe carrier
+# rewrites and the remaining unsafe legacy surfaces.
+# Version: 0.1.0
+# Timestamp: 2026-06-25T20:38:00Z (2026-06-25 16:38:00 EDT)
+# Repository path: examples/organizational-memory.ttl
+#
+# Expected validation target:
+#   shacl/organizational-memory-profile.ttl
+#
+# Expected result:
+#   valid, with no required-field violations.
+
+ex:organizational-memory-001
+    a kee:OrganizationalMemoryArtifact ;
+    rdfs:label "Keep implementation artifacts small and profile-driven"@en ;
+    skos:definition "Implementation artifacts should remain small, profile-driven, and traceable to the specification, profiles, mappings, or examples."@en ;
+    skos:scopeNote "Applies to KEE repository artifacts created during the early implementation phase."@en ;
+    skos:changeNote "Captured as a reusable repository practice after adding initial SHACL shapes and RDF examples."@en ;
+
+    kee:artifactType artifact:OrganizationalMemory ;
+    kee:lifecycleState omlife:Active ;
+    kee:profileConformance profile:OrganizationalMemoryProfile ;
+    kee:scope ex:scope-kee-repository ;
+    kee:context ex:context-implementation-artifacts ;
+    kee:authority ex:authority-kee-maintainers ;
+    kee:reviewDue "2026-09-25T20:38:00Z"^^xsd:dateTime ;
+
+    prov:wasAttributedTo ex:agent-reneyap ;
+    prov:wasGeneratedBy ex:activity-capture-memory-001 ;
+    prov:generatedAtTime "2026-06-25T20:38:00Z"^^xsd:dateTime ;
+
+    dcterms:source ex:source-kee-repository .
+
+ex:activity-capture-memory-001
+    a prov:Activity ;
+    rdfs:label "Capture organizational memory artifact"@en ;
+    prov:wasAssociatedWith ex:agent-reneyap ;
+    prov:generatedAtTime "2026-06-25T20:38:00Z"^^xsd:dateTime .
+
+ex:agent-reneyap
+    a prov:Agent ;
+    rdfs:label "reneyap"@en .
+
+ex:authority-kee-maintainers
+    a prov:Agent ;
+    rdfs:label "KEE maintainers"@en .
+
+ex:scope-kee-repository
+    a skos:Concept ;
+    skos:prefLabel "KEE repository scope"@en ;
+    skos:definition "Applies to artifacts maintained in the KEE repository."@en .
+
+ex:context-implementation-artifacts
+    a skos:Concept ;
+    skos:prefLabel "Implementation artifacts context"@en ;
+    skos:definition "Context for examples, shapes, queries, and tests that exercise the KEE specification."@en .
+
+ex:source-kee-repository
+    a prov:Entity ;
+    rdfs:label "KEE repository"@en ;
+    dcterms:identifier "KnoEdg/kee" .

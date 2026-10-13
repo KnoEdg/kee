@@ -18,7 +18,9 @@
 # pairing structures remain permitted by the normative contract.
 #
 # Legacy kee:evidenceForSide remains structurally readable during the registered legacy
-# compatibility window. New-write examples and fixtures use explicit
+# compatibility window; its presence is reported at sh:Warning so that a
+# validator sees the registered legacy surface the migration registry knows
+# (Section 17.1 item 3). New-write examples and fixtures use explicit
 # dcterms:hasPart side/evidence nodes, and this shape validates that explicit
 # representation whenever it is present. The new-write pairing obligation is
 # governed by the profile/migration contract rather than by invalidating
@@ -126,9 +128,10 @@ kee:ContradictionRecordsProfileShape
     sh:property [
         sh:path kee:evidenceForSide;
         sh:name "legacy flat evidence for side"@en;
-        sh:nodeKind sh:IRI;
-        sh:severity sh:Info;
-        sh:message "Legacy kee:evidenceForSide remains readable during the registered legacy compatibility window; new writes use an explicit side/evidence pairing structure."@en;
+        sh:description "Flat kee:evidenceForSide is a registered legacy surface: an intentionally unmapped structural change to dcterms:hasPart Web Annotation side/evidence nodes, dual-read during the compatibility window and not safe to rewrite, because the flat form does not say which evidence supports which side. Its presence is reported; the record stays structurally valid (Section 17.3)."@en;
+        sh:maxCount 0;
+        sh:severity sh:Warning;
+        sh:message "Legacy surface flat kee:evidenceForSide is present; its canonical surface is dcterms:hasPart side/evidence nodes, each pairing one oa:hasTarget side with its oa:hasBody evidence (intentionally unmapped structural change, dual-read registered, not rewrite-safe). New writes use the explicit pairing (Section 12.4, Section 17.1); a safe conversion needs the evidence-to-side pairing the flat form omits."@en;
     ];
 
     sh:property [

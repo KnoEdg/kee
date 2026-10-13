@@ -1,5 +1,6 @@
 @prefix kee: <https://w3id.org/kee#>.
 @prefix profile: <https://w3id.org/kee/profile#>.
+@prefix elig: <https://w3id.org/kee/vocab/retrieval-eligibility#>.
 @prefix prov: <http://www.w3.org/ns/prov#>.
 @prefix dcterms: <http://purl.org/dc/terms/>.
 @prefix sh: <http://www.w3.org/ns/shacl#>.
@@ -18,6 +19,19 @@
 # Replacement-chain compatibility remains explicit: a materialized
 # supersession terminal is derived from retained dcterms:replaces/dcterms:isReplacedBy
 # and applicable PROV revision lineage, and must not replace or suppress that chain.
+#
+# The eligibility category is a closed value set: schemas/skos/retrieval-eligibility.ttl
+# supplies the seven categories the owning profile names (eligible for normal
+# grounding; eligible only with warning; eligible only for historical
+# explanation; eligible only as superseded context; eligible only as
+# contradictory evidence; excluded from current-answer grounding; requires
+# human review before a generated answer). A new-write result
+# (dcterms:conformsTo) must use one of them. The check is staged: it reports
+# at sh:Warning at the v0.10.0 baseline and at sh:Violation from v0.11.0, the
+# first version that rejects a new-write value outside the scheme; a release
+# control pins the schedule. A registered-legacy result (kee:profileConformance
+# only) carrying another value is reported at sh:Warning in both versions and
+# still conforms during the compatibility window; it retires with that carrier.
 
 kee:RetrievalQueryProfileShape
     a sh:NodeShape;
@@ -72,6 +86,7 @@ kee:RetrievalResultProfileShape
     sh:property [
         sh:path kee:eligibilityCategory;
         sh:name "eligibility category"@en;
+        sh:description "The consumer-scoped eligibility decision, drawn from the retrieval-eligibility scheme. Membership in the scheme is checked by the value shapes below."@en;
         sh:minCount 1;
         sh:maxCount 1;
         sh:nodeKind sh:IRI;
@@ -127,3 +142,70 @@ kee:RetrievalResultProfileShape
     sh:property [ sh:path kee:supersessionChainTarget; sh:name "derived supersession-chain target"@en; sh:description "Optional derived/cache terminal target from retained dcterms:replaces/dcterms:isReplacedBy and applicable PROV revision lineage; this cache must not replace or suppress that chain."@en; sh:nodeKind sh:IRI; sh:severity sh:Warning; sh:message "If present, kee:supersessionChainTarget remains a derived/cache terminal target and must not replace or suppress that chain."@en ];
     sh:property [ sh:path kee:excludedFromCurrentAnswerGrounding; sh:name "excluded from current-answer grounding"@en; sh:datatype xsd:boolean; sh:severity sh:Info; sh:message "If present, this flag is scoped to the current consumer/use decision and does not imply deletion or universal exclusion."@en ];
     sh:property [ sh:path kee:sourceChunk; sh:name "source chunk"@en; sh:nodeKind sh:IRI; sh:severity sh:Info; sh:message "If present, kee:sourceChunk should identify the actual indexed retrieval unit mapped to the governed artifact."@en ].
+
+# Value shapes for kee:eligibilityCategory. The slot is closed to the
+# retrieval-eligibility scheme. Both shapes target kee:RetrievalResult, so no
+# node outside the profile is targeted by them, and each splits on the
+# conformance carrier inside the shape, so that a result is reported by exactly
+# one of the two: the new-write branch (dcterms:conformsTo, or no carrier at
+# all) and the registered-legacy branch (kee:profileConformance alone,
+# specification Section 17). A failing shape reports one node-level sh:or
+# result at the shape's severity; the membership list is the sh:in inside it.
+
+kee:RetrievalResultEligibilityCategoryValueShape
+    a sh:NodeShape;
+    rdfs:label "Retrieval result eligibility-category value shape (new writes)"@en;
+    rdfs:comment "A new-write result records its eligibility decision with a concept of the retrieval-eligibility scheme; a category the scheme does not name cannot be acted on by an independent consumer. The shape passes a registered-legacy result (kee:profileConformance without dcterms:conformsTo), which the legacy shape reports instead. Severity is staged: sh:Warning at the v0.10.0 baseline, sh:Violation from v0.11.0."@en;
+    sh:targetClass kee:RetrievalResult;
+    sh:severity sh:Violation;
+    sh:message "A new-write retrieval result must record its eligibility category as one of the seven concepts of the retrieval-eligibility scheme; no other value identifies a decision a consumer can act on. Reported at sh:Warning at the v0.10.0 baseline; rejected (sh:Violation) from v0.11.0."@en;
+    sh:or (
+        [
+            sh:and (
+                [ sh:property [ sh:path kee:profileConformance; sh:minCount 1 ] ]
+                [ sh:property [ sh:path dcterms:conformsTo; sh:maxCount 0 ] ]
+            )
+        ]
+        [
+            sh:property [
+                sh:path kee:eligibilityCategory;
+                sh:name "eligibility category value"@en;
+                sh:in (
+                    elig:EligibleForNormalGrounding
+                    elig:EligibleOnlyWithWarning
+                    elig:EligibleOnlyForHistoricalExplanation
+                    elig:EligibleOnlyAsSupersededContext
+                    elig:EligibleOnlyAsContradictoryEvidence
+                    elig:ExcludedFromCurrentAnswerGrounding
+                    elig:RequiresHumanReview
+                );
+            ]
+        ]
+    ).
+
+kee:RetrievalResultLegacyEligibilityCategoryValueShape
+    a sh:NodeShape;
+    rdfs:label "Retrieval result eligibility-category value shape (registered legacy)"@en;
+    rdfs:comment "A result declaring only legacy kee:profileConformance may carry a category written before the scheme existed. It is reported, not rejected, during the registered legacy compatibility window; a consumer must not infer a scheme concept from such a value. The shape passes every result that declares dcterms:conformsTo or no carrier, which the new-write shape checks instead."@en;
+    sh:targetClass kee:RetrievalResult;
+    sh:severity sh:Warning;
+    sh:message "A registered-legacy retrieval result carries an eligibility category outside the retrieval-eligibility scheme; it is readable during the compatibility window, but its category is undeclared in the scheme and new writes must use one of the scheme's seven concepts."@en;
+    sh:or (
+        [ sh:property [ sh:path kee:profileConformance; sh:maxCount 0 ] ]
+        [ sh:property [ sh:path dcterms:conformsTo; sh:minCount 1 ] ]
+        [
+            sh:property [
+                sh:path kee:eligibilityCategory;
+                sh:name "eligibility category value (registered legacy result)"@en;
+                sh:in (
+                    elig:EligibleForNormalGrounding
+                    elig:EligibleOnlyWithWarning
+                    elig:EligibleOnlyForHistoricalExplanation
+                    elig:EligibleOnlyAsSupersededContext
+                    elig:EligibleOnlyAsContradictoryEvidence
+                    elig:ExcludedFromCurrentAnswerGrounding
+                    elig:RequiresHumanReview
+                );
+            ]
+        ]
+    ).

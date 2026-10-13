@@ -1,0 +1,86 @@
+@prefix ex: <https://example.org/kee/> .
+@prefix kee: <https://w3id.org/kee#> .
+@prefix profile: <https://w3id.org/kee/profile#> .
+@prefix artifact: <https://w3id.org/kee/artifact#> .
+@prefix alife: <https://w3id.org/kee/lifecycle/assertion#> .
+@prefix confidence: <https://w3id.org/kee/confidence#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+# KEE Assertion Profile Example
+# Status: Draft profile example (specification Section 19); legacy-readable compatibility example
+#
+# Compatibility note (registered legacy compatibility window, specification Section 17): this example intentionally
+# exercises registered legacy-readable carriers (kee:profileConformance and
+# kee:artifactType). It is compatibility evidence, not canonical new-write
+# guidance. Canonical new writes use dcterms:conformsTo and dcterms:type.
+# kee:lifecycleState is written in the profile-specific alife: scheme
+# (https://w3id.org/kee/lifecycle/assertion#), not the generic
+# https://w3id.org/kee/lifecycle# namespace, which is compatibility-only where
+# a profile scheme owns the state (v0.11.0 Section 9.2).
+# Run `kee normalize --rewrite-safe examples/<file>` to see the safe carrier
+# rewrites and the remaining unsafe legacy surfaces.
+# Version: 0.1.0
+# Timestamp: 2026-06-25T20:20:00Z (2026-06-25 16:20:00 EDT)
+# Repository path: examples/assertion.ttl
+#
+# Expected validation target:
+#   shacl/assertion-profile.ttl
+#
+# Expected result:
+#   valid, with no required-field violations.
+#
+# This example intentionally uses a small, artificial assertion so the file
+# demonstrates structure rather than domain truth.
+
+ex:assertion-001
+    a kee:Assertion ;
+    rdfs:label "Example assertion about KEE governance"@en ;
+    skos:definition "KEE assertion artifacts should preserve provenance and lifecycle metadata."@en ;
+
+    kee:artifactType artifact:Assertion ;
+    kee:lifecycleState alife:Normal ;
+    kee:profileConformance profile:AssertionProfile ;
+    kee:scope ex:scope-kee-repository ;
+    kee:context ex:context-specification-dogfooding ;
+    kee:authority ex:authority-kee-maintainers ;
+    kee:confidenceStatus confidence:ProfileDefined ;
+    kee:confidenceValue "0.80"^^xsd:decimal ;
+
+    prov:wasAttributedTo ex:agent-reneyap ;
+    prov:wasGeneratedBy ex:activity-capture-assertion-001 ;
+    prov:generatedAtTime "2026-06-25T20:20:00Z"^^xsd:dateTime ;
+
+    dcterms:source ex:source-kee-specification-v0-11-0 .
+
+ex:activity-capture-assertion-001
+    a prov:Activity ;
+    rdfs:label "Capture example assertion"@en ;
+    prov:wasAssociatedWith ex:agent-reneyap ;
+    prov:generatedAtTime "2026-06-25T20:20:00Z"^^xsd:dateTime .
+
+ex:agent-reneyap
+    a prov:Agent ;
+    rdfs:label "reneyap"@en .
+
+ex:authority-kee-maintainers
+    a prov:Agent ;
+    rdfs:label "KEE maintainers"@en .
+
+ex:scope-kee-repository
+    a skos:Concept ;
+    skos:prefLabel "KEE repository scope"@en ;
+    skos:definition "Applies to artifacts within the KEE repository."@en .
+
+ex:context-specification-dogfooding
+    a skos:Concept ;
+    skos:prefLabel "Specification dogfooding context"@en ;
+    skos:definition "Context for validating KEE specification artifacts against the repository-first workflow."@en .
+
+ex:source-kee-specification-v0-11-0
+    a prov:Entity ;
+    rdfs:label "KEE Specification v0.11.0"@en ;
+    dcterms:identifier "docs/specs/KEE-Specification-v0.11.0.md" .

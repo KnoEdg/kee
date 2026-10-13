@@ -1,0 +1,40 @@
+@prefix ex: <https://example.org/kee/test/> .
+@prefix kee: <https://w3id.org/kee#> .
+@prefix profile: <https://w3id.org/kee/profile#> .
+@prefix grlife: <https://w3id.org/kee/lifecycle/governance-record#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix oa: <http://www.w3.org/ns/oa#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+# Valid fixture for shacl/contradiction-records-profile.ttl.
+
+ex:contradiction-valid-001
+    a kee:ContradictionRecord ;
+    rdfs:label "Valid contradiction record fixture"@en ;
+    kee:conflictingArtifact ex:artifact-a-test, ex:artifact-b-test ;
+    dcterms:description "Artifact A and artifact B state incompatible escalation thresholds for the same runbook step. Both sides carry evidence; the record captures the conflict without disposing of it."@en ;
+    kee:lifecycleState grlife:Accepted ;
+    dcterms:conformsTo profile:ContradictionRecordsProfile ;
+    dcterms:hasPart ex:side-a-evidence, ex:side-b-evidence ;
+    prov:wasGeneratedBy ex:detection-activity-test ;
+    prov:wasAttributedTo ex:agent-test ;
+    prov:generatedAtTime "2026-07-10T21:00:00Z"^^xsd:dateTime .
+
+ex:side-a-evidence
+    a oa:Annotation ;
+    oa:hasTarget ex:artifact-a-test ;
+    oa:hasBody ex:evidence-a-test .
+
+ex:side-b-evidence
+    a oa:Annotation ;
+    oa:hasTarget ex:artifact-b-test ;
+    oa:hasBody ex:evidence-b-test .
+
+ex:artifact-a-test a prov:Entity ; rdfs:label "Test artifact A"@en .
+ex:artifact-b-test a prov:Entity ; rdfs:label "Test artifact B"@en .
+ex:evidence-a-test a prov:Entity ; rdfs:label "Evidence A"@en .
+ex:evidence-b-test a prov:Entity ; rdfs:label "Evidence B"@en .
+ex:detection-activity-test a prov:Activity ; rdfs:label "Test detection activity"@en .
+ex:agent-test a prov:Agent ; rdfs:label "Test agent"@en .

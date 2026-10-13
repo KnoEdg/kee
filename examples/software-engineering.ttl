@@ -1,0 +1,136 @@
+@prefix ex: <https://example.org/kee/> .
+@prefix kee: <https://w3id.org/kee#> .
+@prefix profile: <https://w3id.org/kee/profile#> .
+@prefix artifact: <https://w3id.org/kee/artifact#> .
+@prefix selife: <https://w3id.org/kee/lifecycle/software-engineering#> .
+@prefix confidence: <https://w3id.org/kee/confidence#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+# KEE Software Engineering Profile Example
+# Status: Accepted / Normative (status per specification Section 19); relationship/status correction consolidated into the current baseline
+#
+# Compatibility note (registered legacy compatibility window, specification Section 17): this example intentionally
+# exercises registered legacy-readable carriers (kee:profileConformance and
+# kee:artifactType). It is compatibility evidence, not canonical new-write
+# guidance. Canonical new writes use dcterms:conformsTo and dcterms:type.
+# kee:lifecycleState is written in the profile-specific selife: scheme
+# (https://w3id.org/kee/lifecycle/software-engineering#), not the generic
+# https://w3id.org/kee/lifecycle# namespace, which is compatibility-only where
+# a profile scheme owns the state (v0.10.0 Section 9.2).
+# Run `kee normalize --rewrite-safe examples/<file>` to see the safe carrier
+# rewrites and the remaining unsafe legacy surfaces.
+# Version: 0.1.0
+# Repository path: examples/software-engineering.ttl
+#
+# Expected validation target:
+#   shacl/software-engineering-profile.ttl
+#
+# Expected result:
+#   valid, with no required-field violations.
+#
+# This example represents an architecture-decision-record-like engineering
+# artifact, one of the profile's managed artifact units. The second
+# dcterms:relation demonstrates a generic fallback link to a Git commit via its
+# platform canonical URL, per a recorded project decision. The profile clarifies that a producer should
+# use an established typed domain relation when consumers depend on the
+# relationship kind; generic dcterms:relation does not imply that stronger
+# semantics and no Git-specific KEE predicate is required.
+#
+# ex:software-engineering-002 represents a "compatibility observation"
+# artifact, a different managed artifact unit, demonstrating the recorded project
+# decision that package/version identity is expressed via dcterms:source
+# and dcterms:relation using purl (pkg: scheme, ECMA-427) identifiers, with
+# no new KEE predicate. It intentionally uses the purl "generic" type
+# (pkg:generic/...) rather than an ecosystem-specific type (npm, composer,
+# etc.) to demonstrate the pattern in a way that is not anchored to any one
+# package ecosystem or consuming domain -- any purl type works identically.
+
+ex:software-engineering-001
+    a kee:SoftwareEngineeringArtifact ;
+    rdfs:label "Adopt trunk-based development for the KEE reference package"@en ;
+    skos:definition "The reference/ Python package will use trunk-based development with short-lived feature branches merged directly to main."@en ;
+
+    kee:artifactType artifact:ArchitectureDecisionRecord ;
+    kee:lifecycleState selife:Active ;
+    kee:profileConformance profile:SoftwareEngineeringProfile ;
+    kee:scope ex:scope-reference-package ;
+    kee:context ex:context-repository-workflow ;
+    kee:confidenceStatus confidence:ProfileDefined ;
+
+    prov:wasAttributedTo ex:agent-reneyap ;
+    prov:wasGeneratedBy ex:activity-record-software-engineering-001 ;
+    prov:generatedAtTime "2026-07-08T21:20:00Z"^^xsd:dateTime ;
+
+    dcterms:source ex:source-kee-repository ;
+    dcterms:relation ex:system-kee-reference-package ;
+    dcterms:relation <https://github.com/KnoEdg/kee/commit/d46f1bc9> .
+
+ex:activity-record-software-engineering-001
+    a prov:Activity ;
+    rdfs:label "Record engineering decision"@en ;
+    prov:wasAssociatedWith ex:agent-reneyap ;
+    prov:generatedAtTime "2026-07-08T21:20:00Z"^^xsd:dateTime .
+
+ex:software-engineering-002
+    a kee:SoftwareEngineeringArtifact ;
+    rdfs:label "example-library 2.4.0 requires example-runtime 18.x"@en ;
+    skos:definition "Observes that example-library 2.4.0 requires example-runtime >= 18.0.0 and is incompatible with example-runtime 16.x."@en ;
+
+    kee:artifactType artifact:CompatibilityObservation ;
+    kee:lifecycleState selife:Active ;
+    kee:profileConformance profile:SoftwareEngineeringProfile ;
+    kee:scope ex:scope-dependency-observation ;
+    kee:context ex:context-package-compatibility ;
+    kee:confidenceStatus confidence:ProfileDefined ;
+
+    prov:wasAttributedTo ex:agent-reneyap ;
+    prov:wasGeneratedBy ex:activity-record-software-engineering-002 ;
+    prov:generatedAtTime "2026-07-09T21:00:00Z"^^xsd:dateTime ;
+
+    dcterms:source <pkg:generic/example-library@2.4.0> ;
+    dcterms:relation <pkg:generic/example-runtime@18.0.0> ;
+    dcterms:relation <pkg:generic/example-runtime@16.0.0> .
+
+ex:activity-record-software-engineering-002
+    a prov:Activity ;
+    rdfs:label "Record compatibility observation"@en ;
+    prov:wasAssociatedWith ex:agent-reneyap ;
+    prov:generatedAtTime "2026-07-09T21:00:00Z"^^xsd:dateTime .
+
+ex:agent-reneyap
+    a prov:Agent ;
+    rdfs:label "reneyap"@en .
+
+ex:scope-reference-package
+    a skos:Concept ;
+    skos:prefLabel "Reference package scope"@en ;
+    skos:definition "Applies to the reference/ Python package in the KEE repository." .
+
+ex:context-repository-workflow
+    a skos:Concept ;
+    skos:prefLabel "Repository workflow context"@en ;
+    skos:definition "Context for engineering decisions about how the KEE repository is developed and maintained." .
+
+ex:source-kee-repository
+    a prov:Entity ;
+    rdfs:label "KEE repository"@en ;
+    dcterms:identifier "KnoEdg/kee" .
+
+ex:system-kee-reference-package
+    a prov:Entity ;
+    rdfs:label "KEE reference package"@en ;
+    dcterms:identifier "reference/" .
+
+ex:scope-dependency-observation
+    a skos:Concept ;
+    skos:prefLabel "Dependency observation scope"@en ;
+    skos:definition "Applies to package/runtime version-compatibility observations for any software ecosystem." .
+
+ex:context-package-compatibility
+    a skos:Concept ;
+    skos:prefLabel "Package compatibility context"@en ;
+    skos:definition "Context for interpreting package/version compatibility claims, independent of any single package ecosystem." .

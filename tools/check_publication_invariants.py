@@ -35,7 +35,7 @@ TEXT_SUFFIXES = {".md", ".json", ".jsonld", ".ttl", ".txt", ".yml", ".yaml", ".p
 CITABLE_ROOTS = (
     "docs", "shacl", "schemas", "vocab", "context", "normative-api",
     "sparql", "tests", "reference", "lineage", "conformance", "examples",
-    "profiles", "tools", "experiments",
+    "profiles", "tools", "experiments", "fixtures",
 )
 
 PATH_PATTERN = re.compile(
@@ -43,19 +43,37 @@ PATH_PATTERN = re.compile(
 )
 
 FORBIDDEN = [
-    (re.compile(r"\bADR-\d{3,}\b"), "decision-record identifier"),
+    # A decision record, written with a hyphen or with a space.
+    (re.compile(r"\bADR[- ]\d{3,}\b"), "decision-record identifier"),
     (re.compile(r"\bKEE-v0\.[0-8]\b"), "pre-v0.9.0 artifact identifier"),
-    (re.compile(r"\bv0\.[0-8]\.\d+\b"), "pre-v0.9.0 version identifier"),
+    # A pre-v0.9.0 version, with or without its patch component.
+    (re.compile(r"\bv0\.[0-8](?:\.\d+)?\b(?!\.\d)"), "pre-v0.9.0 version identifier"),
     (re.compile(r"-rc\d+\b"), "release-candidate identifier"),
-    (re.compile(r"\bRC\d+\b"), "release-candidate identifier"),
+    (re.compile(r"\b[Rr][Cc]\d+\b"), "release-candidate identifier"),
     (re.compile(r"\bKCHG-\d+\b"), "change-package identifier"),
-    (re.compile(r"\bamendment-0\d\b"), "amendment identifier"),
+    (re.compile(r"\b[Aa]mendment[- ]0\d\b"), "amendment identifier"),
+    (re.compile(r"\bPhase \d+ ledger\b"), "development-phase ledger reference"),
     (re.compile(r"\bdocs/(?:release|adr|migration|research|planning)/"),
      "internal evidence path"),
 ]
 
 # "ADR-style decision contract" is generic prior art (Nygard), not a KEE ADR.
+# Only the token itself is exempt: it is masked out of the line before the
+# patterns run, so anything else on the same line is still checked. Exempting
+# the whole line once let a decision record, a version, and an evidence path
+# through on any line that also said "ADR-style".
 ALLOWED_SUBSTRINGS = ("ADR-style",)
+
+
+def forbidden_match(line):
+    """The first forbidden reference on a line, as (matched text, label), or None."""
+    for allowed in ALLOWED_SUBSTRINGS:
+        line = line.replace(allowed, " " * len(allowed))
+    for pattern, label in FORBIDDEN:
+        match = pattern.search(line)
+        if match:
+            return match.group(0), label
+    return None
 
 
 def iter_files():
@@ -91,16 +109,13 @@ def check_self_containment(path, text, failures):
 def check_publication_scope(path, text, failures):
     rel = os.path.relpath(path, REPO_ROOT)
     for number, line in enumerate(text.splitlines(), start=1):
-        if any(allowed in line for allowed in ALLOWED_SUBSTRINGS):
-            continue
-        for pattern, label in FORBIDDEN:
-            match = pattern.search(line)
-            if match:
-                failures.append(
-                    f"{rel}:{number}: {label} {match.group(0)!r} "
-                    f"is development work prior to v0.9.0"
-                )
-                break
+        found = forbidden_match(line)
+        if found:
+            matched, label = found
+            failures.append(
+                f"{rel}:{number}: {label} {matched!r} "
+                f"is development work prior to v0.9.0"
+            )
 
 
 def check_json_wellformed(path, failures):

@@ -1,0 +1,25 @@
+@prefix ex: <https://example.org/kee/test/> .
+@prefix kee: <https://w3id.org/kee#> .
+@prefix profile: <https://w3id.org/kee/profile#> .
+@prefix elig: <https://w3id.org/kee/vocab/retrieval-eligibility#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+# Compatibility note (specification Section 17): this fixture exercises registered
+# legacy-readable surfaces (generic https://w3id.org/kee/lifecycle# values and/or
+# legacy carriers). It is executable compatibility evidence, not canonical
+# new-write guidance; profile-aware migration of lifecycle values is registered
+# as unsafe for automatic rewrite (specification Section 9.2 and Section 17).
+
+# Invalid fixture for shacl/ai-grounded-retrieval-profile.ttl
+# Expected result: does not conform.
+# Expected failure: missing required kee:retrievedArtifact -- the
+# structural identity requirement this profile's result shape is built
+# around (a recorded project decision).
+
+ex:retrieval-result-invalid-missing-artifact-001
+    a kee:RetrievalResult ;
+    rdfs:label "Invalid retrieval result fixture missing retrieved artifact"@en ;
+
+    kee:eligibilityCategory elig:EligibleForNormalGrounding ;
+    kee:eligibilityBasis "test basis" ;
+    kee:profileConformance profile:AIGroundedRetrievalProfile .

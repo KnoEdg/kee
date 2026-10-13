@@ -1,0 +1,57 @@
+@prefix ex: <https://example.org/kee/test/> .
+@prefix kee: <https://w3id.org/kee#> .
+@prefix profile: <https://w3id.org/kee/profile#> .
+@prefix grlife: <https://w3id.org/kee/lifecycle/governance-record#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+# Compatibility note (specification Section 17): this fixture exercises registered
+# legacy-readable surfaces (generic https://w3id.org/kee/lifecycle# values and/or
+# legacy carriers). It is executable compatibility evidence, not canonical
+# new-write guidance; profile-aware migration of lifecycle values is registered
+# as unsafe for automatic rewrite (specification Section 9.2 and Section 17).
+
+# Invalid fixture for shacl/authority-delegation-profile.ttl
+# Expected result: does not conform.
+# Expected failure: missing required kee:grantedTo -- the structural
+# requirement unique to authority records (a recorded project decision).
+
+ex:authority-invalid-missing-granted-to-001
+    a kee:GovernanceTransitionRecord, kee:AuthorityRecord ;
+    rdfs:label "Invalid authority record fixture missing granted-to"@en ;
+
+    kee:governedArtifact ex:governed-artifact-test ;
+    kee:newLifecycleState ex:new-status-test ;
+    kee:lifecycleStatusVocabulary ex:status-vocab-test ;
+    kee:lifecycleState grlife:Accepted ;
+    kee:profileConformance profile:AuthorityDelegationProfile ;
+    kee:authorityScope ex:scope-authority-test ;
+
+    prov:wasGeneratedBy ex:authority-grant-activity-test ;
+    prov:wasAttributedTo ex:agent-test ;
+    prov:generatedAtTime "2026-07-10T21:10:00Z"^^xsd:dateTime .
+
+ex:governed-artifact-test
+    a prov:Entity ;
+    rdfs:label "Test governed artifact"@en .
+
+ex:new-status-test
+    a skos:Concept ;
+    skos:prefLabel "Test new status"@en .
+
+ex:status-vocab-test
+    a skos:ConceptScheme ;
+    rdfs:label "Test status vocabulary"@en .
+
+ex:scope-authority-test
+    a skos:Concept ;
+    skos:prefLabel "Test authority scope"@en .
+
+ex:authority-grant-activity-test
+    a prov:Activity ;
+    rdfs:label "Test authority grant activity"@en .
+
+ex:agent-test
+    a prov:Agent ;
+    rdfs:label "Test agent"@en .

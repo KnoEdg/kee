@@ -1,0 +1,85 @@
+@prefix ex: <https://example.org/kee/> .
+@prefix kee: <https://w3id.org/kee#> .
+@prefix profile: <https://w3id.org/kee/profile#> .
+@prefix artifact: <https://w3id.org/kee/artifact#> .
+@prefix dlife: <https://w3id.org/kee/lifecycle/decision#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+# KEE Decision Profile Example
+# Status: Draft profile example (specification Section 19); legacy-readable compatibility example
+#
+# Compatibility note (registered legacy compatibility window, specification Section 17): this example intentionally
+# exercises registered legacy-readable carriers (kee:profileConformance and
+# kee:artifactType). It is compatibility evidence, not canonical new-write
+# guidance. Canonical new writes use dcterms:conformsTo and dcterms:type.
+# kee:lifecycleState is written in the profile-specific dlife: scheme
+# (https://w3id.org/kee/lifecycle/decision#), not the generic
+# https://w3id.org/kee/lifecycle# namespace, which is compatibility-only where
+# a profile scheme owns the state (v0.10.0 Section 9.2).
+# Run `kee normalize --rewrite-safe examples/<file>` to see the safe carrier
+# rewrites and the remaining unsafe legacy surfaces.
+# Version: 0.1.0
+# Timestamp: 2026-06-25T20:29:00Z (2026-06-25 16:29:00 EDT)
+# Repository path: examples/decision.ttl
+#
+# Expected validation target:
+#   shacl/decision-profile.ttl
+#
+# Expected result:
+#   valid, with no required-field violations.
+#
+# This example is ADR-like and demonstrates a decision artifact with
+# provenance, rationale, scope, authority, and lifecycle state.
+
+ex:decision-001
+    a kee:Decision ;
+    rdfs:label "Use PROV-O as the default provenance vocabulary for RDF profiles"@en ;
+    skos:definition "KEE RDF profiles will use PROV-O as the default vocabulary for representing provenance entities, activities, agents, attribution, revision, derivation, and invalidation."@en ;
+    skos:scopeNote "This decision applies to RDF-based KEE profiles and examples. Non-RDF implementations may preserve equivalent semantics through other representations."@en ;
+    skos:changeNote "Rationale: PROV-O is mature, standardized, composable, and already aligned with Semantic Web practice. KEE should compose existing provenance standards before introducing new vocabulary."@en ;
+
+    kee:artifactType artifact:Decision ;
+    kee:lifecycleState dlife:Accepted ;
+    kee:profileConformance profile:DecisionProfile ;
+    kee:scope ex:scope-rdf-profiles ;
+    kee:context ex:context-prior-art-first ;
+    kee:authority ex:authority-kee-maintainers ;
+
+    prov:wasAttributedTo ex:agent-reneyap ;
+    prov:wasGeneratedBy ex:activity-accept-decision-001 ;
+    prov:generatedAtTime "2026-06-25T20:29:00Z"^^xsd:dateTime ;
+
+    dcterms:source ex:source-provenance-crosswalk .
+
+ex:activity-accept-decision-001
+    a prov:Activity ;
+    rdfs:label "Accept decision to use PROV-O by default"@en ;
+    prov:wasAssociatedWith ex:authority-kee-maintainers ;
+    prov:generatedAtTime "2026-06-25T20:29:00Z"^^xsd:dateTime .
+
+ex:agent-reneyap
+    a prov:Agent ;
+    rdfs:label "reneyap"@en .
+
+ex:authority-kee-maintainers
+    a prov:Agent ;
+    rdfs:label "KEE maintainers"@en .
+
+ex:scope-rdf-profiles
+    a skos:Concept ;
+    skos:prefLabel "RDF profile scope"@en ;
+    skos:definition "Applies to KEE profiles and examples expressed in RDF-compatible forms."@en .
+
+ex:context-prior-art-first
+    a skos:Concept ;
+    skos:prefLabel "Prior-Art-First context"@en ;
+    skos:definition "Context in which KEE adopts existing standards before defining new vocabulary."@en .
+
+ex:source-provenance-crosswalk
+    a prov:Entity ;
+    rdfs:label "KEE conceptual overview"@en ;
+    dcterms:identifier "docs/CONCEPTS.md" .

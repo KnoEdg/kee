@@ -1,0 +1,87 @@
+@prefix ex: <https://example.org/kee/test/> .
+@prefix kee: <https://w3id.org/kee#> .
+@prefix profile: <https://w3id.org/kee/profile#> .
+@prefix grlife: <https://w3id.org/kee/lifecycle/governance-record#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+# Valid fixtures for shacl/authority-delegation-profile.ttl.
+
+ex:authority-valid-001
+    a kee:GovernanceTransitionRecord, kee:AuthorityRecord ;
+    kee:governedArtifact ex:governed-artifact-test ;
+    kee:newLifecycleState ex:new-status-test ;
+    kee:lifecycleStatusVocabulary ex:status-vocab-test ;
+    kee:lifecycleState grlife:Accepted ;
+    dcterms:conformsTo profile:AuthorityDelegationProfile ;
+    kee:scope ex:artifact-applicability-scope-test ;
+    kee:grantedTo ex:agent-grantee-test ;
+    kee:authorityScope ex:authority-scope-test ;
+    kee:authorityEvidence ex:authority-policy-test ;
+    prov:wasGeneratedBy ex:authority-grant-activity-test ;
+    prov:wasAttributedTo ex:agent-test ;
+    prov:generatedAtTime "2026-07-10T21:00:00Z"^^xsd:dateTime .
+
+ex:authority-grant-activity-test
+    a prov:Activity ;
+    prov:qualifiedAssociation [
+        a prov:Association ;
+        prov:agent ex:grantor-test ;
+        prov:hadRole ex:grantor-role-test
+    ] .
+
+# Valid delegated software-agent grant; the chain terminates at a Person.
+ex:authority-valid-software-001
+    a kee:GovernanceTransitionRecord, kee:AuthorityRecord ;
+    kee:governedArtifact ex:governed-artifact-test ;
+    kee:newLifecycleState ex:new-status-test ;
+    kee:lifecycleStatusVocabulary ex:status-vocab-test ;
+    kee:lifecycleState grlife:Accepted ;
+    dcterms:conformsTo profile:AuthorityDelegationProfile ;
+    kee:scope ex:artifact-applicability-scope-test ;
+    kee:grantedTo ex:software-grantee-test ;
+    kee:authorityScope ex:software-authority-scope-test ;
+    kee:authorityEvidence ex:software-authority-policy-test ;
+    prov:wasGeneratedBy ex:software-authority-grant-activity-test ;
+    prov:wasAttributedTo ex:agent-test ;
+    prov:generatedAtTime "2026-07-10T21:01:00Z"^^xsd:dateTime .
+
+ex:software-authority-grant-activity-test
+    a prov:Activity ;
+    prov:qualifiedAssociation [
+        a prov:Association ;
+        prov:agent ex:agent-grantee-test ;
+        prov:hadRole ex:delegator-role-test
+    ] .
+
+ex:software-grantee-test
+    a prov:Agent, prov:SoftwareAgent ;
+    prov:actedOnBehalfOf ex:agent-grantee-test .
+
+ex:agent-grantee-test a prov:Agent, prov:Person .
+ex:grantor-test a prov:Agent, prov:Person .
+ex:grantor-role-test a prov:Role .
+ex:delegator-role-test a prov:Role .
+ex:authority-policy-test a prov:Entity .
+ex:software-authority-policy-test a prov:Entity .
+ex:governed-artifact-test a prov:Entity .
+ex:new-status-test a skos:Concept .
+ex:status-vocab-test a skos:ConceptScheme .
+ex:artifact-applicability-scope-test a skos:Concept .
+ex:authority-scope-test a skos:Concept .
+ex:software-authority-scope-test a skos:Concept .
+ex:agent-test a prov:Agent .
+
+ex:contested-authority-valid-001
+    a kee:ContestedAuthorityClaim ;
+    kee:claimant ex:claimant-a-test, ex:claimant-b-test ;
+    kee:lifecycleState grlife:Accepted ;
+    dcterms:conformsTo profile:AuthorityDelegationProfile ;
+    prov:wasAttributedTo ex:agent-test ;
+    prov:generatedAtTime "2026-07-10T21:05:00Z"^^xsd:dateTime .
+
+ex:claimant-a-test a prov:Agent .
+ex:claimant-b-test a prov:Agent .

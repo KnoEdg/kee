@@ -1,0 +1,24 @@
+@prefix kee: <https://w3id.org/kee#> .
+@prefix profile: <https://w3id.org/kee/profile#> .
+@prefix artifact: <https://w3id.org/kee/artifact#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+# Compatibility note (specification Section 17): this fixture exercises registered
+# legacy-readable surfaces (generic https://w3id.org/kee/lifecycle# values and/or
+# legacy carriers). It is executable compatibility evidence, not canonical
+# new-write guidance; profile-aware migration of lifecycle values is registered
+# as unsafe for automatic rewrite (specification Section 9.2 and Section 17).
+
+# Invalid fixture for shacl/artifact-identity-granularity-profile.ttl
+# Expected result: does not conform.
+# Expected failure: kee:ManagedArtifactUnit instance is a blank node, not an
+# IRI, violating the shape's node-level sh:nodeKind sh:IRI constraint. This
+# directly encodes the profile's own Candidate Validation Constraint:
+# "blank nodes, when used, are not relied upon for cross-system or
+# cross-snapshot governance identity" (a recorded project decision).
+
+[]
+    a kee:ManagedArtifactUnit ;
+    rdfs:label "Invalid managed artifact unit fixture using a blank node identity"@en ;
+
+    kee:artifactType artifact:DocumentArtifact ;
+    kee:profileConformance profile:ArtifactIdentityGranularityProfile .

@@ -1,0 +1,39 @@
+@prefix ex: <https://example.org/kee/test/> .
+@prefix kee: <https://w3id.org/kee#> .
+@prefix profile: <https://w3id.org/kee/profile#> .
+@prefix alife: <https://w3id.org/kee/lifecycle/assertion#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+# Valid new-write fixture for shacl/assertion-metadata-profile.ttl.
+# Recording time, asserting-act time, and valid time are distinct.
+
+ex:assertion-metadata-valid-001
+    a kee:AssertionMetadataRecord ;
+    rdfs:label "Valid assertion metadata fixture"@en ;
+    kee:managedAssertionUnit ex:assertion-unit-test ;
+    kee:assertionContent ex:assertion-unit-test ;
+    kee:lifecycleState alife:Normal ;
+    dcterms:conformsTo profile:AssertionMetadataProfile ;
+    kee:scope ex:scope-test ;
+    kee:context ex:context-test ;
+    prov:wasAttributedTo ex:agent-test ;
+    prov:wasGeneratedBy ex:asserting-activity-test ;
+    prov:generatedAtTime "2026-07-09T21:00:00Z"^^xsd:dateTime ;
+    dcterms:valid "2026-07-09T20:55:00Z"^^xsd:dateTime ;
+    dcterms:source ex:source-test .
+
+ex:asserting-activity-test
+    a prov:Activity ;
+    prov:wasAssociatedWith ex:agent-test ;
+    prov:startedAtTime "2026-07-09T20:59:30Z"^^xsd:dateTime ;
+    prov:endedAtTime "2026-07-09T21:00:00Z"^^xsd:dateTime .
+
+ex:assertion-unit-test a prov:Entity ; rdfs:label "Test managed assertion unit"@en .
+ex:agent-test a prov:Agent ; rdfs:label "Test agent"@en .
+ex:scope-test a skos:Concept ; skos:prefLabel "Test scope"@en .
+ex:context-test a skos:Concept ; skos:prefLabel "Test context"@en .
+ex:source-test a prov:Entity ; rdfs:label "Test source"@en .

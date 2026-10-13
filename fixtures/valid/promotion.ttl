@@ -1,0 +1,40 @@
+@prefix ex: <https://example.org/kee/test/> .
+@prefix kee: <https://w3id.org/kee#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix profile: <https://w3id.org/kee/profile#> .
+@prefix grlife: <https://w3id.org/kee/lifecycle/governance-record#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+# Valid fixture for shacl/promotion-profile.ttl and the inherited
+# governance-transition shape.
+
+ex:promotion-valid-001
+    a kee:GovernanceTransitionRecord, kee:PromotionRecord ;
+    rdfs:label "Valid promotion record fixture"@en ;
+    kee:governedArtifact ex:governed-artifact-test ;
+    kee:newLifecycleState ex:new-status-test ;
+    kee:lifecycleStatusVocabulary ex:status-vocab-test ;
+    kee:lifecycleState grlife:Accepted ;
+    dcterms:conformsTo profile:PromotionProfile ;
+    kee:authorityEvidence ex:authority-evidence-test ;
+    kee:sourceScope ex:scope-source-test ;
+    kee:scope ex:scope-target-test ;
+    prov:wasGeneratedBy ex:promotion-activity-test ;
+    prov:wasAttributedTo ex:agent-test ;
+    prov:generatedAtTime "2026-07-10T21:00:00Z"^^xsd:dateTime .
+
+ex:scope-source-test
+    a skos:Concept ;
+    skos:prefLabel "Test source scope"@en ;
+    skos:broader ex:scope-target-test .
+
+ex:scope-target-test a skos:Concept ; skos:prefLabel "Test target scope"@en .
+ex:governed-artifact-test a prov:Entity ; rdfs:label "Test governed artifact"@en .
+ex:new-status-test a skos:Concept ; skos:prefLabel "Test new status"@en .
+ex:status-vocab-test a skos:ConceptScheme ; rdfs:label "Test status vocabulary"@en .
+ex:promotion-activity-test a prov:Activity ; rdfs:label "Test promotion activity"@en .
+ex:agent-test a prov:Agent ; rdfs:label "Test agent"@en .
+ex:authority-evidence-test a prov:Entity ; rdfs:label "Test authority evidence"@en .

@@ -13,7 +13,6 @@
 
 # KEE Scientific Claim Profile SHACL Shapes
 # Status: Accepted / Normative
-# Shape-contract version: 0.9.2
 # Repository path: shacl/scientific-claim-profile.ttl
 #
 # Carry-forward compatibility:

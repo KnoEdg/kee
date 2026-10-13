@@ -1,0 +1,100 @@
+@prefix ex: <https://example.org/kee/> .
+@prefix kee: <https://w3id.org/kee#> .
+@prefix profile: <https://w3id.org/kee/profile#> .
+@prefix qtd: <https://w3id.org/kee/vocab/query-time-dimension#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+# KEE Historical and Bitemporal Querying Profile Example
+# Status: Draft / Non-Normative profile example (specification Section 19); legacy-readable compatibility example
+#
+# Compatibility note (registered legacy compatibility window, specification Section 17): this example intentionally
+# exercises registered legacy-readable surfaces (for example kee:profileConformance,
+# kee:artifactType, or the generic https://w3id.org/kee/lifecycle# namespace). It is
+# compatibility evidence, not canonical new-write guidance. Canonical new writes
+# use dcterms:conformsTo, dcterms:type, and the profile-specific lifecycle
+# namespaces named in docs/specs/KEE-Specification-v0.11.0.md Sections 8-9.
+# Run `kee normalize --rewrite-safe examples/<file>` to see the safe carrier
+# rewrites and the remaining unsafe legacy surfaces.
+#
+# The source fixture intentionally retains legacy kee:profileConformance for
+# registered legacy-read compatibility. New-write semantics use dcterms:temporal for the
+# requested instant and dcterms:source for a history source with declared
+# temporal coverage. The time dimension is drawn from the query-time-dimension
+# scheme: qtd:RecordedTime for the known-as-of query, qtd:ValidTime for the
+# valid-during and active-at queries.
+
+ex:query-known-as-of-2026-06-01
+    a kee:PointInTimeQuery ;
+    rdfs:label "Known-as-of query: 2026-06-01"@en ;
+    kee:queryPattern ex:query-pattern-known-as-of ;
+    kee:queryTimeDimension qtd:RecordedTime ;
+    dcterms:temporal ex:instant-2026-06-01 ;
+    dcterms:source ex:history-source-runbook ;
+    kee:profileConformance profile:HistoricalBitemporalQueryingProfile ;
+    kee:historyCompleteness ex:completeness-complete ;
+    kee:reconstructedArtifact ex:runbook-incident-triage-v2 ;
+    dcterms:description "What escalation-threshold guidance did we know on 2026-06-01?"@en .
+
+ex:query-valid-during-2026-05-01
+    a kee:PointInTimeQuery ;
+    rdfs:label "Valid-during query: 2026-05-01 incident"@en ;
+    kee:queryPattern ex:query-pattern-valid-during ;
+    kee:queryTimeDimension qtd:ValidTime ;
+    dcterms:temporal ex:instant-2026-05-01 ;
+    dcterms:source ex:history-source-runbook ;
+    kee:profileConformance profile:HistoricalBitemporalQueryingProfile ;
+    kee:historyCompleteness ex:completeness-complete ;
+    kee:reconstructedArtifact ex:runbook-incident-triage-v2 ;
+    time:hasBeginning ex:instant-2026-04-12 ;
+    time:hasEnd ex:instant-2026-07-05 ;
+    dcterms:description "Which runbook revision applied during the incident on 2026-05-01?"@en .
+
+ex:query-active-at-2026-08-15
+    a kee:PointInTimeQuery ;
+    rdfs:label "Active-at query: 2026-08-15"@en ;
+    kee:queryPattern ex:query-pattern-active-at ;
+    kee:queryTimeDimension qtd:ValidTime ;
+    dcterms:temporal ex:instant-2026-08-15 ;
+    dcterms:source ex:history-source-runbook ;
+    kee:profileConformance profile:HistoricalBitemporalQueryingProfile ;
+    kee:crossReference ex:retrieval-query-escalation-threshold ;
+    dcterms:description "Which runbook was active for current-answer retrieval at 2026-08-15?"@en .
+
+ex:history-source-runbook
+    a prov:Entity ;
+    rdfs:label "Retained runbook history"@en ;
+    dcterms:temporal ex:history-coverage-2025-through-2026 .
+
+ex:history-coverage-2025-through-2026
+    a time:Interval ;
+    time:hasBeginning ex:instant-history-start ;
+    time:hasEnd ex:instant-history-end .
+
+ex:instant-history-start a time:Instant ; time:inXSDDateTimeStamp "2025-01-01T00:00:00Z"^^xsd:dateTimeStamp .
+ex:instant-history-end a time:Instant ; time:inXSDDateTimeStamp "2026-09-01T00:00:00Z"^^xsd:dateTimeStamp .
+ex:instant-2026-06-01 a time:Instant ; time:inXSDDateTimeStamp "2026-06-01T00:00:00Z"^^xsd:dateTimeStamp .
+ex:instant-2026-05-01 a time:Instant ; time:inXSDDateTimeStamp "2026-05-01T00:00:00Z"^^xsd:dateTimeStamp .
+ex:instant-2026-08-15 a time:Instant ; time:inXSDDateTimeStamp "2026-08-15T00:00:00Z"^^xsd:dateTimeStamp .
+ex:instant-2026-04-12 a time:Instant ; time:inXSDDateTimeStamp "2026-04-12T14:30:00Z"^^xsd:dateTimeStamp .
+ex:instant-2026-07-05 a time:Instant ; time:inXSDDateTimeStamp "2026-07-05T16:00:00Z"^^xsd:dateTimeStamp .
+
+ex:query-pattern-known-as-of a skos:Concept ; skos:prefLabel "Known as of"@en .
+ex:query-pattern-valid-during a skos:Concept ; skos:prefLabel "Valid during"@en .
+ex:query-pattern-active-at a skos:Concept ; skos:prefLabel "Active at"@en .
+ex:completeness-complete a skos:Concept ; skos:prefLabel "Complete history"@en .
+ex:runbook-incident-triage-v2 a prov:Entity ; rdfs:label "Incident triage runbook v2"@en .
+
+# The cross-referenced retrieval query, carried complete so that it conforms to
+# shacl/ai-grounded-retrieval-profile.ttl as well; examples/ai-grounded-retrieval.ttl
+# holds the same query with its candidate results.
+ex:retrieval-query-escalation-threshold
+    a kee:RetrievalQuery ;
+    rdfs:label "Retrieval query: payment-latency escalation threshold"@en ;
+    dcterms:conformsTo profile:AIGroundedRetrievalProfile ;
+    dcterms:description "What guidance was active for payment-latency alerts at the requested historical instant?"@en ;
+    prov:generatedAtTime "2026-08-15T09:00:00Z"^^xsd:dateTime .

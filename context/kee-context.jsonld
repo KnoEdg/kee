@@ -11,9 +11,12 @@
     "organizationalMemoryLifecycle": "https://w3id.org/kee/lifecycle/organizational-memory#",
     "decisionLifecycle": "https://w3id.org/kee/lifecycle/decision#",
     "softwareEngineeringLifecycle": "https://w3id.org/kee/lifecycle/software-engineering#",
+    "governanceRecordLifecycle": "https://w3id.org/kee/lifecycle/governance-record#",
     "confidence": "https://w3id.org/kee/confidence#",
     "contradictionCause": "https://w3id.org/kee/vocab/contradiction-cause#",
     "assertionUnitKind": "https://w3id.org/kee/vocab/assertion-unit-kind#",
+    "timeDimension": "https://w3id.org/kee/vocab/query-time-dimension#",
+    "retrievalEligibility": "https://w3id.org/kee/vocab/retrieval-eligibility#",
 
     "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",

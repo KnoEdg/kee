@@ -1,0 +1,22 @@
+@prefix ex: <https://example.org/kee/test/> .
+@prefix kee: <https://w3id.org/kee#> .
+@prefix profile: <https://w3id.org/kee/profile#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+# Compatibility note (specification Section 17): this fixture exercises registered
+# legacy-readable surfaces (generic https://w3id.org/kee/lifecycle# values and/or
+# legacy carriers). It is executable compatibility evidence, not canonical
+# new-write guidance; profile-aware migration of lifecycle values is registered
+# as unsafe for automatic rewrite (specification Section 9.2 and Section 17).
+
+# Invalid fixture for shacl/ai-grounded-retrieval-profile.ttl
+# Expected result: does not conform.
+# Expected failure: missing required prov:generatedAtTime on a
+# kee:RetrievalQuery -- the retrieval/answer-time timestamp this profile's
+# own Baseline Retrieval-Eligibility Categories table requires (per
+# a recorded project decision).
+
+ex:retrieval-query-invalid-missing-timestamp-001
+    a kee:RetrievalQuery ;
+    rdfs:label "Invalid retrieval query fixture missing timestamp"@en ;
+
+    kee:profileConformance profile:AIGroundedRetrievalProfile .

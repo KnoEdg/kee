@@ -1,0 +1,76 @@
+@prefix ex: <https://example.org/kee/> .
+@prefix kee: <https://w3id.org/kee#> .
+@prefix profile: <https://w3id.org/kee/profile#> .
+@prefix artifact: <https://w3id.org/kee/artifact#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+# KEE Artifact Identity and Granularity Profile Example
+# Status: Draft / Non-Normative profile example (specification Section 19); legacy-readable compatibility example
+#
+# Compatibility note (registered legacy compatibility window, specification Section 17): this example intentionally
+# exercises registered legacy-readable surfaces (for example kee:profileConformance,
+# kee:artifactType, or the generic https://w3id.org/kee/lifecycle# namespace). It is
+# compatibility evidence, not canonical new-write guidance. Canonical new writes
+# use dcterms:conformsTo, dcterms:type, and the profile-specific lifecycle
+# namespaces named in docs/specs/KEE-Specification-v0.11.0.md Sections 8-9.
+# Run `kee normalize --rewrite-safe examples/<file>` to see the safe carrier
+# rewrites and the remaining unsafe legacy surfaces.
+# Version: 0.1.0
+# Repository path: examples/artifact-identity-granularity.ttl
+#
+# Expected validation target:
+#   shacl/artifact-identity-granularity-profile.ttl
+#
+# Expected result:
+#   valid, with no required-field violations.
+#
+# This is a normative conformance fixture (unlike the illustrative sketch kept
+# with the profile document, which intentionally uses placeholder exprof:
+# predicates and is not registered in the conformance manifest). It mirrors the same scenario -- a
+# document-level runbook with stable series identity spanning versions, a
+# container distinct from the runbooks it holds, and a retrieval-chunk
+# mapping -- using the real kee: predicates adopted by a recorded project decision.
+
+ex:runbook-incident-triage-v3
+    a kee:ManagedArtifactUnit ;
+    rdfs:label "Incident triage runbook v3"@en ;
+
+    kee:artifactType artifact:DocumentArtifact ;
+    kee:profileConformance profile:ArtifactIdentityGranularityProfile ;
+    kee:contentIdentifier "sha256:7g8h9i-v3-org-wide-promotion-revision" ;
+    kee:containerIdentifier ex:runbook-collection-incident-response ;
+
+    dcterms:isVersionOf ex:runbook-incident-triage-series ;
+    dcterms:replaces ex:runbook-incident-triage-v2 .
+
+ex:runbook-incident-triage-v2
+    a kee:ManagedArtifactUnit ;
+    rdfs:label "Incident triage runbook v2"@en ;
+
+    kee:artifactType artifact:DocumentArtifact ;
+    kee:profileConformance profile:ArtifactIdentityGranularityProfile ;
+    kee:contentIdentifier "sha256:4d5e6f-v2-added-payment-alert-section" ;
+
+    dcterms:isVersionOf ex:runbook-incident-triage-series ;
+    dcterms:isReplacedBy ex:runbook-incident-triage-v3 .
+
+ex:runbook-incident-triage-series
+    a prov:Entity ;
+    rdfs:label "Incident triage runbook series"@en ;
+    dcterms:hasVersion ex:runbook-incident-triage-v2, ex:runbook-incident-triage-v3 .
+
+ex:runbook-collection-incident-response
+    a prov:Entity ;
+    rdfs:label "Incident response runbook collection"@en .
+
+ex:retrieval-chunk-091
+    a kee:RetrievalChunk ;
+    rdfs:label "Retrieval chunk 091"@en ;
+
+    kee:mapsToArtifact ex:runbook-incident-triage-v3 ;
+    kee:mapsToContentHash "sha256:7g8h9i-v3-org-wide-promotion-revision" ;
+
+    dcterms:description "Passage: 'Escalate payment-latency alerts to on-call after 15 minutes of sustained latency.'"@en .

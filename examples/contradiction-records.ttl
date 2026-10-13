@@ -1,0 +1,76 @@
+@prefix ex: <https://example.org/kee/> .
+@prefix kee: <https://w3id.org/kee#> .
+@prefix profile: <https://w3id.org/kee/profile#> .
+@prefix grlife: <https://w3id.org/kee/lifecycle/governance-record#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix oa: <http://www.w3.org/ns/oa#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+# KEE Contradiction Records Profile Example
+# Status: Draft / Non-Normative profile example (specification Section 19); legacy-readable compatibility example
+#
+# Compatibility note (registered legacy compatibility window, specification Section 17): this example intentionally
+# exercises registered legacy-readable surfaces (for example kee:profileConformance,
+# kee:artifactType, or the generic https://w3id.org/kee/lifecycle# namespace). It is
+# compatibility evidence, not canonical new-write guidance. Canonical new writes
+# use dcterms:conformsTo, dcterms:type, and the profile-specific lifecycle
+# namespaces named in docs/specs/KEE-Specification-v0.11.0.md Sections 8-9.
+# Run `kee normalize --rewrite-safe examples/<file>` to see the safe carrier
+# rewrites and the remaining unsafe legacy surfaces.
+#
+# The profile uses Web Annotation side/evidence nodes so each evidence item is
+# mechanically paired with the conflicting artifact it supports.
+
+ex:contradiction-escalation-threshold
+    a kee:ContradictionRecord ;
+    rdfs:label "Contradiction: escalation threshold, payments vs. observability"@en ;
+    kee:conflictingArtifact ex:runbook-incident-triage-v3, ex:runbook-incident-triage-payments ;
+    kee:lifecycleState grlife:Accepted ;
+    kee:profileConformance profile:ContradictionRecordsProfile ;
+    kee:causeType ex:cause-evidence-conflict ;
+    dcterms:hasPart ex:side-evidence-org-runbook, ex:side-evidence-payments-runbook ;
+    dcterms:description "The org-wide standard runbook recommends a 15-minute escalation threshold based on alert-fatigue postmortem data. The payments team's variant recommends a 5-minute threshold based on a cost analysis of SLA violations. Both recommendations are evidentially supported; the conflict is a difference in risk framing, not an error on either side."@en ;
+    prov:wasGeneratedBy ex:detection-escalation-threshold-contradiction ;
+    prov:wasAttributedTo ex:governance-log-service ;
+    prov:generatedAtTime "2026-07-10T11:21:40Z"^^xsd:dateTime .
+
+ex:side-evidence-org-runbook
+    a oa:Annotation ;
+    oa:hasTarget ex:runbook-incident-triage-v3 ;
+    oa:hasBody ex:evidence-alert-fatigue-postmortem .
+
+ex:side-evidence-payments-runbook
+    a oa:Annotation ;
+    oa:hasTarget ex:runbook-incident-triage-payments ;
+    oa:hasBody ex:evidence-payments-sla-cost-analysis .
+
+ex:runbook-incident-triage-v3
+    a prov:Entity ;
+    rdfs:label "Incident triage runbook v3"@en .
+
+ex:runbook-incident-triage-payments
+    a prov:Entity ;
+    rdfs:label "Payments team incident triage runbook variant"@en .
+
+ex:cause-evidence-conflict
+    a skos:Concept ;
+    skos:prefLabel "Evidence conflict"@en .
+
+ex:evidence-alert-fatigue-postmortem
+    a prov:Entity ;
+    rdfs:label "Alert-fatigue postmortem evidence"@en .
+
+ex:evidence-payments-sla-cost-analysis
+    a prov:Entity ;
+    rdfs:label "Payments SLA violation cost-analysis evidence"@en .
+
+ex:detection-escalation-threshold-contradiction
+    a prov:Activity ;
+    rdfs:label "Detection activity: escalation threshold contradiction"@en .
+
+ex:governance-log-service
+    a prov:Agent, prov:SoftwareAgent ;
+    rdfs:label "Governance Log Service"@en .

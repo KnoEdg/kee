@@ -1,0 +1,27 @@
+@prefix ex: <https://example.org/kee/test/> .
+@prefix kee: <https://w3id.org/kee#> .
+@prefix profile: <https://w3id.org/kee/profile#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+# Compatibility note (specification Section 17): this fixture exercises registered
+# legacy-readable surfaces (generic https://w3id.org/kee/lifecycle# values and/or
+# legacy carriers). It is executable compatibility evidence, not canonical
+# new-write guidance; profile-aware migration of lifecycle values is registered
+# as unsafe for automatic rewrite (specification Section 9.2 and Section 17).
+
+# Invalid fixture for shacl/historical-bitemporal-querying-profile.ttl
+# Expected result: does not conform.
+# Expected failure: missing required kee:queryTimeDimension -- directly
+# encoding this profile's own constraint that a queried timestamp must not
+# be left ambiguous between time dimensions (a recorded project decision).
+
+ex:point-in-time-query-invalid-missing-dimension-001
+    a kee:PointInTimeQuery ;
+    rdfs:label "Invalid point-in-time query fixture missing time dimension"@en ;
+
+    kee:queryPattern ex:query-pattern-test ;
+    kee:profileConformance profile:HistoricalBitemporalQueryingProfile .
+
+ex:query-pattern-test
+    a skos:Concept ;
+    skos:prefLabel "Test query pattern"@en .

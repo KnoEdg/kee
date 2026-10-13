@@ -1,0 +1,54 @@
+@prefix ex: <https://example.org/kee/test/> .
+@prefix kee: <https://w3id.org/kee#> .
+@prefix profile: <https://w3id.org/kee/profile#> .
+@prefix grlife: <https://w3id.org/kee/lifecycle/governance-record#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+# Compatibility note (specification Section 17): this fixture exercises registered
+# legacy-readable surfaces (generic https://w3id.org/kee/lifecycle# values and/or
+# legacy carriers). It is executable compatibility evidence, not canonical
+# new-write guidance; profile-aware migration of lifecycle values is registered
+# as unsafe for automatic rewrite (specification Section 9.2 and Section 17).
+
+# Invalid fixture for shacl/lifecycle-crosswalk-profile.ttl
+# Expected result: does not conform.
+# Expected failure: missing required prov:wasAttributedTo and
+# prov:generatedAtTime.
+
+ex:lifecycle-crosswalk-invalid-missing-provenance-001
+    a kee:LifecycleCrosswalkMapping ;
+    rdfs:label "Invalid lifecycle crosswalk fixture missing provenance"@en ;
+
+    kee:sourceVocabulary ex:source-vocab-test ;
+    kee:sourceTerm ex:source-term-test ;
+    kee:targetVocabulary ex:target-vocab-test ;
+    kee:targetTerm ex:target-term-test ;
+    kee:mappingRelationship skos:exactMatch ;
+    kee:lifecycleState grlife:Accepted ;
+    kee:profileConformance profile:LifecycleCrosswalkProfile ;
+    kee:scope ex:scope-test ;
+    kee:context ex:context-test .
+
+ex:source-vocab-test
+    a skos:ConceptScheme ;
+    rdfs:label "Test source vocabulary"@en .
+
+ex:source-term-test
+    a skos:Concept ;
+    rdfs:label "Test source term"@en .
+
+ex:target-vocab-test
+    a skos:ConceptScheme ;
+    rdfs:label "Test target vocabulary"@en .
+
+ex:target-term-test
+    a skos:Concept ;
+    rdfs:label "Test target term"@en .
+
+ex:scope-test
+    a skos:Concept ;
+    skos:prefLabel "Test scope"@en .
+
+ex:context-test
+    a skos:Concept ;
+    skos:prefLabel "Test context"@en .

@@ -1,0 +1,39 @@
+@prefix ex: <https://example.org/kee/test/> .
+@prefix kee: <https://w3id.org/kee#> .
+@prefix profile: <https://w3id.org/kee/profile#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+# Expected-negative fixture for shacl/ai-grounded-retrieval-profile.ttl.
+# Expected result: does not conform.
+#
+# kee:eligibilityCategory carries an IRI outside the retrieval-eligibility
+# scheme on a new-write result (dcterms:conformsTo). The result is otherwise
+# complete, so its only result is the membership check on the new-write
+# branch: a category the scheme does not name is not a decision an
+# independent consumer can act on (specification Section 14.5).
+#
+# The check was staged. At the v0.10.0 baseline it reported at sh:Warning, so
+# this file was a tolerated-warning fixture that conformed under the severity
+# policy. From v0.11.0 it reports at sh:Violation and this file is an
+# expected-negative fixture: v0.10.0 is the last version in which such a value
+# conforms and v0.11.0 the first rejecting version.
+
+ex:retrieval-result-category-not-in-scheme-001
+    a kee:RetrievalResult ;
+    rdfs:label "Retrieval result fixture with an eligibility category outside the scheme"@en ;
+    kee:retrievedArtifact ex:artifact-test ;
+    kee:eligibilityCategory ex:eligibility-preferred ;
+    kee:eligibilityBasis "test basis" ;
+    kee:context ex:use-context-test ;
+    dcterms:conformsTo profile:AIGroundedRetrievalProfile ;
+    prov:wasGeneratedBy ex:decision-activity-test ;
+    prov:generatedAtTime "2026-07-10T21:00:01Z"^^xsd:dateTime .
+
+ex:artifact-test a prov:Entity ; rdfs:label "Test artifact"@en .
+ex:eligibility-preferred a skos:Concept ; skos:prefLabel "Preferred"@en .
+ex:use-context-test a skos:Concept ; skos:prefLabel "Test consumer/use context"@en .
+ex:decision-activity-test a prov:Activity ; rdfs:label "Test retrieval eligibility decision"@en .

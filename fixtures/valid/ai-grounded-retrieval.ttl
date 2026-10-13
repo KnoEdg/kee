@@ -1,0 +1,33 @@
+@prefix ex: <https://example.org/kee/test/> .
+@prefix kee: <https://w3id.org/kee#> .
+@prefix profile: <https://w3id.org/kee/profile#> .
+@prefix elig: <https://w3id.org/kee/vocab/retrieval-eligibility#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+# Valid new-write fixtures for shacl/ai-grounded-retrieval-profile.ttl.
+
+ex:retrieval-query-valid-001
+    a kee:RetrievalQuery ;
+    rdfs:label "Valid retrieval query fixture"@en ;
+    dcterms:conformsTo profile:AIGroundedRetrievalProfile ;
+    kee:candidateResult ex:retrieval-result-valid-001 ;
+    prov:generatedAtTime "2026-07-10T21:00:00Z"^^xsd:dateTime .
+
+ex:retrieval-result-valid-001
+    a kee:RetrievalResult ;
+    rdfs:label "Valid retrieval result fixture"@en ;
+    kee:retrievedArtifact ex:artifact-test ;
+    kee:eligibilityCategory elig:EligibleForNormalGrounding ;
+    kee:eligibilityBasis "test basis" ;
+    kee:context ex:use-context-test ;
+    dcterms:conformsTo profile:AIGroundedRetrievalProfile ;
+    prov:wasGeneratedBy ex:decision-activity-test ;
+    prov:generatedAtTime "2026-07-10T21:00:01Z"^^xsd:dateTime .
+
+ex:artifact-test a prov:Entity ; rdfs:label "Test artifact"@en .
+ex:use-context-test a skos:Concept ; skos:prefLabel "Test consumer/use context"@en .
+ex:decision-activity-test a prov:Activity ; rdfs:label "Test retrieval eligibility decision"@en .

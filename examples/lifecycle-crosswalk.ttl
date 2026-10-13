@@ -1,0 +1,81 @@
+@prefix ex: <https://example.org/kee/> .
+@prefix kee: <https://w3id.org/kee#> .
+@prefix profile: <https://w3id.org/kee/profile#> .
+@prefix grlife: <https://w3id.org/kee/lifecycle/governance-record#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+# KEE Lifecycle Crosswalk Profile Example
+# Status: Draft / Non-Normative profile example (specification Section 19); legacy-readable compatibility example
+#
+# Compatibility note (registered legacy compatibility window, specification Section 17): this example intentionally
+# exercises registered legacy-readable surfaces (for example kee:profileConformance,
+# kee:artifactType, or the generic https://w3id.org/kee/lifecycle# namespace). It is
+# compatibility evidence, not canonical new-write guidance. Canonical new writes
+# use dcterms:conformsTo, dcterms:type, and the profile-specific lifecycle
+# namespaces named in docs/specs/KEE-Specification-v0.11.0.md Sections 8-9.
+# Run `kee normalize --rewrite-safe examples/<file>` to see the safe carrier
+# rewrites and the remaining unsafe legacy surfaces.
+# Version: 0.1.0
+# Repository path: examples/lifecycle-crosswalk.ttl
+#
+# Expected validation target:
+#   shacl/lifecycle-crosswalk-profile.ttl
+#
+# Expected result:
+#   valid, with no required-field violations.
+#
+# This is a normative conformance fixture (unlike the illustrative sketch kept
+# with the profile document, which intentionally uses placeholder exprof:
+# predicates and is not registered in the conformance manifest). It mirrors the same scenario -- an ADR-status term
+# mapped onto a local team lifecycle-status vocabulary -- using the real
+# kee: predicates adopted by a recorded project decision.
+
+ex:adr-status-superseded
+    a skos:Concept ;
+    rdfs:label "ADR status: Superseded"@en .
+
+ex:local-status-superseded
+    a skos:Concept ;
+    rdfs:label "Local status: Superseded"@en .
+
+ex:crosswalk-adr-superseded-to-local-superseded
+    a kee:LifecycleCrosswalkMapping ;
+    rdfs:label "ADR Superseded to local Superseded crosswalk"@en ;
+
+    kee:sourceVocabulary ex:adr-status-scheme ;
+    kee:sourceTerm ex:adr-status-superseded ;
+    kee:targetVocabulary ex:local-status-scheme ;
+    kee:targetTerm ex:local-status-superseded ;
+    kee:mappingRelationship skos:broadMatch ;
+    kee:lifecycleState grlife:Accepted ;
+    kee:profileConformance profile:LifecycleCrosswalkProfile ;
+    kee:scope ex:scope-observability-runbooks ;
+    kee:context ex:context-adr-to-local-crosswalk ;
+
+    skos:changeNote "The source term does not distinguish whether a direct successor exists. This mapping applies only when a specific successor artifact is recorded."@en ;
+
+    prov:wasAttributedTo ex:agent-crosswalk-maintainer ;
+    prov:generatedAtTime "2026-07-10T14:00:00Z"^^xsd:dateTime .
+
+ex:adr-status-scheme
+    a skos:ConceptScheme ;
+    rdfs:label "ADR status vocabulary"@en .
+
+ex:local-status-scheme
+    a skos:ConceptScheme ;
+    rdfs:label "Local team lifecycle-status vocabulary"@en .
+
+ex:agent-crosswalk-maintainer
+    a prov:Agent ;
+    rdfs:label "Crosswalk Maintainer"@en .
+
+ex:scope-observability-runbooks
+    a skos:Concept ;
+    skos:prefLabel "Observability runbooks scope"@en .
+
+ex:context-adr-to-local-crosswalk
+    a skos:Concept ;
+    skos:prefLabel "ADR-to-local-status crosswalk context"@en .
