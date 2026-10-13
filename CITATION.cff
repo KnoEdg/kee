@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+message: "If you use or cite KEE, please cite the published baseline as below."
+title: "KEE (Knowledge, Epistemics & Eidos)"
+type: software
+version: 0.11.0
+date-released: "2026-10-12"
+authors:
+  - family-names: Yap
+    given-names: René
+repository-code: "https://github.com/KnoEdg/kee"
+url: "https://w3id.org/kee"
+license: Apache-2.0
+abstract: >-
+  A governed profile family over PROV, SKOS, DCTerms, OWL-Time and SHACL for
+  keeping knowledge artifacts interpretable as they move between people,
+  organizations, software systems, and through time. The published baseline
+  comprises the specification, the term declarations, the SHACL shape graphs,
+  the SKOS concept schemes, the JSON Schemas, the JSON-LD context, examples,
+  and conformance fixtures.
+keywords:
+  - provenance
+  - shacl
+  - rdf
+  - prov-o
+  - skos
+  - knowledge-graph
+  - interoperability

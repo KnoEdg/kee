@@ -1,0 +1,36 @@
+@prefix ex: <https://example.org/kee/test/> .
+@prefix kee: <https://w3id.org/kee#> .
+@prefix profile: <https://w3id.org/kee/profile#> .
+@prefix grlife: <https://w3id.org/kee/lifecycle/governance-record#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+# Valid new-write fixture for shacl/governance-transition-profile.ttl
+# Expected result: conforms.
+
+ex:governance-transition-valid-001
+    a kee:GovernanceTransitionRecord ;
+    rdfs:label "Valid governance transition fixture"@en ;
+
+    kee:governedArtifact ex:governed-artifact-test ;
+    kee:newLifecycleState ex:new-status-test ;
+    kee:lifecycleStatusVocabulary ex:status-vocab-test ;
+    kee:lifecycleState grlife:Accepted ;
+    dcterms:conformsTo profile:GovernanceTransitionProfile ;
+    kee:scope ex:scope-test ;
+    kee:context ex:context-test ;
+
+    prov:wasGeneratedBy ex:transition-activity-test ;
+    prov:wasAttributedTo ex:agent-test ;
+    prov:generatedAtTime "2026-07-10T21:00:00Z"^^xsd:dateTime .
+
+ex:governed-artifact-test a prov:Entity ; rdfs:label "Test governed artifact"@en .
+ex:new-status-test a skos:Concept ; skos:prefLabel "Test new status"@en .
+ex:status-vocab-test a skos:ConceptScheme ; rdfs:label "Test status vocabulary"@en .
+ex:transition-activity-test a prov:Activity ; rdfs:label "Test transition activity"@en .
+ex:agent-test a prov:Agent ; rdfs:label "Test agent"@en .
+ex:scope-test a skos:Concept ; skos:prefLabel "Test scope"@en .
+ex:context-test a skos:Concept ; skos:prefLabel "Test context"@en .

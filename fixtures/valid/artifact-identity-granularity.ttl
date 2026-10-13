@@ -1,0 +1,32 @@
+@prefix ex: <https://example.org/kee/test/> .
+@prefix kee: <https://w3id.org/kee#> .
+@prefix profile: <https://w3id.org/kee/profile#> .
+@prefix artifact: <https://w3id.org/kee/artifact#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+# Valid new-write fixture for shacl/artifact-identity-granularity-profile.ttl
+# Expected result: conforms.
+
+ex:artifact-identity-valid-001
+    a kee:ManagedArtifactUnit ;
+    rdfs:label "Valid managed artifact unit fixture"@en ;
+
+    dcterms:type artifact:DocumentArtifact ;
+    dcterms:conformsTo profile:ArtifactIdentityGranularityProfile ;
+    kee:contentIdentifier "sha256:test-content-hash" ;
+
+    dcterms:isVersionOf ex:artifact-series-test .
+
+ex:artifact-series-test
+    a kee:ManagedArtifactUnit ;
+    rdfs:label "Test artifact series"@en ;
+
+    dcterms:type artifact:DocumentArtifact ;
+    dcterms:conformsTo profile:ArtifactIdentityGranularityProfile .
+
+ex:retrieval-chunk-valid-001
+    a kee:RetrievalChunk ;
+    rdfs:label "Valid retrieval chunk fixture"@en ;
+
+    kee:mapsToArtifact ex:artifact-identity-valid-001 .

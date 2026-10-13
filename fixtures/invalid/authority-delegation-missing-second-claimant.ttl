@@ -1,0 +1,38 @@
+@prefix ex: <https://example.org/kee/test/> .
+@prefix kee: <https://w3id.org/kee#> .
+@prefix profile: <https://w3id.org/kee/profile#> .
+@prefix grlife: <https://w3id.org/kee/lifecycle/governance-record#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+# Compatibility note (specification Section 17): this fixture exercises registered
+# legacy-readable surfaces (generic https://w3id.org/kee/lifecycle# values and/or
+# legacy carriers). It is executable compatibility evidence, not canonical
+# new-write guidance; profile-aware migration of lifecycle values is registered
+# as unsafe for automatic rewrite (specification Section 9.2 and Section 17).
+
+# Invalid fixture for shacl/authority-delegation-profile.ttl
+# Expected result: does not conform.
+# Expected failure: only one kee:claimant value, violating the minCount 2
+# requirement -- a contested claim requires at least two claimants by
+# definition (a recorded project decision, mirroring the contradiction profile's kee:conflictingArtifact
+# minCount-2 pattern for the Contradiction Records Profile).
+
+ex:contested-authority-invalid-missing-second-claimant-001
+    a kee:ContestedAuthorityClaim ;
+    rdfs:label "Invalid contested authority claim fixture with only one claimant"@en ;
+
+    kee:claimant ex:claimant-a-test ;
+    kee:lifecycleState grlife:Accepted ;
+    kee:profileConformance profile:AuthorityDelegationProfile ;
+
+    prov:wasAttributedTo ex:agent-test ;
+    prov:generatedAtTime "2026-07-10T21:20:00Z"^^xsd:dateTime .
+
+ex:claimant-a-test
+    a prov:Agent ;
+    rdfs:label "Test claimant A"@en .
+
+ex:agent-test
+    a prov:Agent ;
+    rdfs:label "Test agent"@en .

@@ -1,0 +1,39 @@
+@prefix ex: <https://example.org/kee/test/> .
+@prefix kee: <https://w3id.org/kee#> .
+@prefix profile: <https://w3id.org/kee/profile#> .
+@prefix grlife: <https://w3id.org/kee/lifecycle/governance-record#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+# Valid new-write fixture for shacl/lifecycle-crosswalk-profile.ttl
+# Expected result: conforms.
+
+ex:lifecycle-crosswalk-valid-001
+    a kee:LifecycleCrosswalkMapping ;
+    rdfs:label "Valid lifecycle crosswalk fixture"@en ;
+
+    kee:sourceVocabulary ex:source-vocab-test ;
+    kee:sourceTerm ex:source-term-test ;
+    kee:targetVocabulary ex:target-vocab-test ;
+    kee:targetTerm ex:target-term-test ;
+    kee:mappingRelationship skos:exactMatch ;
+    kee:lifecycleState grlife:Accepted ;
+    dcterms:conformsTo profile:LifecycleCrosswalkProfile ;
+    kee:scope ex:scope-test ;
+    kee:context ex:context-test ;
+
+    skos:changeNote "Test rationale."@en ;
+
+    prov:wasAttributedTo ex:agent-test ;
+    prov:generatedAtTime "2026-07-10T21:00:00Z"^^xsd:dateTime .
+
+ex:source-vocab-test a skos:ConceptScheme ; rdfs:label "Test source vocabulary"@en .
+ex:source-term-test a skos:Concept ; rdfs:label "Test source term"@en .
+ex:target-vocab-test a skos:ConceptScheme ; rdfs:label "Test target vocabulary"@en .
+ex:target-term-test a skos:Concept ; rdfs:label "Test target term"@en .
+ex:agent-test a prov:Agent ; rdfs:label "Test agent"@en .
+ex:scope-test a skos:Concept ; skos:prefLabel "Test scope"@en .
+ex:context-test a skos:Concept ; skos:prefLabel "Test context"@en .

@@ -1,0 +1,75 @@
+@prefix ex: <https://example.org/kee/> .
+@prefix kee: <https://w3id.org/kee#> .
+@prefix profile: <https://w3id.org/kee/profile#> .
+@prefix alife: <https://w3id.org/kee/lifecycle/assertion#> .
+@prefix confidence: <https://w3id.org/kee/confidence#> .
+@prefix unitkind: <https://knoedg.org/vocab/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+# KEE Assertion Metadata Profile Example
+# Status: Example for the Accepted / Normative Assertion Metadata Profile (status per specification Section 19); temporal-role semantics; legacy-readable compatibility example
+#
+# Compatibility note (registered legacy compatibility window, specification Section 17): this example intentionally
+# exercises registered legacy-readable surfaces (for example kee:profileConformance,
+# kee:artifactType, or the generic https://w3id.org/kee/lifecycle# namespace). It is
+# compatibility evidence, not canonical new-write guidance. Canonical new writes
+# use dcterms:conformsTo, dcterms:type, and the profile-specific lifecycle
+# namespaces named in docs/specs/KEE-Specification-v0.11.0.md Sections 8-9.
+# Run `kee normalize --rewrite-safe examples/<file>` to see the safe carrier
+# rewrites and the remaining unsafe legacy surfaces.
+#
+# The source fixture intentionally retains legacy kee:profileConformance so
+# the frozen compatibility regression can prove legacy reads. The temporal-role
+# rules remove the ambiguous kee:assertionTime new-write example: recording time, asserting-act
+# time, and valid/applicability time are represented separately.
+
+ex:assertion-metadata-001
+    a kee:AssertionMetadataRecord ;
+    rdfs:label "Example assertion metadata record for a monitoring-pipeline assertion"@en ;
+
+    kee:managedAssertionUnit ex:assertion-graph-001 ;
+    kee:managedAssertionUnitKind unitkind:NamedGraphUnit ;
+    kee:assertionContent ex:assertion-graph-001 ;
+    kee:lifecycleState alife:Normal ;
+    kee:profileConformance profile:AssertionMetadataProfile ;
+    kee:scope ex:scope-observability-runbooks ;
+    kee:context ex:context-incident-review ;
+    kee:confidenceStatus confidence:ProfileDefined ;
+
+    prov:wasAttributedTo ex:agent-monitoring-pipeline ;
+    prov:wasGeneratedBy ex:activity-record-assertion-001 ;
+    prov:generatedAtTime "2026-07-09T14:00:12Z"^^xsd:dateTime ;
+    dcterms:valid "2026-07-09T13:58:00Z"^^xsd:dateTime ;
+
+    dcterms:source ex:incident-001 .
+
+ex:assertion-graph-001
+    a prov:Entity ;
+    rdfs:label "Managed assertion unit named graph"@en .
+
+ex:activity-record-assertion-001
+    a prov:Activity ;
+    rdfs:label "Assert and record example assertion"@en ;
+    prov:wasAssociatedWith ex:agent-monitoring-pipeline ;
+    prov:startedAtTime "2026-07-09T13:59:40Z"^^xsd:dateTime ;
+    prov:endedAtTime "2026-07-09T14:00:12Z"^^xsd:dateTime .
+
+ex:agent-monitoring-pipeline
+    a prov:Agent, prov:SoftwareAgent ;
+    rdfs:label "Monitoring Pipeline"@en .
+
+ex:scope-observability-runbooks
+    a skos:Concept ;
+    skos:prefLabel "Observability runbooks scope"@en .
+
+ex:context-incident-review
+    a skos:Concept ;
+    skos:prefLabel "Incident review context"@en .
+
+ex:incident-001
+    a prov:Entity ;
+    rdfs:label "Incident 2026-07-09-01"@en .

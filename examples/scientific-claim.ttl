@@ -1,0 +1,91 @@
+@prefix ex: <https://example.org/kee/> .
+@prefix kee: <https://w3id.org/kee#> .
+@prefix profile: <https://w3id.org/kee/profile#> .
+@prefix artifact: <https://w3id.org/kee/artifact#> .
+@prefix sclife: <https://w3id.org/kee/lifecycle/scientific-claim#> .
+@prefix confidence: <https://w3id.org/kee/confidence#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+# KEE Scientific Claim Profile Example
+# Status: Example for the Accepted / Normative Scientific Claim Profile (status per specification Section 19); legacy-readable compatibility example
+# Version: 0.2.0
+# Repository path: examples/scientific-claim.ttl
+#
+# Expected validation target:
+#   shacl/scientific-claim-profile.ttl
+#
+# Expected result:
+#   valid, with no required-field violations.
+#
+# This example intentionally uses a small, artificial claim so the file
+# demonstrates structure rather than domain truth.
+#
+# Compatibility note (registered legacy compatibility window, specification Section 17): kee:artifactType and
+# kee:profileConformance are registered legacy-readable carriers, not
+# canonical new-write forms. Canonical new writes use dcterms:type and
+# dcterms:conformsTo. kee:lifecycleState is written in the profile-specific
+# https://w3id.org/kee/lifecycle/scientific-claim# scheme, not the generic
+# lifecycle# namespace (v0.10.0 Section 9.2).
+# lifecycleState is a publication/governance state (Published); evidential
+# support is carried separately by evidence-strength and evidence links (a
+# recorded project decision).
+
+ex:scientific-claim-001
+    a kee:ScientificClaim ;
+    rdfs:label "Example claim about caffeinated tea and reaction time"@en ;
+    skos:definition "Adult participants who consumed 80mg of caffeinated tea showed a measurable reduction in mean simple reaction time within the study's declared scope."@en ;
+
+    kee:artifactType artifact:ScientificClaim ;
+    kee:lifecycleState sclife:Published ;
+    kee:profileConformance profile:ScientificClaimProfile ;
+    kee:scope ex:scope-adult-reaction-time-study ;
+    kee:context ex:context-controlled-trial ;
+    kee:confidenceStatus confidence:ProfileDefined ;
+    kee:confidenceValue "0.65"^^xsd:decimal ;
+    kee:evidenceStrength ex:evidence-strength-moderate ;
+    kee:replicationStatus ex:replication-status-not-yet-attempted ;
+
+    prov:wasAttributedTo ex:agent-example-researcher ;
+    prov:wasGeneratedBy ex:activity-record-claim-001 ;
+    prov:generatedAtTime "2026-07-08T14:00:00Z"^^xsd:dateTime ;
+
+    dcterms:source ex:evidence-reaction-time-dataset .
+
+ex:activity-record-claim-001
+    a prov:Activity ;
+    rdfs:label "Record example scientific claim"@en ;
+    prov:wasAssociatedWith ex:agent-example-researcher ;
+    prov:generatedAtTime "2026-07-08T14:00:00Z"^^xsd:dateTime .
+
+ex:agent-example-researcher
+    a prov:Agent ;
+    rdfs:label "Example Researcher"@en .
+
+ex:scope-adult-reaction-time-study
+    a skos:Concept ;
+    skos:prefLabel "Adult reaction-time study scope"@en ;
+    skos:definition "Applies to the declared adult participant population of the example study." .
+
+ex:context-controlled-trial
+    a skos:Concept ;
+    skos:prefLabel "Controlled trial context"@en ;
+    skos:definition "Context for claims produced under a controlled experimental protocol." .
+
+ex:evidence-reaction-time-dataset
+    a prov:Entity ;
+    rdfs:label "Reaction Time Dataset"@en ;
+    dcterms:identifier "https://example.org/kee/datasets/reaction-time-001" .
+
+ex:evidence-strength-moderate
+    a skos:Concept ;
+    skos:prefLabel "Moderate evidence strength"@en ;
+    skos:definition "Illustrative profile-defined evidence-strength term. An implementation may instead use a SEPIO, ECO, or GRADE term here; this example does not adopt any specific evidence ontology (a recorded project decision)." .
+
+ex:replication-status-not-yet-attempted
+    a skos:Concept ;
+    skos:prefLabel "Not yet attempted"@en ;
+    skos:definition "Illustrative profile-defined replication-status term, deliberately independent of kee:lifecycleState (a recorded project decision)." .

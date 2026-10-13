@@ -1,0 +1,19 @@
+@prefix ex: <https://example.org/kee/test/> .
+@prefix kee: <https://w3id.org/kee#> .
+@prefix artifact: <https://w3id.org/kee/artifact#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+# Compatibility note (specification Section 17): this fixture exercises registered
+# legacy-readable surfaces (generic https://w3id.org/kee/lifecycle# values and/or
+# legacy carriers). It is executable compatibility evidence, not canonical
+# new-write guidance; profile-aware migration of lifecycle values is registered
+# as unsafe for automatic rewrite (specification Section 9.2 and Section 17).
+
+# Invalid fixture for shacl/artifact-identity-granularity-profile.ttl
+# Expected result: does not conform.
+# Expected failure: missing required kee:profileConformance.
+
+ex:artifact-identity-invalid-missing-profile-conformance-001
+    a kee:ManagedArtifactUnit ;
+    rdfs:label "Invalid managed artifact unit fixture missing profile conformance"@en ;
+
+    kee:artifactType artifact:DocumentArtifact .

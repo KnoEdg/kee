@@ -2,7 +2,37 @@
 
 **Knowledge, Epistemics & Eidos**
 
-KEE is a framework for keeping knowledge understandable as it moves between people, organizations, software systems, and through time.
+KEE is a governed profile family over PROV, SKOS, DCTerms, OWL-Time and SHACL for keeping knowledge understandable as it moves between people, organizations, software systems, and through time.
+
+---
+
+# Start here
+
+**Who it is for**
+
+- An open-data steward documenting that one dataset release supersedes another, and that two publishers disagree about the same thing, without flattening either into "the current value".
+- A research or engineering group recording claims, the evidence behind them, and the contradictions between them, so a later reader can tell what was asserted, by whom, and what challenged it.
+- A retrieval team whose grounding must know a record is deprecated or superseded instead of serving it as current.
+
+Today each of these pays by hand: the distinction lives in a comment, a changelog, or someone's memory, and is lost at the next copy.
+
+**Validate a file in ten minutes**
+
+```bash
+pip install pyshacl
+git clone https://github.com/KnoEdg/kee.git && cd kee
+pyshacl -s shacl/assertion-metadata-profile.ttl examples/assertion-metadata.ttl -w --allow-infos
+```
+
+Expected: `Conforms: True`. The `-w --allow-infos` flags matter: KEE counts only `sh:Violation` results against a file. [`shacl/README.md`](shacl/README.md) states that rule, which shape files load together, and why a pass can be vacuous. More examples are in [`examples/`](examples/); the conformance fixtures, with the named reason each invalid one fails, are in [`fixtures/`](fixtures/).
+
+**See it on real data**
+
+The [KEE NYC case study](https://knoedg.nyc/kee-nyc-case-study/) walks through supersession and contradiction in NYC open data. Its fixtures were created under an earlier baseline, and the page makes no v0.11.0 conformance claim for them.
+
+**Ask or contribute**
+
+[`CONTRIBUTING.md`](CONTRIBUTING.md) says what a pull request can change directly and what goes through the governed process. To ask a question, open an issue.
 
 ---
 
@@ -185,7 +215,7 @@ KEE is concerned with how knowledge artifacts can preserve important distinction
 
 ## Formal definition
 
-KEE is a **governed application-profile family and interoperability framework for knowledge artifacts**.
+KEE is a **governed application-profile family over PROV, SKOS, DCTerms, OWL-Time and SHACL**, with a cross-profile interoperability contract for knowledge artifacts.
 
 It is not a semantic foundation.
 
@@ -213,7 +243,7 @@ KEE does not define what the concepts of a particular scientific, legal, technic
 
 The KEE family contract owns the published cross-profile obligations required for independently developed profiles to remain interpretable to one another.
 
-KEE framework governance owns the standing of KEE's own normative instruments, including:
+KEE's project governance owns the standing of KEE's own normative instruments, including:
 
 - proposals
 - accepted decisions
@@ -243,7 +273,7 @@ But source type alone does not determine whether a claim should be accepted.
 
 ## Profiles
 
-KEE uses profiles to specialize the framework for particular kinds of knowledge artifacts, domains, or uses.
+KEE uses profiles to specialize the family contract for particular kinds of knowledge artifacts, domains, or uses.
 
 Profiles may be:
 
@@ -309,21 +339,23 @@ Full documentation index: [`docs/`](docs/). Conceptual overview and tree diagram
 
 ## Current release
 
-**KEE v0.10.0**
+**KEE v0.11.0**
 
 Status: **Published Normative Baseline**
 
-KEE v0.10.0 is a backward-compatible minor release.
-
-It carries exactly one conformance-behaviour change: the Section 12.3 accountable-root constraint is enforced as a violation rather than a warning. A grantee that resolves to no accountable person or organization conformed structurally under v0.9.2 and does not conform under v0.10.0. The change is confined to the Authority and Delegation profile, which is Draft / Non-Normative and outside the public normative API. It adds no new normative requirement, KEE-owned semantic term, profile promotion, or Capability Level.
+What this release changed, and its SemVer classification, are recorded in the release history linked below.
 
 Current normative specification:
 
-[`docs/specs/KEE-Specification-v0.10.0.md`](docs/specs/KEE-Specification-v0.10.0.md)
+[`docs/specs/KEE-Specification-v0.11.0.md`](docs/specs/KEE-Specification-v0.11.0.md)
+
+Informative annex (the project's release-process text, moved out of the specification):
+
+[`docs/specs/KEE-Specification-v0.11.0-release-governance-annex.md`](docs/specs/KEE-Specification-v0.11.0-release-governance-annex.md)
 
 Public normative API:
 
-[`normative-api/v0.10.0.json`](normative-api/v0.10.0.json)
+[`normative-api/v0.11.0.json`](normative-api/v0.11.0.json)
 
 Release history:
 
@@ -331,7 +363,7 @@ Release history:
 
 Previous published baseline:
 
-[`docs/specs/KEE-Specification-v0.9.2.md`](docs/specs/KEE-Specification-v0.9.2.md) / [`normative-api/v0.9.2.json`](normative-api/v0.9.2.json)
+[`docs/specs/KEE-Specification-v0.10.0.md`](docs/specs/KEE-Specification-v0.10.0.md) / [`normative-api/v0.10.0.json`](normative-api/v0.10.0.json)
 
 Published normative releases are immutable historical records.
 
@@ -365,7 +397,7 @@ curl -H 'Accept: text/turtle'        https://w3id.org/kee/   # vocab/kee.ttl
 curl -H 'Accept: application/ld+json' https://w3id.org/kee/   # context/kee-context.jsonld
 ```
 
-The concept schemes, the profile identifiers, and the artifact classification each dereference to the file published here — for example `https://w3id.org/kee/artifact` returns `schemas/skos/artifact-types.ttl`.
+Which identifiers resolve to RDF is stated by the specification, Section 18.7, and this page claims no more than it does. As re-verified on 2026-10-12: the base identifier content-negotiates as shown above; the artifact and confidence namespaces, the five profile-specific lifecycle namespaces and the two local vocabulary namespaces that v0.10.0 carried each resolve to their published SKOS concept scheme by one unconditional redirect, whatever media type is requested; those RDF documents are served under `text/plain`, so parse them as Turtle on the strength of the published format rather than of the served media type; the generic `https://w3id.org/kee/lifecycle` namespace and the profile identifiers (`https://w3id.org/kee/profile`) redirect to human-readable pages of this repository; and the three namespaces added at v0.11.0 (`https://w3id.org/kee/lifecycle/governance-record`, `https://w3id.org/kee/vocab/query-time-dimension` and `https://w3id.org/kee/vocab/retrieval-eligibility`) are registration pending and do not resolve. A consumer needing a machine-readable definition for a namespace that does not resolve to RDF reads the corresponding SKOS scheme or shape graph from this repository directly.
 
 The identifiers redirect to this repository's default branch, so they serve the current published artifact rather than a pinned version. Cite a release when you need a fixed one.
 
@@ -406,7 +438,3 @@ Primary maintainer: **René Yap**
 Repository:
 
 https://github.com/KnoEdg/kee
-
----
-
-**Current baseline: KEE v0.10.0**

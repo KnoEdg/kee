@@ -1,0 +1,50 @@
+@prefix ex: <https://example.org/kee/test/> .
+@prefix kee: <https://w3id.org/kee#> .
+@prefix profile: <https://w3id.org/kee/profile#> .
+@prefix artifact: <https://w3id.org/kee/artifact#> .
+@prefix sclife: <https://w3id.org/kee/lifecycle/scientific-claim#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+# Compatibility note (specification Section 17): this fixture exercises registered
+# legacy-readable surfaces (generic https://w3id.org/kee/lifecycle# values and/or
+# legacy carriers). It is executable compatibility evidence, not canonical
+# new-write guidance; profile-aware migration of lifecycle values is registered
+# as unsafe for automatic rewrite (specification Section 9.2 and Section 17).
+
+# Invalid fixture for shacl/scientific-claim-profile.ttl
+# Expected result: does not conform.
+# Expected failure: missing required rdfs:label and skos:definition.
+#
+# kee:lifecycleState uses the Scientific Claim lifecycle scheme (sclife:Published),
+# not the generic lifecycle:Supported, which the lifecycle-axis shapes reject
+# (Section 9.3); the fixture then fails only for the reason it is named for.
+
+ex:scientific-claim-invalid-missing-label-001
+    a kee:ScientificClaim ;
+    kee:artifactType artifact:ScientificClaim ;
+    kee:lifecycleState sclife:Published ;
+    kee:profileConformance profile:ScientificClaimProfile ;
+    kee:scope ex:scope-test ;
+    kee:context ex:context-test ;
+    prov:wasAttributedTo ex:agent-test ;
+    prov:generatedAtTime "2026-07-08T21:12:00Z"^^xsd:dateTime ;
+    dcterms:source ex:source-test .
+
+ex:agent-test
+    a prov:Agent ;
+    rdfs:label "Test agent"@en .
+
+ex:scope-test
+    a skos:Concept ;
+    skos:prefLabel "Test scope"@en .
+
+ex:context-test
+    a skos:Concept ;
+    skos:prefLabel "Test context"@en .
+
+ex:source-test
+    a prov:Entity ;
+    rdfs:label "Test source"@en .

@@ -1,0 +1,143 @@
+@prefix kee: <https://w3id.org/kee#>.
+@prefix grlife: <https://w3id.org/kee/lifecycle/governance-record#>.
+@prefix sh: <http://www.w3.org/ns/shacl#>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+
+# Governance-record review-status membership constraints.
+#
+# These shapes compose with the Governance Transition, Contradiction Records,
+# Authority and Delegation and Lifecycle Crosswalk profile shapes, as
+# lifecycle-status-constraints.ttl composes with the lifecycle-owning shapes.
+# Each adopting shape requires exactly one kee:lifecycleState IRI on its
+# record class and leaves the value open; this file closes it to the five
+# concepts of the governance-record review-status scheme
+# (schemas/skos/governance-record-lifecycle.ttl): Proposed, Accepted,
+# Rejected, Withdrawn, Superseded. The four profile shapes are not edited.
+#
+# A promotion record and an authority record are governance transition
+# records, and a producer is not required to write the parent type for a
+# validator to see that (Section 15.6): the Governance Transition parent
+# constraints apply to a record typed only as kee:PromotionRecord or
+# kee:AuthorityRecord. The two shapes for those classes therefore carry the
+# owner's adoption to a record that is not also typed
+# kee:GovernanceTransitionRecord; they adopt nothing on their own account.
+# Each stands down for a record that is also typed
+# kee:GovernanceTransitionRecord, which the owner's shape reaches directly:
+# the shape is satisfied when the record carries the parent type or when its
+# review status is in the scheme (sh:or), so one value outside the scheme is
+# reported once, whichever types the record carries. The result of such a
+# shape is reported for the record, not for the kee:lifecycleState path, at
+# the node shape's severity and with its message; the nested membership
+# constraint states no severity of its own, because a validator that
+# tolerates results at a severity may take an alternative stated at a
+# tolerated severity as satisfied, and the check would then never report.
+#
+# Membership is checked with sh:in rather than a class constraint, because a
+# skos:inScheme check evaluates only when the scheme's triples are present in
+# the data graph, and they normally are not.
+#
+# Enforcement is staged (Section 17.3). In v0.11.0, the last dual-read
+# version, every constraint here reports at sh:Warning: data keeps conforming
+# under the severity policy, and every value outside the scheme is reported.
+# From v0.12.0, the first rejecting version, the constraints report at
+# sh:Violation. The severity is stated on each membership constraint, and on
+# the two node shapes whose constraint is nested in an sh:or; the escalation
+# changes every one. A value outside the scheme, a generic
+# https://w3id.org/kee/lifecycle# value such as lifecycle#Supported included,
+# is read as a review status not stated in the adopted scheme, never as
+# Accepted: Supported is epistemic-standing vocabulary and never had a defined
+# meaning on this axis, and no concept of the scheme is its exact, close,
+# broad or narrow match.
+#
+# The Assertion Metadata shape is not composed with this file. The
+# kee:lifecycleState of a kee:AssertionMetadataRecord is the lifecycle of the
+# managed assertion unit, drawn from the scheme of the profile governing that
+# unit; the review-status scheme is not adopted for that slot.
+
+kee:GovernanceTransitionRecordReviewStatusShape
+    a sh:NodeShape;
+    sh:targetClass kee:GovernanceTransitionRecord;
+    rdfs:label "Governance Transition Record review-status constraint"@en;
+    rdfs:comment "Applies to every kee:GovernanceTransitionRecord, including an authority or promotion record multi-typed with it: the owning profile's adoption governs the slot."@en;
+    sh:property [
+        sh:path kee:lifecycleState;
+        sh:name "review status"@en;
+        sh:description "The review status of a governance transition record is a concept of the governance-record review-status scheme: the record's own standing as a record, not the recorded transition and not whether the transition was correct or authorized."@en;
+        sh:severity sh:Warning;
+        sh:in ( grlife:Proposed grlife:Accepted grlife:Rejected grlife:Withdrawn grlife:Superseded );
+        sh:message "The review status of a governance transition record (kee:lifecycleState) is one of https://w3id.org/kee/lifecycle/governance-record# Proposed, Accepted, Rejected, Withdrawn or Superseded. A value outside that scheme, a generic https://w3id.org/kee/lifecycle# value such as lifecycle#Supported included, is read as a review status not stated in the adopted scheme, never as Accepted. Reported at sh:Warning in v0.11.0, the last dual-read version; reported at sh:Violation from v0.12.0, the first rejecting version (Section 17.3)."@en;
+    ].
+
+kee:ContradictionRecordReviewStatusShape
+    a sh:NodeShape;
+    sh:targetClass kee:ContradictionRecord;
+    rdfs:label "Contradiction Record review-status constraint"@en;
+    sh:property [
+        sh:path kee:lifecycleState;
+        sh:name "contradiction-record review status"@en;
+        sh:description "The review status of a contradiction record is a concept of the governance-record review-status scheme: whether the record of the conflict was accepted as a record, not whether the conflict is resolved or which side prevails (Section 13.1)."@en;
+        sh:severity sh:Warning;
+        sh:in ( grlife:Proposed grlife:Accepted grlife:Rejected grlife:Withdrawn grlife:Superseded );
+        sh:message "The review status of a contradiction record (kee:lifecycleState) is one of https://w3id.org/kee/lifecycle/governance-record# Proposed, Accepted, Rejected, Withdrawn or Superseded; resolution or disposition of the contradiction is carried separately (Section 13.1). A value outside that scheme, a generic https://w3id.org/kee/lifecycle# value such as lifecycle#Supported included, is read as a review status not stated in the adopted scheme, never as Accepted. Reported at sh:Warning in v0.11.0, the last dual-read version; reported at sh:Violation from v0.12.0, the first rejecting version (Section 17.3)."@en;
+    ].
+
+kee:ContestedAuthorityClaimReviewStatusShape
+    a sh:NodeShape;
+    sh:targetClass kee:ContestedAuthorityClaim;
+    rdfs:label "Contested Authority Claim review-status constraint"@en;
+    sh:property [
+        sh:path kee:lifecycleState;
+        sh:name "review status"@en;
+        sh:description "The review status of a contested authority claim is a concept of the governance-record review-status scheme: whether the claim record was accepted as a record, not which claimant holds authority and not a grant's validity, expiry, revocation or suspension (Section 12.2)."@en;
+        sh:severity sh:Warning;
+        sh:in ( grlife:Proposed grlife:Accepted grlife:Rejected grlife:Withdrawn grlife:Superseded );
+        sh:message "The review status of a contested authority claim (kee:lifecycleState) is one of https://w3id.org/kee/lifecycle/governance-record# Proposed, Accepted, Rejected, Withdrawn or Superseded; a grant's expiry, revocation or suspension is carried by kee:validUntil and prov:invalidatedAtTime (Section 12.2). A value outside that scheme, a generic https://w3id.org/kee/lifecycle# value such as lifecycle#Supported included, is read as a review status not stated in the adopted scheme, never as Accepted. Reported at sh:Warning in v0.11.0, the last dual-read version; reported at sh:Violation from v0.12.0, the first rejecting version (Section 17.3)."@en;
+    ].
+
+kee:LifecycleCrosswalkMappingReviewStatusShape
+    a sh:NodeShape;
+    sh:targetClass kee:LifecycleCrosswalkMapping;
+    rdfs:label "Lifecycle Crosswalk Mapping review-status constraint"@en;
+    sh:property [
+        sh:path kee:lifecycleState;
+        sh:name "review status"@en;
+        sh:description "The review status of a crosswalk mapping record is a concept of the governance-record review-status scheme: whether the mapping record was accepted as a record, not the mapping's strength, which is the SKOS mapping relation (Section 9.4)."@en;
+        sh:severity sh:Warning;
+        sh:in ( grlife:Proposed grlife:Accepted grlife:Rejected grlife:Withdrawn grlife:Superseded );
+        sh:message "The review status of a lifecycle crosswalk mapping (kee:lifecycleState) is one of https://w3id.org/kee/lifecycle/governance-record# Proposed, Accepted, Rejected, Withdrawn or Superseded; accepting a mapping record does not change its SKOS mapping relation (Section 9.4). A value outside that scheme, a generic https://w3id.org/kee/lifecycle# value such as lifecycle#Supported included, is read as a review status not stated in the adopted scheme, never as Accepted. Reported at sh:Warning in v0.11.0, the last dual-read version; reported at sh:Violation from v0.12.0, the first rejecting version (Section 17.3)."@en;
+    ].
+
+kee:PromotionRecordReviewStatusShape
+    a sh:NodeShape;
+    sh:targetClass kee:PromotionRecord;
+    rdfs:label "Promotion Record review-status constraint"@en;
+    rdfs:comment "Applies to a kee:PromotionRecord not also typed kee:GovernanceTransitionRecord (Section 15.6): a promotion record is a governance transition record, and its review status is governed through the Governance Transition Profile's adoption of the scheme. The Promotion Profile adopts nothing on its own account. A record typed with both classes is checked once, by the Governance Transition shape: this shape is satisfied by the parent type."@en;
+    sh:severity sh:Warning;
+    sh:message "The review status of a promotion record (kee:lifecycleState) is governed through the Governance Transition adoption and is one of https://w3id.org/kee/lifecycle/governance-record# Proposed, Accepted, Rejected, Withdrawn or Superseded, whether or not the record is also typed kee:GovernanceTransitionRecord (Section 15.6). A value outside that scheme, a generic https://w3id.org/kee/lifecycle# value such as lifecycle#Supported included, is read as a review status not stated in the adopted scheme, never as Accepted. Reported at sh:Warning in v0.11.0, the last dual-read version; reported at sh:Violation from v0.12.0, the first rejecting version (Section 17.3)."@en;
+    sh:or (
+        [ sh:property [ sh:path rdf:type; sh:hasValue kee:GovernanceTransitionRecord ] ]
+        [ sh:property [
+            sh:path kee:lifecycleState;
+            sh:name "review status"@en;
+            sh:description "The review status of a promotion record is a concept of the governance-record review-status scheme, governed through the Governance Transition adoption: the record's own standing as a record, not the promotion's recorded state and not whether the promotion was correct or authorized."@en;
+            sh:in ( grlife:Proposed grlife:Accepted grlife:Rejected grlife:Withdrawn grlife:Superseded );
+        ] ]
+    ).
+
+kee:AuthorityRecordReviewStatusShape
+    a sh:NodeShape;
+    sh:targetClass kee:AuthorityRecord;
+    rdfs:label "Authority Record review-status constraint"@en;
+    rdfs:comment "Applies to a kee:AuthorityRecord not also typed kee:GovernanceTransitionRecord (Section 15.6): an authority record is a governance transition record, and its review status is governed through the Governance Transition Profile's adoption of the scheme. The Authority and Delegation Profile adopts the scheme on its own account only for kee:ContestedAuthorityClaim. A record typed with both classes is checked once, by the Governance Transition shape: this shape is satisfied by the parent type."@en;
+    sh:severity sh:Warning;
+    sh:message "The review status of an authority record (kee:lifecycleState) is governed through the Governance Transition adoption and is one of https://w3id.org/kee/lifecycle/governance-record# Proposed, Accepted, Rejected, Withdrawn or Superseded, whether or not the record is also typed kee:GovernanceTransitionRecord (Section 15.6); a grant's expiry, revocation or suspension is carried by kee:validUntil and prov:invalidatedAtTime (Section 12.2). A value outside that scheme, a generic https://w3id.org/kee/lifecycle# value such as lifecycle#Supported included, is read as a review status not stated in the adopted scheme, never as Accepted. Reported at sh:Warning in v0.11.0, the last dual-read version; reported at sh:Violation from v0.12.0, the first rejecting version (Section 17.3)."@en;
+    sh:or (
+        [ sh:property [ sh:path rdf:type; sh:hasValue kee:GovernanceTransitionRecord ] ]
+        [ sh:property [
+            sh:path kee:lifecycleState;
+            sh:name "review status"@en;
+            sh:description "The review status of an authority record is a concept of the governance-record review-status scheme, governed through the Governance Transition adoption: the record's own standing as a record, not the grant's validity, expiry, revocation or suspension (Section 12.2)."@en;
+            sh:in ( grlife:Proposed grlife:Accepted grlife:Rejected grlife:Withdrawn grlife:Superseded );
+        ] ]
+    ).

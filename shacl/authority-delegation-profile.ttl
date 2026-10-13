@@ -7,7 +7,6 @@
 
 # KEE Authority and Delegation Profile SHACL Shapes
 # Status: Draft / Non-Normative
-# Shape-contract version: 0.10.0
 #
 # Corrections remain controlling for authority semantics.
 # removes validator-driven explicit multi-typing dependence: the

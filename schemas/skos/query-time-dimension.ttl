@@ -1,0 +1,46 @@
+@prefix qtd: <https://w3id.org/kee/vocab/query-time-dimension#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+# KEE Query Time Dimension Scheme
+# Status: Draft / Non-Normative (owned by the Historical and Bitemporal Querying Profile)
+#
+# The value set for kee:queryTimeDimension on a point-in-time query record
+# (specification Section 14.2). A query record declares exactly one dimension:
+# it names which temporal axis the requested instant or interval is read on.
+# The two concepts are the two dimensions of SQL:2011's temporal model, where
+# transaction time is carried by the system-time period of a system-versioned
+# table and valid time by an application-time period; "AS OF" there applies to
+# system time only, which is why a query that names no dimension is ambiguous.
+# OWL-Time supplies instants and intervals and leaves valid time to a
+# specialization of time:hasTime, so the dimension comes from this profile,
+# not from the time vocabulary. No external vocabulary publishes identifiers
+# for the two dimensions; SQL:2011 defines them in a language standard.
+#
+# The scheme is closed: the two profile shapes list its concepts with sh:in.
+# A third dimension is a governed addition (a MINOR release), not an
+# extension slot. The other timestamp roles the owning profile names
+# (assertion, observation, publication, review, invalidation, deprecation,
+# supersession, archival time) classify what a stored timestamp means; they
+# are not axes a point-in-time query is read on, and are not in this scheme.
+
+qtd:QueryTimeDimensionScheme
+  a skos:ConceptScheme ;
+  skos:prefLabel "KEE Query Time Dimension Scheme" ;
+  dcterms:identifier "kee-query-time-dimension-v0.11.0" ;
+  dcterms:description "Closed local vocabulary for the time dimension a point-in-time query record declares: recorded (transaction, known-as-of) time or valid (application, active-at) time. A query record declares exactly one dimension; a bitemporal question is two query records over the same history source. Extension requires a governed decision." ;
+  skos:scopeNote "The dimension says which axis the requested instant or interval is read on. It is not the query pattern (kee:queryPattern), not the requested instant (dcterms:temporal), and not a claim that the history source covers that instant (dcterms:temporal on dcterms:source)." .
+
+qtd:RecordedTime a skos:Concept ;
+  skos:prefLabel "Recorded time" ;
+  skos:altLabel "Transaction time", "Known as of" ;
+  skos:definition "The requested instant or interval is read on the recording axis: the query asks what the history source had recorded, as committed to or recorded in that source, at that time, whether or not it was valid then. This is the transaction time of SQL:2011, carried by the system-time period of a system-versioned table and queried with FOR SYSTEM_TIME AS OF; in the RDF reference representation it is read from prov:generatedAtTime or a prov:qualifiedGeneration time on the recorded resource." ;
+  skos:scopeNote "A query declaring this dimension is a known-as-of query. It reconstructs what was known, not what applied; a value recorded later than the requested instant is outside its answer even if it was valid at that instant." ;
+  skos:inScheme qtd:QueryTimeDimensionScheme .
+
+qtd:ValidTime a skos:Concept ;
+  skos:prefLabel "Valid time" ;
+  skos:altLabel "Application time", "Active at" ;
+  skos:definition "The requested instant or interval is read on the validity axis: the query asks what applied in the modeled world at that time, regardless of when it was recorded. This is the valid time of SQL:2011, carried by an application-time period, which SQL:2011 keeps distinct from transaction time because for any given row the two may arbitrarily differ; in the RDF reference representation it is read from dcterms:valid or from an OWL-Time interval attached to the resource." ;
+  skos:scopeNote "A query declaring this dimension is a valid-at, active-at or valid-during query. It answers from validity metadata, not from recording order; a value recorded after the requested instant but valid at it is inside its answer." ;
+  skos:inScheme qtd:QueryTimeDimensionScheme .

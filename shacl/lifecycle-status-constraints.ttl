@@ -36,3 +36,30 @@ kee:OrganizationalMemoryLifecycleAxisShape
         sh:not [ sh:in ( lifecycle:UnderReview lifecycle:Qualified lifecycle:Stale ) ];
         sh:message "UnderReview, Qualified, and Stale are review/currency/assessment standings, not Organizational Memory lifecycleState values."@en;
     ].
+
+# Assertion Metadata: the kee:lifecycleState slot carries the lifecycle of the
+# managed assertion unit, drawn from the scheme of the profile governing that
+# unit (https://w3id.org/kee/lifecycle/assertion# when no other profile does).
+# The profile is Accepted / Normative, so this guard reports at sh:Warning: no
+# value that conforms today stops conforming, and every value written on the
+# wrong axis, or in the compatibility-only generic namespace, is reported.
+# Whether and when this profile rejects such a value is a separately versioned
+# decision with its own Section 17.3 migration notice, not yet taken; no version
+# is named for it here or in the messages below.
+
+kee:AssertionMetadataLifecycleAxisShape
+    a sh:NodeShape;
+    sh:targetClass kee:AssertionMetadataRecord;
+    rdfs:label "Assertion Metadata lifecycle-axis constraint"@en;
+    sh:property [
+        sh:path kee:lifecycleState;
+        sh:severity sh:Warning;
+        sh:not [ sh:in ( kee:ChallengedAssertion kee:SupersededAssertion kee:PreferredAssertion kee:QualifiedAssertion ) ];
+        sh:message "kee:ChallengedAssertion, kee:SupersededAssertion, kee:PreferredAssertion and kee:QualifiedAssertion are not concepts of any lifecycle scheme: challenge, preference and qualification are dispute, ranking and assessment standings that must not be written as the lifecycle state of an assertion metadata record (Section 9.3), and supersession is written as the managed unit's lifecycle scheme states it (lifecycle/assertion#Superseded). Reported at sh:Warning at this baseline; whether and when this profile rejects the value is a separately versioned decision with its own migration notice (Section 17.3), not yet taken."@en;
+    ];
+    sh:property [
+        sh:path kee:lifecycleState;
+        sh:severity sh:Warning;
+        sh:not [ sh:pattern "^https://w3id\\.org/kee/lifecycle#" ];
+        sh:message "A generic https://w3id.org/kee/lifecycle# value is compatibility-only on the lifecycle state of an assertion metadata record: new writes use the lifecycle scheme of the profile governing the managed unit, https://w3id.org/kee/lifecycle/assertion# when no other profile does (Section 9.2). Reported at sh:Warning at this baseline; whether and when this profile rejects the value is a separately versioned decision with its own migration notice (Section 17.3), not yet taken."@en;
+    ].

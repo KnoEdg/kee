@@ -9,7 +9,6 @@
 
 # KEE Assertion Metadata Profile SHACL Shapes
 # Status: Accepted / Normative
-# Shape-contract version: 0.9.2
 #
 # This shape deprecates kee:assertionTime as a new-write catch-all because
 # earlier text allowed it to mean assertion time or valid time. New RDF writes
@@ -17,8 +16,11 @@
 # generation/recording time, PROV activity timing for a modeled asserting act,
 # and dcterms:valid / OWL-Time for valid/applicability time.
 #
-# Legacy kee:assertionTime remains structurally readable at Info severity. Its
-# temporal role must not be inferred without additional profile/context evidence.
+# Legacy kee:assertionTime remains structurally readable; its presence is
+# reported at sh:Warning, as is legacy kee:profileConformance, so that a
+# validator sees the registered legacy surfaces the migration registry knows
+# (Section 17.1 item 3). Its temporal role must not be inferred without
+# additional profile/context evidence.
 #
 # This shape preserves the representation-neutral non-collapse contract:
 # managed assertion unit, assertion content/proposition, assertion metadata
@@ -61,6 +63,15 @@ kee:AssertionMetadataProfileShape
     ];
 
     sh:property [
+        sh:path kee:profileConformance;
+        sh:name "legacy profile conformance carrier"@en;
+        sh:description "kee:profileConformance is a registered legacy surface: an exact replacement of dcterms:conformsTo, dual-read during the compatibility window and safe to rewrite. Its presence is reported so that a validator sees what the migration registry knows; the record stays structurally valid (Section 17.3)."@en;
+        sh:maxCount 0;
+        sh:severity sh:Warning;
+        sh:message "Legacy surface kee:profileConformance is present; its canonical surface is dcterms:conformsTo (exact replacement, dual-read registered, rewrite-safe). New writes use dcterms:conformsTo (Section 17.1); `kee normalize --rewrite-safe` performs the carrier rename."@en;
+    ];
+
+    sh:property [
         sh:path prov:wasAttributedTo;
         sh:name "source or asserting agent"@en;
         sh:minCount 1;
@@ -81,7 +92,7 @@ kee:AssertionMetadataProfileShape
     sh:property [ sh:path kee:assertionContent; sh:name "assertion content"@en; sh:description "Reference to or embedded representation of assertion content. Content identity is not automatically the same as metadata-record, managed-unit, occurrence, or container identity."@en; sh:minCount 1; sh:nodeKind sh:IRIOrLiteral; sh:severity sh:Warning; sh:message "An assertion metadata record should have at least one kee:assertionContent value."@en ];
     sh:property [ sh:path prov:wasGeneratedBy; sh:name "recording/asserting activity"@en; sh:nodeKind sh:IRI; sh:severity sh:Warning; sh:message "An assertion metadata record should identify at least one prov:wasGeneratedBy activity; activity timing may be used when the act of asserting must be timed explicitly."@en ];
     sh:property [ sh:path dcterms:valid; sh:name "valid/applicability time"@en; sh:nodeKind sh:IRIOrLiteral; sh:severity sh:Warning; sh:message "If present, dcterms:valid identifies valid/applicability time and must not be interpreted as record-generation time."@en ];
-    sh:property [ sh:path kee:assertionTime; sh:name "legacy ambiguous assertion time"@en; sh:nodeKind sh:IRIOrLiteral; sh:severity sh:Info; sh:message "Legacy kee:assertionTime remains readable, but new writes should use role-specific PROV, DCTerms, or OWL-Time terms; do not infer assertion-time versus valid-time meaning from this predicate alone."@en ];
+    sh:property [ sh:path kee:assertionTime; sh:name "legacy ambiguous assertion time"@en; sh:description "kee:assertionTime is a registered legacy surface: an intentionally unmapped semantic split across PROV activity timing, prov:generatedAtTime, dcterms:valid and OWL-Time, dual-read during the compatibility window and not safe to rewrite. Its presence is reported; the record stays structurally valid (Section 17.3)."@en; sh:maxCount 0; sh:severity sh:Warning; sh:message "Legacy surface kee:assertionTime is present; its canonical surfaces are role-specific: PROV activity timing for the asserting act, prov:generatedAtTime for recording time, dcterms:valid or OWL-Time for valid time (intentionally unmapped semantic split, dual-read registered, not rewrite-safe). Do not infer assertion-time versus valid-time meaning from this predicate alone; migration needs contextual evidence (Section 14.1, Section 17.1)."@en ];
     sh:property [ sh:path kee:scope; sh:name "scope"@en; sh:nodeKind sh:IRI; sh:severity sh:Warning; sh:message "An assertion metadata record should declare at least one kee:scope IRI."@en ];
     sh:property [ sh:path kee:context; sh:name "context"@en; sh:nodeKind sh:IRI; sh:severity sh:Warning; sh:message "An assertion metadata record should declare at least one kee:context IRI."@en ];
     sh:property [ sh:path dcterms:source; sh:name "additional source or evidence"@en; sh:nodeKind sh:IRIOrLiteral; sh:severity sh:Warning; sh:message "If present, dcterms:source should identify supporting evidence."@en ];

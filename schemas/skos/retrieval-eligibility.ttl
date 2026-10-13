@@ -1,0 +1,71 @@
+@prefix elig: <https://w3id.org/kee/vocab/retrieval-eligibility#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+# KEE Retrieval Eligibility Scheme
+# Status: Draft / Non-Normative (owned by the AI-Grounded Retrieval Profile)
+#
+# The value set for kee:eligibilityCategory on a retrieval result
+# (specification Section 14.5). Each concept is a decision about one
+# consumer/use operation, derived from upstream lifecycle, confidence,
+# authority, promotion, contradiction and temporal-validity metadata. The
+# seven concepts are the seven categories the owning profile's category table
+# names; none is a lifecycle state, a confidence level, an authority claim or
+# a statement about truth, and none mutates the source artifact, its history
+# or its retained metadata. Exclusion from current-answer grounding is not
+# deletion and does not make the artifact unqueryable.
+#
+# Prior art surveyed for the owning profile found no external vocabulary for
+# a consumer-scoped eligibility decision. The nearest is Wikidata's statement
+# rank (preferred, normal, deprecated), which classifies a statement at its
+# source; carrying a source-side rank as a consumer-side decision is the
+# collapse Section 14.5 forbids, so no external mapping is asserted.
+#
+# The scheme is closed: the profile shape lists its concepts with sh:in. A
+# further category is a governed addition (a MINOR release), not an
+# extension slot. The category drives the result's warning and review
+# routing; kee:warningContent, kee:humanReviewRequired and
+# kee:excludedFromCurrentAnswerGrounding carry the routing itself and are
+# not replaced by it.
+
+elig:RetrievalEligibilityScheme
+  a skos:ConceptScheme ;
+  skos:prefLabel "KEE Retrieval Eligibility Scheme" ;
+  dcterms:identifier "kee-retrieval-eligibility-v0.11.0" ;
+  dcterms:description "Closed local vocabulary for the retrieval-eligibility category of one consumer-scoped retrieval decision: whether, and under what qualification, a retrieved artifact may ground a generated answer for the declared consumer/use context. The category is derived from upstream governance metadata and does not restate, redefine or mutate it. Extension requires a governed decision." ;
+  skos:scopeNote "A category is not the artifact's lifecycle state, confidence, authority, promotion status or contradiction status, and is not a judgment of truth. It is scoped to the kee:context the result names; the same artifact may carry a different category for a different consumer or operation." .
+
+elig:EligibleForNormalGrounding a skos:Concept ;
+  skos:prefLabel "Eligible for normal grounding" ;
+  skos:definition "The retrieved artifact may ground a generated answer for the declared consumer/use context without qualification: the consulted upstream metadata shows it current, within authority, not superseded and not party to an unresolved contradiction. This does not assert that the artifact is true or preferred." ;
+  skos:inScheme elig:RetrievalEligibilityScheme .
+
+elig:EligibleOnlyWithWarning a skos:Concept ;
+  skos:prefLabel "Eligible only with warning" ;
+  skos:definition "The retrieved artifact may ground a generated answer for the declared consumer/use context only when the answer surfaces a stated qualification, such as limited confidence, an approaching review date or a scope narrower than the question. The qualification is carried by kee:warningContent." ;
+  skos:inScheme elig:RetrievalEligibilityScheme .
+
+elig:EligibleOnlyForHistoricalExplanation a skos:Concept ;
+  skos:prefLabel "Eligible only for historical explanation" ;
+  skos:definition "The retrieved artifact may be used to explain what was once the case, for example a deprecated or formerly valid artifact, and may not ground a current answer. It remains retrievable and its history is retained; exclusion from current-answer grounding is not deletion." ;
+  skos:inScheme elig:RetrievalEligibilityScheme .
+
+elig:EligibleOnlyAsSupersededContext a skos:Concept ;
+  skos:prefLabel "Eligible only as superseded context" ;
+  skos:definition "The retrieved artifact has been replaced and may be used only as context for its replacement, which the answer should ground on instead. The replacement is found by traversing the retained replacement relations; kee:supersessionChainTarget may cache the terminal result and does not replace the chain." ;
+  skos:inScheme elig:RetrievalEligibilityScheme .
+
+elig:EligibleOnlyAsContradictoryEvidence a skos:Concept ;
+  skos:prefLabel "Eligible only as contradictory evidence" ;
+  skos:definition "The retrieved artifact is party to an unresolved contradiction and may ground a generated answer only when the answer surfaces the conflict rather than presenting one side as settled. The category records that a conflict exists; it is not a resolution or disposition of the conflict." ;
+  skos:inScheme elig:RetrievalEligibilityScheme .
+
+elig:ExcludedFromCurrentAnswerGrounding a skos:Concept ;
+  skos:prefLabel "Excluded from current-answer grounding" ;
+  skos:definition "The retrieved artifact may not ground a current answer for the declared consumer/use context, for example because the consulted authority evidence does not permit it or its validity has lapsed. The exclusion is scoped to this decision: it does not delete the artifact, alter its lifecycle state or make it unqueryable." ;
+  skos:inScheme elig:RetrievalEligibilityScheme .
+
+elig:RequiresHumanReview a skos:Concept ;
+  skos:prefLabel "Requires human review before a generated answer" ;
+  skos:definition "No generated answer may be produced from the retrieved artifact for the declared consumer/use context until a person has reviewed its use, because the applicable eligibility policy routes this case to review. The routing is carried by kee:humanReviewRequired; the category records that the policy required it." ;
+  skos:inScheme elig:RetrievalEligibilityScheme .

@@ -1,5 +1,6 @@
 @prefix kee: <https://w3id.org/kee#>.
 @prefix profile: <https://w3id.org/kee/profile#>.
+@prefix qtd: <https://w3id.org/kee/vocab/query-time-dimension#>.
 @prefix prov: <http://www.w3.org/ns/prov#>.
 @prefix time: <http://www.w3.org/2006/time#>.
 @prefix dcterms: <http://purl.org/dc/terms/>.
@@ -19,6 +20,18 @@
 # kee:profileConformance may retain kee:queryInstant and kee:historyCompleteness.
 # The new-write branch is identified by dcterms:conformsTo and requires the
 # corrected dcterms:temporal + dcterms:source/coverage structure.
+#
+# The time dimension is a closed value set: schemas/skos/query-time-dimension.ttl
+# supplies qtd:RecordedTime (transaction time, known as of) and qtd:ValidTime
+# (application time, active at), the two dimensions of SQL:2011's temporal
+# model. A new-write record (dcterms:conformsTo) must use one of them. The
+# check is staged: it reports at sh:Warning at the v0.10.0 baseline, where the
+# published specification still calls the slot an open classifier, and at
+# sh:Violation from v0.11.0, the first version that rejects a new-write value
+# outside the scheme; a release control pins the schedule. A registered-legacy
+# record (kee:profileConformance only) carrying another value is reported at
+# sh:Warning in both versions and still conforms during the compatibility
+# window; it is not rejected, and retires with that carrier.
 
 kee:HistorySourceCoverageShape
     a sh:NodeShape;
@@ -49,7 +62,7 @@ kee:HistoricalBitemporalQueryingProfileShape
     sh:property [
         sh:path kee:queryTimeDimension;
         sh:name "query time dimension"@en;
-        sh:description "Declares the temporal axis meant by the requested time, e.g. valid/active-at versus transaction/known-as-of."@en;
+        sh:description "Declares the temporal axis meant by the requested time: qtd:ValidTime (valid/active-at) or qtd:RecordedTime (transaction/known-as-of). Membership in the scheme is checked by the value shapes below."@en;
         sh:minCount 1;
         sh:maxCount 1;
         sh:nodeKind sh:IRI;
@@ -114,3 +127,54 @@ kee:HistoricalBitemporalQueryingProfileShape
     sh:property [ sh:path time:hasBeginning; sh:name "result valid interval start"@en; sh:nodeKind sh:IRI; sh:severity sh:Warning; sh:message "If present, time:hasBeginning should identify a time:Instant."@en ];
     sh:property [ sh:path time:hasEnd; sh:name "result valid interval end"@en; sh:nodeKind sh:IRI; sh:severity sh:Warning; sh:message "If present, time:hasEnd should identify a time:Instant."@en ];
     sh:property [ sh:path kee:crossReference; sh:name "cross reference"@en; sh:nodeKind sh:IRI; sh:severity sh:Info; sh:message "If present, kee:crossReference should identify another query record."@en ].
+
+# Value shapes for kee:queryTimeDimension. The slot is closed to the
+# query-time-dimension scheme. Both shapes target kee:PointInTimeQuery, so no
+# node outside the profile is targeted by them, and each splits on the
+# conformance carrier inside the shape, so that a record is reported by exactly
+# one of the two: the new-write branch (dcterms:conformsTo, or no carrier at
+# all) and the registered-legacy branch (kee:profileConformance alone,
+# specification Section 17). A failing shape reports one node-level sh:or
+# result at the shape's severity; the membership list is the sh:in inside it.
+
+kee:PointInTimeQueryTimeDimensionValueShape
+    a sh:NodeShape;
+    rdfs:label "Point-in-time query time-dimension value shape (new writes)"@en;
+    rdfs:comment "A new-write record declares its time dimension with a concept of the query-time-dimension scheme; a dimension the scheme does not name cannot be read as either recorded or valid time. The shape passes a registered-legacy record (kee:profileConformance without dcterms:conformsTo), which the legacy shape reports instead. Severity is staged: sh:Warning at the v0.10.0 baseline, sh:Violation from v0.11.0."@en;
+    sh:targetClass kee:PointInTimeQuery;
+    sh:severity sh:Violation;
+    sh:message "A new-write point-in-time query record must declare its time dimension as qtd:RecordedTime (transaction time, known as of) or qtd:ValidTime (application time, active at); no other value identifies the axis the requested time is read on. Reported at sh:Warning at the v0.10.0 baseline; rejected (sh:Violation) from v0.11.0."@en;
+    sh:or (
+        [
+            sh:and (
+                [ sh:property [ sh:path kee:profileConformance; sh:minCount 1 ] ]
+                [ sh:property [ sh:path dcterms:conformsTo; sh:maxCount 0 ] ]
+            )
+        ]
+        [
+            sh:property [
+                sh:path kee:queryTimeDimension;
+                sh:name "query time dimension value"@en;
+                sh:in ( qtd:RecordedTime qtd:ValidTime );
+            ]
+        ]
+    ).
+
+kee:PointInTimeQueryLegacyTimeDimensionValueShape
+    a sh:NodeShape;
+    rdfs:label "Point-in-time query time-dimension value shape (registered legacy)"@en;
+    rdfs:comment "A record declaring only legacy kee:profileConformance may carry a time-dimension value written before the scheme existed. It is reported, not rejected, during the registered legacy compatibility window; a consumer must not infer a scheme concept from such a value. The shape passes every record that declares dcterms:conformsTo or no carrier, which the new-write shape checks instead."@en;
+    sh:targetClass kee:PointInTimeQuery;
+    sh:severity sh:Warning;
+    sh:message "A registered-legacy point-in-time query record carries a time-dimension value outside the query-time-dimension scheme; it is readable during the compatibility window, but its dimension is undeclared in the scheme and new writes must use qtd:RecordedTime or qtd:ValidTime."@en;
+    sh:or (
+        [ sh:property [ sh:path kee:profileConformance; sh:maxCount 0 ] ]
+        [ sh:property [ sh:path dcterms:conformsTo; sh:minCount 1 ] ]
+        [
+            sh:property [
+                sh:path kee:queryTimeDimension;
+                sh:name "query time dimension value (registered legacy record)"@en;
+                sh:in ( qtd:RecordedTime qtd:ValidTime );
+            ]
+        ]
+    ).

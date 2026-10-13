@@ -1,0 +1,49 @@
+@prefix ex: <https://example.org/kee/test/> .
+@prefix kee: <https://w3id.org/kee#> .
+@prefix profile: <https://w3id.org/kee/profile#> .
+@prefix artifact: <https://w3id.org/kee/artifact#> .
+@prefix lifecycle: <https://w3id.org/kee/lifecycle#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+# Compatibility note (specification Section 17): this fixture exercises registered
+# legacy-readable surfaces (generic https://w3id.org/kee/lifecycle# values and/or
+# legacy carriers). It is executable compatibility evidence, not canonical
+# new-write guidance; profile-aware migration of lifecycle values is registered
+# as unsafe for automatic rewrite (specification Section 9.2 and Section 17).
+
+# Invalid fixture for shacl/software-engineering-profile.ttl
+# Expected result: does not conform.
+# Expected failure: missing required prov:wasAttributedTo.
+#
+# The fixture includes lifecycle state and generatedAtTime so this test isolates
+# missing attribution/provenance as a distinct failure mode.
+
+ex:software-engineering-invalid-missing-provenance-001
+    a kee:SoftwareEngineeringArtifact ;
+    rdfs:label "Invalid software engineering fixture missing attribution"@en ;
+    skos:definition "This software engineering fixture intentionally omits prov:wasAttributedTo."@en ;
+
+    kee:artifactType artifact:ArchitectureDecisionRecord ;
+    kee:lifecycleState lifecycle:Active ;
+    kee:profileConformance profile:SoftwareEngineeringProfile ;
+    kee:scope ex:scope-test ;
+    kee:context ex:context-test ;
+
+    prov:generatedAtTime "2026-07-08T21:35:00Z"^^xsd:dateTime ;
+
+    dcterms:source ex:source-test .
+
+ex:scope-test
+    a skos:Concept ;
+    skos:prefLabel "Test scope"@en .
+
+ex:context-test
+    a skos:Concept ;
+    skos:prefLabel "Test context"@en .
+
+ex:source-test
+    a prov:Entity ;
+    rdfs:label "Test source"@en .

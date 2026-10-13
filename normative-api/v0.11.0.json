@@ -1,0 +1,238 @@
+{
+  "version": "0.11.0",
+  "specification": "docs/specs/KEE-Specification-v0.11.0.md",
+  "supersedesCurrentVersionIdentifier": "0.10.0",
+  "changeType": "MINOR",
+  "normativeChange": true,
+  "implementationChangeRequired": true,
+  "selfContained": true,
+  "compatibilityPolicy": "strict pre-1.0 SemVer: a published PATCH release must not hide an incompatible change",
+  "acceptedProfiles": [
+    "assertion-metadata",
+    "scientific-claim",
+    "software-engineering"
+  ],
+  "profileStatuses": {
+    "software-engineering": "Accepted / Normative",
+    "scientific-claim": "Accepted / Normative",
+    "assertion-metadata": "Accepted / Normative",
+    "assertion": "Draft",
+    "decision": "Draft",
+    "organizational-memory": "Draft",
+    "lifecycle-crosswalk": "Draft / Non-Normative",
+    "governance-transition": "Draft / Non-Normative",
+    "promotion": "Draft / Non-Normative",
+    "authority-delegation": "Draft / Non-Normative",
+    "contradiction-records": "Draft / Non-Normative",
+    "ai-grounded-retrieval": "Draft / Non-Normative",
+    "artifact-identity-granularity": "Draft / Non-Normative",
+    "historical-bitemporal-querying": "Draft / Non-Normative"
+  },
+  "excludedFromPublicAPI": [
+    "Draft profiles",
+    "Non-Normative profiles",
+    "Experimental surfaces"
+  ],
+  "termDeclarations": "vocab/kee.ttl",
+  "termRegistry": "Section 18.3 of the published specification defines the term-registry contract; vocab/kee.ttl is its published declaration document.",
+  "nonCollapseRuleIdentifiers": {
+    "NC-01": "Section 7.1 rule 1",
+    "NC-02": "Section 7.1 rule 2",
+    "NC-03": "Section 7.1 rule 3",
+    "NC-04": "Section 7.1 rule 4",
+    "NC-05": "Section 7.1 rule 5",
+    "NC-06": "Section 7.1 rule 6",
+    "NC-07": "Section 7.1 rule 7",
+    "NC-08": "Section 7.1 rule 8",
+    "NC-09": "Section 7.1 rule 9",
+    "NC-10": "Section 7.1 rule 10",
+    "NC-11": "Section 7.1 rule 11",
+    "NC-12": "Section 7.1 rule 12",
+    "NC-13": "Section 7.1 rule 13",
+    "NC-14": "Section 7.1 rule 14",
+    "NC-15": "Section 7.1 rule 15",
+    "NC-16": "Section 7.1 rule 16",
+    "NC-17": "Section 7.1 rule 17"
+  },
+  "nonCollapseBehaviouralCoverage": {
+    "demonstrated": 15,
+    "total": 17,
+    "notDemonstrable": [
+      "NC-03",
+      "NC-06"
+    ],
+    "reason": "representational: accountability and trust are not represented as surfaces distinct from authority and confidence"
+  },
+  "conformanceDimensions": [
+    "structural",
+    "profile-semantic",
+    "procedural",
+    "governance/policy",
+    "interoperability"
+  ],
+  "conformanceDimensionMachineTokens": {
+    "structural": "structural",
+    "profile-semantic": "profile-semantic",
+    "procedural": "procedural",
+    "governance-policy": "governance/policy",
+    "interoperability": "interoperability"
+  },
+  "capabilityLevels": {
+    "Level 0": "Informational alignment",
+    "Level 1": "Artifact registry",
+    "Level 2": "Governed lifecycle",
+    "Level 3": "Temporal and provenance-aware governance",
+    "Level 4": "Epistemic governance"
+  },
+  "declarationStatusValues": [
+    "experimental",
+    "partial",
+    "conformant",
+    "extended"
+  ],
+  "profileLifecycleNamespaces": [
+    "https://w3id.org/kee/lifecycle/assertion#",
+    "https://w3id.org/kee/lifecycle/scientific-claim#",
+    "https://w3id.org/kee/lifecycle/organizational-memory#",
+    "https://w3id.org/kee/lifecycle/decision#",
+    "https://w3id.org/kee/lifecycle/software-engineering#",
+    "https://w3id.org/kee/lifecycle/governance-record#"
+  ],
+  "profileLifecycleNamespaceNote": "https://w3id.org/kee/lifecycle/governance-record# is the governance-record review-status scheme (Section 9.2): owned by the Governance Transition Profile and adopted for kee:lifecycleState on kee:GovernanceTransitionRecord, kee:ContradictionRecord, kee:ContestedAuthorityClaim and kee:LifecycleCrosswalkMapping; not adopted for kee:AssertionMetadataRecord, whose slot carries the managed unit's lifecycle (Section 16.4). Added at 0.11.0; registration pending.",
+  "localVocabularyNamespaces": {
+    "https://w3id.org/kee/vocab/contradiction-cause#": "open slot (kee:causeType); Section 10",
+    "https://w3id.org/kee/vocab/assertion-unit-kind#": "open slot (kee:managedAssertionUnitKind); Section 10",
+    "https://w3id.org/kee/vocab/query-time-dimension#": "closed slot (kee:queryTimeDimension), two concepts; Sections 10, 14.2; added at 0.11.0; registration pending",
+    "https://w3id.org/kee/vocab/retrieval-eligibility#": "closed slot (kee:eligibilityCategory), seven concepts; Sections 10, 14.5; added at 0.11.0; registration pending"
+  },
+  "statusAwareToolingObligations": [
+    "report-profile-identity",
+    "report-profile-governance-status",
+    "report-shape-or-shape-contract-version",
+    "report-structural-result",
+    "report-normative-effect-for-evaluated-claim",
+    "report-untested-conformance-dimensions",
+    "make-claim-scoped-binding-explicit"
+  ],
+  "registeredLegacyCompatibilityWindow": {
+    "mode": "single-write canonical / dual-read registered legacy+canonical",
+    "newWrites": "canonical form only",
+    "legacyReads": "only where the migration registry explicitly records a compatibility policy",
+    "retirement": "requires a separately versioned decision and migration notice naming the legacy surface, last dual-read version, first rejecting version, and migration path or explicit absence of a safe automatic migration"
+  },
+  "interoperabilityObligations": [
+    "source-neutrality",
+    "consumer-neutrality",
+    "claim-scoped-binding",
+    "non-collapse"
+  ],
+  "promotionRequirements": [
+    "independent-interoperability-evidence"
+  ],
+  "candidateAdditions": [
+    "obligation-lineage-registry",
+    "JSON-profile-declaration-and-schema",
+    "EARL-PROV-SHACL-evidence-graph",
+    "RO-Crate-KEEpack-experiment",
+    "public-API-diff"
+  ],
+  "sharedContractCount": "NOT PUBLISHED. The question-(a) figure is carried as a band after the classification predicate failed blind replication, and must not be narrowed by drafting alone. No count is part of this API.",
+  "openItems": [
+    "shared-contract band not settled; no drafting-only narrowing authorized",
+    "NC-03 and NC-06 representationally non-demonstrable",
+    "KEEpack Experimental / Non-Normative pending independent producer/consumer evidence",
+    "the governance-record review-status check reports at sh:Warning at this release and at sh:Violation from 0.12.0, the first rejecting version; whether the Assertion Metadata lifecycle slot will ever reject a generic or mixed-axis value is undecided",
+    "verified 2026-10-12: the base w3id identifier content-negotiates; the artifact, confidence, five lifecycle and two local-vocabulary namespaces that 0.10.0 carried resolve to their concept schemes by an unconditional redirect, served as text/plain; the generic lifecycle namespace and the Section 5 profile identifiers resolve to human-readable pages; the three namespaces added at this release are registration pending and do not resolve; durable persistence of any resolving identifier is not thereby established; and the version-identifier redirect rules are not yet registered"
+  ],
+  "status": "Published public normative API snapshot",
+  "publishedSurfaces": {
+    "specification": "docs/specs/KEE-Specification-v0.10.0.md",
+    "termDeclarations": "vocab/kee.ttl",
+    "shapeGraphs": "shacl/",
+    "conceptSchemes": "schemas/skos/",
+    "jsonSchemas": "schemas/json-schema/",
+    "jsonLdContext": "context/kee-context.jsonld",
+    "profileStatus": "docs/profiles/README.md",
+    "informativeAnnex": "docs/specs/KEE-Specification-v0.11.0-release-governance-annex.md",
+    "vocabularyAnnex": "docs/vocabulary.md"
+  },
+  "shapeContractVersion": "0.11.0",
+  "shapeGraphNote": "The published shape graphs are byte-identical to those the reference validator executes. A structural result from a Draft or Non-Normative shape has no normative effect.",
+  "conformanceBehaviourChanges": [
+    {
+      "specificationSection": "9.2",
+      "constraint": "kee:lifecycleState on a governance record is a concept of the governance-record review-status scheme",
+      "shape": "shacl/governance-record-review-status-constraints.ttl",
+      "composedWith": [
+        "shacl/governance-transition-profile.ttl",
+        "shacl/contradiction-records-profile.ttl",
+        "shacl/authority-delegation-profile.ttl",
+        "shacl/lifecycle-crosswalk-profile.ttl"
+      ],
+      "notComposedWith": "shacl/assertion-metadata-profile.ttl",
+      "severityBefore": "none: no membership check existed under 0.10.0",
+      "severityAfter": "sh:Warning",
+      "schedule": {
+        "lastDualReadVersion": "0.11.0",
+        "firstRejectingVersion": "0.12.0",
+        "severityFromFirstRejectingVersion": "sh:Violation"
+      },
+      "owningProfile": "Governance Transition (owner); Contradiction Records, Authority and Delegation, Lifecycle Crosswalk (adopting)",
+      "owningProfileStatus": "Draft / Non-Normative",
+      "excludedFromPublicAPI": true,
+      "classification": "MINOR-compatible because the owning profiles are excluded from the public normative API; no conformance outcome changes at 0.11.0",
+      "negativeCase": {
+        "conformedUnder": "0.10.0",
+        "conformsUnder": "0.11.0, reported at sh:Warning",
+        "doesNotConformUnder": "0.12.0",
+        "case": "a record of one of the four classes whose kee:lifecycleState is a generic https://w3id.org/kee/lifecycle# value rather than Proposed, Accepted, Rejected, Withdrawn or Superseded"
+      },
+      "migrationObligation": "Implementations claiming any of the four profiles write the review status of a governance record from the governance-record review-status scheme; a generic value is reported at 0.11.0 and rejected from 0.12.0. No generic value maps to a scheme concept."
+    },
+    {
+      "specificationSection": "14.2, 14.5",
+      "constraint": "kee:queryTimeDimension on a new-write point-in-time query record is a concept of the query-time-dimension scheme; kee:eligibilityCategory on a new-write retrieval result is a concept of the retrieval-eligibility scheme",
+      "shape": [
+        "shacl/historical-bitemporal-querying-profile.ttl",
+        "shacl/ai-grounded-retrieval-profile.ttl"
+      ],
+      "severityBefore": "none in the shape graphs 0.10.0 published, whose slot was an open IRI; sh:Warning in the staged value shapes the repository carried under the 0.10.0 baseline",
+      "severityAfter": "sh:Violation",
+      "legacyBranch": "a record declaring only kee:profileConformance is reported at sh:Warning and remains readable for as long as that carrier is; it retires with the carrier",
+      "schedule": {
+        "lastConformingVersion": "0.10.0",
+        "firstRejectingVersion": "0.11.0"
+      },
+      "owningProfile": "Historical and Bitemporal Querying; AI-Grounded Retrieval",
+      "owningProfileStatus": "Draft / Non-Normative",
+      "excludedFromPublicAPI": true,
+      "classification": "MINOR-compatible because the owning profiles are excluded from the public normative API",
+      "negativeCase": {
+        "conformedUnder": "0.10.0",
+        "doesNotConformUnder": "0.11.0",
+        "case": "a new-write point-in-time query record or retrieval result (dcterms:conformsTo, or no conformance carrier) whose value in the closed slot is an IRI outside the scheme"
+      },
+      "migrationObligation": "Implementations claiming either profile write kee:queryTimeDimension as qtd:RecordedTime or qtd:ValidTime, and kee:eligibilityCategory as one of the seven retrieval-eligibility concepts. No automatic mapping from a producer-minted identifier to a scheme concept is defined; a registered-legacy record is reported, not rewritten."
+    },
+    {
+      "specificationSection": "16.4",
+      "constraint": "kee:lifecycleState on an Assertion Metadata record is neither a generic https://w3id.org/kee/lifecycle# value nor a dispute, ranking or assessment standing (kee:ChallengedAssertion, kee:SupersededAssertion, kee:PreferredAssertion, kee:QualifiedAssertion)",
+      "shape": "shacl/lifecycle-status-constraints.ttl",
+      "severityBefore": "none: no such check existed in the shape graphs 0.10.0 published",
+      "severityAfter": "sh:Warning",
+      "schedule": null,
+      "rejection": "not scheduled: whether and when the profile rejects such a value is a separately versioned decision with its own migration notice (Section 17.3), not yet taken",
+      "owningProfile": "Assertion Metadata",
+      "owningProfileStatus": "Accepted / Normative",
+      "excludedFromPublicAPI": false,
+      "classification": "MINOR-compatible because the shape reports and rejects nothing: no conformance outcome changes and the profile's public contract is unchanged",
+      "negativeCase": {
+        "conformedUnder": "0.10.0",
+        "conformsUnder": "0.11.0, reported at sh:Warning",
+        "doesNotConformUnder": "not scheduled",
+        "case": "an Assertion Metadata record whose kee:lifecycleState is a generic https://w3id.org/kee/lifecycle# value, or kee:ChallengedAssertion, kee:SupersededAssertion, kee:PreferredAssertion or kee:QualifiedAssertion"
+      },
+      "migrationObligation": "None at this release: new writes use the lifecycle scheme of the profile governing the managed unit, https://w3id.org/kee/lifecycle/assertion# when no other profile does; a generic or mixed-axis value is reported, not rejected."
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+@prefix ex: <https://example.org/kee/test/> .
+@prefix kee: <https://w3id.org/kee#> .
+@prefix profile: <https://w3id.org/kee/profile#> .
+@prefix artifact: <https://w3id.org/kee/artifact#> .
+@prefix lifecycle: <https://w3id.org/kee/lifecycle#> .
+@prefix confidence: <https://w3id.org/kee/confidence#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+# Tolerated-warning fixture for shacl/assertion-profile.ttl
+# Expected result: conforms, and only because of the severity policy.
+#
+# This fixture satisfies every Violation-severity constraint of the Assertion
+# Profile and omits dcterms:source, which the profile recommends at sh:Warning.
+# Its only validation result is therefore a warning, so `sh:conforms` is true
+# under the severity policy described in shacl/README.md and false without it.
+#
+# It replaces the accountable-root fixture that carried this role until v0.10.0
+# escalated that constraint to sh:Violation. The constraint exercised here is a
+# recommendation rather than a normative requirement awaiting escalation, so the
+# severity policy keeps a demonstration that does not expire with a schedule.
+
+ex:assertion-warning-001
+    a kee:Assertion ;
+    rdfs:label "Assertion fixture without a declared source"@en ;
+    skos:definition "This assertion fixture omits dcterms:source, which the Assertion Profile recommends rather than requires."@en ;
+
+    dcterms:type artifact:Assertion ;
+    kee:lifecycleState lifecycle:Active ;
+    dcterms:conformsTo profile:AssertionProfile ;
+    kee:scope ex:scope-test ;
+    kee:context ex:context-test ;
+    kee:authority ex:authority-test ;
+    kee:confidenceStatus confidence:ProfileDefined ;
+    kee:confidenceValue "0.75"^^xsd:decimal ;
+
+    prov:wasAttributedTo ex:agent-test ;
+    prov:generatedAtTime "2026-06-25T20:50:00Z"^^xsd:dateTime .
+
+ex:agent-test
+    a prov:Agent ;
+    rdfs:label "Test agent"@en .
+
+ex:authority-test
+    a prov:Agent ;
+    rdfs:label "Test authority"@en .
+
+ex:scope-test
+    a skos:Concept ;
+    skos:prefLabel "Test scope"@en .
+
+ex:context-test
+    a skos:Concept ;
+    skos:prefLabel "Test context"@en .

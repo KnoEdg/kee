@@ -1,0 +1,30 @@
+@prefix ex: <https://example.org/kee/test/> .
+@prefix kee: <https://w3id.org/kee#> .
+@prefix profile: <https://w3id.org/kee/profile#> .
+@prefix elig: <https://w3id.org/kee/vocab/retrieval-eligibility#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+# Compatibility note (specification Section 17): this fixture exercises registered
+# legacy-readable surfaces (generic https://w3id.org/kee/lifecycle# values and/or
+# legacy carriers). It is executable compatibility evidence, not canonical
+# new-write guidance; profile-aware migration of lifecycle values is registered
+# as unsafe for automatic rewrite (specification Section 9.2 and Section 17).
+
+# Invalid fixture for shacl/ai-grounded-retrieval-profile.ttl
+# Expected result: does not conform.
+# Expected failure: missing required kee:eligibilityBasis -- a retrieval
+# result must name at least one upstream category it actually consulted,
+# per this profile's own Candidate Validation Constraints (a recorded project decision).
+
+ex:retrieval-result-invalid-missing-basis-001
+    a kee:RetrievalResult ;
+    rdfs:label "Invalid retrieval result fixture missing eligibility basis"@en ;
+
+    kee:retrievedArtifact ex:artifact-test ;
+    kee:eligibilityCategory elig:EligibleForNormalGrounding ;
+    kee:profileConformance profile:AIGroundedRetrievalProfile .
+
+ex:artifact-test
+    a prov:Entity ;
+    rdfs:label "Test artifact"@en .

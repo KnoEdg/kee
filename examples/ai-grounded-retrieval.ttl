@@ -1,0 +1,101 @@
+@prefix ex: <https://example.org/kee/> .
+@prefix kee: <https://w3id.org/kee#> .
+@prefix profile: <https://w3id.org/kee/profile#> .
+@prefix qtd: <https://w3id.org/kee/vocab/query-time-dimension#> .
+@prefix elig: <https://w3id.org/kee/vocab/retrieval-eligibility#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+# KEE AI-Grounded Retrieval Profile Example
+# Status: Draft / Non-Normative profile example (specification Section 19); legacy-readable compatibility example
+#
+# Compatibility note (registered legacy compatibility window, specification Section 17): this example intentionally
+# exercises registered legacy-readable surfaces (for example kee:profileConformance,
+# kee:artifactType, or the generic https://w3id.org/kee/lifecycle# namespace). It is
+# compatibility evidence, not canonical new-write guidance. Canonical new writes
+# use dcterms:conformsTo, dcterms:type, and the profile-specific lifecycle
+# namespaces named in docs/specs/KEE-Specification-v0.11.0.md Sections 8-9.
+# Run `kee normalize --rewrite-safe examples/<file>` to see the safe carrier
+# rewrites and the remaining unsafe legacy surfaces.
+#
+# The source fixture intentionally retains legacy kee:profileConformance for
+# registered legacy-read compatibility. prov:generatedAtTime is answer/resource generation time;
+# historical query intent is carried by a separate PointInTimeQuery. The
+# eligibility categories are drawn from the retrieval-eligibility scheme and
+# the query's time dimension from the query-time-dimension scheme.
+
+ex:retrieval-query-escalation-threshold
+    a kee:RetrievalQuery ;
+    rdfs:label "Retrieval query: payment-latency escalation threshold"@en ;
+    kee:profileConformance profile:AIGroundedRetrievalProfile ;
+    kee:candidateResult ex:retrieval-result-runbook-v3, ex:retrieval-result-runbook-draft-2025 ;
+    dcterms:references ex:historical-intent-active-at-2026-08-15 ;
+    dcterms:description "What guidance was active for payment-latency alerts at the requested historical instant?"@en ;
+    prov:generatedAtTime "2026-08-15T09:00:00Z"^^xsd:dateTime .
+
+ex:historical-intent-active-at-2026-08-15
+    a kee:PointInTimeQuery ;
+    kee:queryPattern ex:query-pattern-active-at ;
+    kee:queryTimeDimension qtd:ValidTime ;
+    dcterms:temporal ex:instant-2026-08-15 ;
+    dcterms:source ex:history-source-runbook ;
+    kee:profileConformance profile:HistoricalBitemporalQueryingProfile ;
+    dcterms:description "Which runbook guidance was valid/active at 2026-08-15?"@en .
+
+ex:history-source-runbook
+    a prov:Entity ;
+    dcterms:temporal ex:history-coverage-runbook .
+
+ex:history-coverage-runbook
+    a time:Interval ;
+    time:hasBeginning ex:history-start ;
+    time:hasEnd ex:history-end .
+
+ex:history-start a time:Instant ; time:inXSDDateTimeStamp "2025-01-01T00:00:00Z"^^xsd:dateTimeStamp .
+ex:history-end a time:Instant ; time:inXSDDateTimeStamp "2026-09-01T00:00:00Z"^^xsd:dateTimeStamp .
+ex:instant-2026-08-15 a time:Instant ; time:inXSDDateTimeStamp "2026-08-15T00:00:00Z"^^xsd:dateTimeStamp .
+ex:query-pattern-active-at a skos:Concept ; skos:prefLabel "Active at"@en .
+
+ex:retrieval-result-runbook-v3
+    a kee:RetrievalResult ;
+    rdfs:label "Retrieval result: runbook v3 (contradictory evidence)"@en ;
+    kee:retrievedArtifact ex:runbook-incident-triage-v3 ;
+    kee:eligibilityCategory elig:EligibleOnlyAsContradictoryEvidence ;
+    kee:eligibilityBasis "lifecycle state (Adopted, current)", "contradiction status (unresolved)" ;
+    kee:context ex:use-context-current-answer ;
+    kee:profileConformance profile:AIGroundedRetrievalProfile ;
+    kee:citationGranularity ex:citation-granularity-assertion-level ;
+    kee:warningContent "Current org-wide standard with unresolved contradictory evidence; present both sides."@en ;
+    kee:humanReviewRequired true ;
+    kee:sourceChunk ex:retrieval-chunk-091 ;
+    prov:wasGeneratedBy ex:eligibility-decision-v3 ;
+    prov:generatedAtTime "2026-08-15T09:00:01Z"^^xsd:dateTime .
+
+ex:retrieval-result-runbook-draft-2025
+    a kee:RetrievalResult ;
+    rdfs:label "Retrieval result: 2025 draft (superseded, historical only)"@en ;
+    kee:retrievedArtifact ex:runbook-incident-triage-org-draft-2025 ;
+    kee:eligibilityCategory elig:EligibleOnlyForHistoricalExplanation ;
+    kee:eligibilityBasis "supersession relation (replaced by the current org-wide standard)" ;
+    kee:context ex:use-context-current-answer ;
+    kee:profileConformance profile:AIGroundedRetrievalProfile ;
+    kee:citationGranularity ex:citation-granularity-document-level ;
+    kee:supersessionChainTarget ex:runbook-incident-triage-v3 ;
+    kee:warningContent "Superseded draft retained for historical context only; do not use for current-answer grounding."@en ;
+    kee:humanReviewRequired false ;
+    kee:excludedFromCurrentAnswerGrounding true ;
+    prov:wasGeneratedBy ex:eligibility-decision-draft ;
+    prov:generatedAtTime "2026-08-15T09:00:02Z"^^xsd:dateTime .
+
+ex:eligibility-decision-v3 a prov:Activity .
+ex:eligibility-decision-draft a prov:Activity .
+ex:use-context-current-answer a skos:Concept ; skos:prefLabel "Current-answer grounding"@en .
+ex:runbook-incident-triage-v3 a prov:Entity ; rdfs:label "Incident triage runbook v3"@en .
+ex:runbook-incident-triage-org-draft-2025 a prov:Entity ; rdfs:label "Incident triage runbook org draft 2025"@en .
+ex:citation-granularity-assertion-level a skos:Concept ; skos:prefLabel "Assertion-level citation granularity"@en .
+ex:citation-granularity-document-level a skos:Concept ; skos:prefLabel "Document-level citation granularity"@en .
+ex:retrieval-chunk-091 a kee:RetrievalChunk ; rdfs:label "Retrieval chunk 091"@en ; kee:mapsToArtifact ex:runbook-incident-triage-v3 .

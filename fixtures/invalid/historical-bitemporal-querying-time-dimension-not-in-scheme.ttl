@@ -1,0 +1,49 @@
+@prefix ex: <https://example.org/kee/test/> .
+@prefix kee: <https://w3id.org/kee#> .
+@prefix profile: <https://w3id.org/kee/profile#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+# Expected-negative fixture for shacl/historical-bitemporal-querying-profile.ttl.
+# Expected result: does not conform.
+#
+# kee:queryTimeDimension carries an IRI outside the query-time-dimension
+# scheme on a new-write record (dcterms:conformsTo). The record is otherwise
+# complete, so its only result is the membership check on the new-write
+# branch: a dimension the scheme does not name cannot be read as either
+# recorded (transaction) or valid (application) time, and specification
+# Section 14.2 requires the dimension to be mechanically identifiable.
+#
+# The check was staged. At the v0.10.0 baseline it reported at sh:Warning, so
+# this file was a tolerated-warning fixture that conformed under the severity
+# policy. From v0.11.0 it reports at sh:Violation and this file is an
+# expected-negative fixture: v0.10.0 is the last version in which such a value
+# conforms and v0.11.0 the first rejecting version.
+
+ex:point-in-time-query-dimension-not-in-scheme-001
+    a kee:PointInTimeQuery ;
+    rdfs:label "Point-in-time query fixture with a time dimension outside the scheme"@en ;
+    kee:queryPattern ex:query-pattern-test ;
+    kee:queryTimeDimension ex:dimension-publication-time ;
+    dcterms:temporal ex:requested-instant-test ;
+    dcterms:source ex:history-source-test ;
+    dcterms:conformsTo profile:HistoricalBitemporalQueryingProfile .
+
+ex:history-source-test
+    a prov:Entity ;
+    dcterms:temporal ex:coverage-test .
+
+ex:coverage-test
+    a time:Interval ;
+    time:hasBeginning ex:coverage-start-test ;
+    time:hasEnd ex:coverage-end-test .
+
+ex:requested-instant-test a time:Instant ; time:inXSDDateTimeStamp "2026-06-01T00:00:00Z"^^xsd:dateTimeStamp .
+ex:coverage-start-test a time:Instant ; time:inXSDDateTimeStamp "2026-01-01T00:00:00Z"^^xsd:dateTimeStamp .
+ex:coverage-end-test a time:Instant ; time:inXSDDateTimeStamp "2026-12-31T23:59:59Z"^^xsd:dateTimeStamp .
+ex:query-pattern-test a skos:Concept ; skos:prefLabel "Known as of"@en .
+ex:dimension-publication-time a skos:Concept ; skos:prefLabel "Publication time"@en .

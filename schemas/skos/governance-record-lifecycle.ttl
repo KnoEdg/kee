@@ -1,0 +1,101 @@
+@prefix grlife: <https://w3id.org/kee/lifecycle/governance-record#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+# The review status of a governance record.
+#
+# Four Draft profiles require kee:lifecycleState on records that are about
+# governing knowledge rather than knowledge themselves: governance transition
+# records (including multi-typed authority and promotion records),
+# contradiction records, contested authority claims and lifecycle crosswalk
+# mappings. The value on that slot is the record's own standing as a record:
+# whether it has been proposed, accepted, rejected, withdrawn or superseded by
+# whatever review governs records of its kind. It is not the state of anything
+# the record describes.
+#
+# Owner: the Governance Transition Profile. Adopted, by name, for
+# kee:lifecycleState on kee:GovernanceTransitionRecord (owner, including
+# multi-typed kee:AuthorityRecord and kee:PromotionRecord),
+# kee:ContradictionRecord (Contradiction Records Profile),
+# kee:ContestedAuthorityClaim (Authority and Delegation Profile) and
+# kee:LifecycleCrosswalkMapping (Lifecycle Crosswalk Profile). It is not
+# adopted for kee:AssertionMetadataRecord, whose slot carries the lifecycle of
+# the managed assertion unit, drawn from the scheme of the profile governing
+# that unit (https://w3id.org/kee/lifecycle/assertion# when no other does).
+#
+# What this axis must not carry, because each has its own carrier already:
+#   1. a dispute's resolution or disposition (kee:resolutionOutcome where used,
+#      Section 13.1): an Accepted contradiction record is an accepted record
+#      of a conflict, not a resolved conflict;
+#   2. a grant's expiry, revocation or suspension (kee:validUntil,
+#      prov:invalidatedAtTime; Section 12.2): a revoked grant's record normally
+#      stays Accepted, because revocation is an event and not a rejection of
+#      the record;
+#   3. the recorded or target state (kee:previousLifecycleState,
+#      kee:newLifecycleState, kee:lifecycleStatusVocabulary on a transition
+#      record; the source and target terms on a crosswalk record; Section 9.4);
+#   4. mapping strength (the SKOS mapping relation; Section 9.4): accepting a
+#      crosswalk record does not upgrade a close, broad, narrow or related
+#      match to an exact one;
+#   5. epistemic standing, confidence, authority or correctness (Sections 9.1,
+#      11 and 12.5): Supported, Qualified, Challenged, a confidence value, a
+#      claim of authority.
+#
+# Transition constraints: none. The scheme defines no state machine and no
+# permitted orderings. History: a change of a record's review status does not
+# erase the earlier value or its provenance; it is recorded by a governance
+# transition whose kee:governedArtifact is the record, or by a revision linked
+# with prov:wasRevisionOf, as the adopting profile chooses. Mapping behaviour:
+# no generic https://w3id.org/kee/lifecycle# value maps to any concept here.
+# Supported never had a defined meaning on this axis; a legacy read is reported
+# as a review status not stated in this scheme, never as Accepted.
+#
+# Labels shared with other schemes do not establish equivalence (Section 9.2).
+# Proposed, Rejected, Withdrawn and Superseded share labels with concepts of
+# the Assertion and Decision lifecycle schemes and are not asserted equivalent,
+# close or related to them. The scheme asserts no external mapping.
+
+grlife:GovernanceRecordReviewStatusScheme
+  a skos:ConceptScheme ;
+  skos:prefLabel "KEE Governance Record Review Status Scheme"@en ;
+  dcterms:identifier "kee-governance-record-lifecycle-v0.11.0" ;
+  dcterms:publisher "KEE (KnoEdg + Eidos)" ;
+  dcterms:description "Canonical scheme for the review status of a governance record: the record's own standing as a record, as accepted or not by the review that governs records of its kind. It is not the state of anything the record describes. Owner: the Governance Transition Profile; adopted for kee:lifecycleState on kee:GovernanceTransitionRecord, kee:ContradictionRecord, kee:ContestedAuthorityClaim and kee:LifecycleCrosswalkMapping. Status: the owning and adopting profiles are Draft / Non-Normative. Closed: a new concept needs a governed decision, which is a MINOR addition; the five concepts are checked by membership on the four adopting classes. Versioning: additions require a governed decision; the scheme defines no transitions. External mappings: none asserted; shared labels with other KEE lifecycle schemes do not establish equivalence (Section 9.2)."@en ;
+  skos:scopeNote "The axis carries only the record's acceptance as a record. It MUST NOT carry a dispute's resolution or disposition, a grant's expiry, revocation or suspension, the recorded or target state of a transition or crosswalk, mapping strength, or epistemic standing, confidence, authority or correctness; each of those has its own carrier. No generic https://w3id.org/kee/lifecycle# value maps to a concept of this scheme."@en ;
+  dcterms:conformsTo <https://www.w3.org/TR/skos-reference/> ;
+  skos:hasTopConcept grlife:Proposed, grlife:Accepted, grlife:Rejected, grlife:Withdrawn, grlife:Superseded .
+
+grlife:Proposed
+  a skos:Concept ;
+  skos:prefLabel "Proposed"@en ;
+  skos:definition "The record has been made and submitted for review, and has not yet been accepted, rejected or withdrawn."@en ;
+  skos:inScheme grlife:GovernanceRecordReviewStatusScheme ;
+  skos:topConceptOf grlife:GovernanceRecordReviewStatusScheme .
+
+grlife:Accepted
+  a skos:Concept ;
+  skos:prefLabel "Accepted"@en ;
+  skos:definition "The record has been accepted, as a record, by the review that governs records of its kind. This says nothing about whether what it records is correct, authorized, resolved or true."@en ;
+  skos:inScheme grlife:GovernanceRecordReviewStatusScheme ;
+  skos:topConceptOf grlife:GovernanceRecordReviewStatusScheme .
+
+grlife:Rejected
+  a skos:Concept ;
+  skos:prefLabel "Rejected"@en ;
+  skos:definition "Review did not accept the record, for example because it duplicates another record, is malformed, or is not an instance of its kind. A rejection says nothing about what the record describes. Where it rests on a substantive finding, that finding is represented separately."@en ;
+  skos:inScheme grlife:GovernanceRecordReviewStatusScheme ;
+  skos:topConceptOf grlife:GovernanceRecordReviewStatusScheme .
+
+grlife:Withdrawn
+  a skos:Concept ;
+  skos:prefLabel "Withdrawn"@en ;
+  skos:definition "The party that made the record, or a party acting on its behalf, withdrew it. Withdrawal is not a review outcome."@en ;
+  skos:inScheme grlife:GovernanceRecordReviewStatusScheme ;
+  skos:topConceptOf grlife:GovernanceRecordReviewStatusScheme .
+
+grlife:Superseded
+  a skos:Concept ;
+  skos:prefLabel "Superseded"@en ;
+  skos:definition "The record has been replaced by another record of the same kind. The replacement SHOULD be linked with dcterms:isReplacedBy."@en ;
+  skos:inScheme grlife:GovernanceRecordReviewStatusScheme ;
+  skos:topConceptOf grlife:GovernanceRecordReviewStatusScheme .

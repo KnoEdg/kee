@@ -1,0 +1,50 @@
+@prefix ex: <https://example.org/kee/test/> .
+@prefix kee: <https://w3id.org/kee#> .
+@prefix profile: <https://w3id.org/kee/profile#> .
+@prefix lifecycle: <https://w3id.org/kee/lifecycle#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+# Tolerated-warning fixture for shacl/governance-transition-profile.ttl composed
+# with shacl/governance-record-review-status-constraints.ttl.
+# Expected result: conforms, and only because of the severity policy.
+#
+# Compatibility note (specification Section 17): this fixture exercises a
+# registered legacy-readable surface on purpose. The transition record writes
+# the generic https://w3id.org/kee/lifecycle# value Supported as its own review
+# status (kee:lifecycleState), which is what every governance record in this
+# repository wrote before the governance-record review-status scheme existed.
+# Supported has no defined meaning on that axis, and no concept of the scheme
+# is its match, so the composed membership constraint reports it: at sh:Warning
+# in v0.11.0, the last dual-read version, which is why this file conforms under
+# the severity policy and not under the SHACL default; at sh:Violation from
+# v0.12.0, the first rejecting version, when this file stops conforming and the
+# conformance manifest must say so. Everything else the record carries is
+# canonical new-write form, so the review status is the only result.
+
+ex:governance-transition-generic-review-status-001
+    a kee:GovernanceTransitionRecord ;
+    rdfs:label "Governance transition fixture with a generic review status"@en ;
+
+    kee:governedArtifact ex:governed-artifact-test ;
+    kee:newLifecycleState ex:new-status-test ;
+    kee:lifecycleStatusVocabulary ex:status-vocab-test ;
+    kee:lifecycleState lifecycle:Supported ;
+    dcterms:conformsTo profile:GovernanceTransitionProfile ;
+    kee:scope ex:scope-test ;
+    kee:context ex:context-test ;
+
+    prov:wasGeneratedBy ex:transition-activity-test ;
+    prov:wasAttributedTo ex:agent-test ;
+    prov:generatedAtTime "2026-10-12T20:00:00Z"^^xsd:dateTime .
+
+ex:governed-artifact-test a prov:Entity ; rdfs:label "Test governed artifact"@en .
+ex:new-status-test a skos:Concept ; skos:prefLabel "Test new status"@en .
+ex:status-vocab-test a skos:ConceptScheme ; rdfs:label "Test status vocabulary"@en .
+ex:transition-activity-test a prov:Activity ; rdfs:label "Test transition activity"@en .
+ex:agent-test a prov:Agent ; rdfs:label "Test agent"@en .
+ex:scope-test a skos:Concept ; skos:prefLabel "Test scope"@en .
+ex:context-test a skos:Concept ; skos:prefLabel "Test context"@en .

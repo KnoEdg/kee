@@ -1,0 +1,90 @@
+@prefix ex: <https://example.org/kee/> .
+@prefix kee: <https://w3id.org/kee#> .
+@prefix profile: <https://w3id.org/kee/profile#> .
+@prefix grlife: <https://w3id.org/kee/lifecycle/governance-record#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+# KEE Promotion Profile Example
+# Status: Draft / Non-Normative profile example (specification Section 19); legacy-readable compatibility example
+#
+# Compatibility note (registered legacy compatibility window, specification Section 17): this example intentionally
+# exercises registered legacy-readable surfaces (for example kee:profileConformance,
+# kee:artifactType, or the generic https://w3id.org/kee/lifecycle# namespace). It is
+# compatibility evidence, not canonical new-write guidance. Canonical new writes
+# use dcterms:conformsTo, dcterms:type, and the profile-specific lifecycle
+# namespaces named in docs/specs/KEE-Specification-v0.11.0.md Sections 8-9.
+# Run `kee normalize --rewrite-safe examples/<file>` to see the safe carrier
+# rewrites and the remaining unsafe legacy surfaces.
+#
+# Reference ordering uses SKOS: the narrower source scope reaches the
+# broader target scope via skos:broader. Scope inequality alone is not enough.
+
+ex:promotion-record-runbook-incident-triage-v3
+    a kee:GovernanceTransitionRecord, kee:PromotionRecord ;
+    rdfs:label "Promotion record: incident-triage runbook to org-wide standard"@en ;
+    kee:governedArtifact ex:runbook-incident-triage-v3 ;
+    kee:previousLifecycleState ex:local-status-accepted ;
+    kee:newLifecycleState ex:org-status-adopted ;
+    kee:lifecycleStatusVocabulary ex:lifecycle-profile-org-standards-2026 ;
+    kee:lifecycleState grlife:Accepted ;
+    kee:profileConformance profile:PromotionProfile ;
+    kee:authorityEvidence ex:charter-engineering-standards-committee ;
+    kee:scope ex:scope-org-wide-engineering ;
+    kee:context ex:context-standards-committee-q3-2026 ;
+    kee:sourceScope ex:scope-team-observability ;
+    kee:reasonCode ex:reason-standards-adopted ;
+    kee:knownContradiction ex:contradiction-escalation-threshold ;
+    skos:changeNote "Adopted as the organization-wide incident-triage standard after committee review of six months of postmortem evidence; a known escalation-threshold disagreement with the payments team's variant remains unresolved and is linked, not erased, by this promotion."@en ;
+    dcterms:source ex:postmortem-evidence-summary-2026-h1 ;
+    dcterms:valid "2026-08-01"^^xsd:date ;
+    kee:reviewDue "2027-02-01T00:00:00Z"^^xsd:dateTime ;
+    prov:wasGeneratedBy ex:promotion-activity-runbook-incident-triage-v3 ;
+    prov:wasAttributedTo ex:agent-standards-chair ;
+    prov:generatedAtTime "2026-07-09T16:31:15Z"^^xsd:dateTime .
+
+ex:promotion-activity-runbook-incident-triage-v3
+    a prov:Activity ;
+    rdfs:label "Promotion activity: incident-triage runbook"@en ;
+    prov:wasAssociatedWith ex:agent-standards-chair .
+
+ex:runbook-incident-triage-v3 a prov:Entity ; rdfs:label "Incident triage runbook v3"@en .
+ex:local-status-accepted a skos:Concept ; skos:prefLabel "Accepted (local)"@en .
+ex:org-status-adopted a skos:Concept ; skos:prefLabel "Adopted (organization-wide)"@en .
+ex:lifecycle-profile-org-standards-2026 a skos:ConceptScheme ; rdfs:label "Organization standards lifecycle-status vocabulary"@en .
+ex:agent-standards-chair a prov:Agent ; rdfs:label "Standards Committee Chair"@en .
+ex:charter-engineering-standards-committee a prov:Entity ; rdfs:label "Engineering Standards Committee charter"@en .
+
+ex:scope-team-observability
+    a skos:Concept ;
+    skos:prefLabel "Team observability scope"@en ;
+    skos:broader ex:scope-org-wide-engineering .
+
+ex:scope-org-wide-engineering
+    a skos:Concept ;
+    skos:prefLabel "Org-wide engineering scope"@en .
+
+ex:context-standards-committee-q3-2026 a skos:Concept ; skos:prefLabel "Standards committee Q3 2026 context"@en .
+ex:reason-standards-adopted a skos:Concept ; skos:prefLabel "Standards adopted"@en .
+ex:postmortem-evidence-summary-2026-h1 a prov:Entity ; rdfs:label "Postmortem evidence summary 2026 H1"@en .
+
+# The linked contradiction record, carried complete so that it conforms to
+# shacl/contradiction-records-profile.ttl as well; examples/contradiction-records.ttl
+# holds the same record with its side/evidence pairing.
+ex:contradiction-escalation-threshold
+    a kee:ContradictionRecord ;
+    rdfs:label "Escalation threshold contradiction"@en ;
+    kee:conflictingArtifact ex:runbook-incident-triage-v3, ex:runbook-incident-triage-payments ;
+    kee:lifecycleState grlife:Accepted ;
+    dcterms:conformsTo profile:ContradictionRecordsProfile ;
+    dcterms:description "The org-wide standard runbook recommends a 15-minute escalation threshold based on alert-fatigue postmortem data. The payments team's variant recommends a 5-minute threshold based on a cost analysis of SLA violations. Both recommendations are evidentially supported; the conflict is a difference in risk framing, not an error on either side."@en ;
+    prov:wasGeneratedBy ex:detection-escalation-threshold-contradiction ;
+    prov:wasAttributedTo ex:governance-log-service ;
+    prov:generatedAtTime "2026-07-10T11:21:40Z"^^xsd:dateTime .
+
+ex:runbook-incident-triage-payments a prov:Entity ; rdfs:label "Payments team incident triage runbook variant"@en .
+ex:detection-escalation-threshold-contradiction a prov:Activity ; rdfs:label "Detection activity: escalation threshold contradiction"@en .
+ex:governance-log-service a prov:Agent, prov:SoftwareAgent ; rdfs:label "Governance Log Service"@en .
